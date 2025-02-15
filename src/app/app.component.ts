@@ -4,11 +4,12 @@ import { RouterOutlet } from '@angular/router';
 import { DeckComponent } from "./deck/deck.component";
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
+import { FlashcardComponent } from './flashcard/flashcard.component';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, DeckComponent, MatGridListModule, MatCardModule],
+  imports: [RouterOutlet, DeckComponent, MatGridListModule, MatCardModule, FlashcardComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
