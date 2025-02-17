@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Flashcard } from '../models/flashcard.model';
 
 @Component({
   selector: 'app-flashcard',
@@ -7,7 +8,5 @@ import { Component, Input } from '@angular/core';
   styleUrl: './flashcard.component.css'
 })
 export class FlashcardComponent {
-
-  @Input() term!: string;
-  @Input() definition!: string;
+  @Input() card!: Flashcard;
 }

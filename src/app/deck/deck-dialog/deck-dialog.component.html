@@ -1,8 +1,7 @@
 <h1 mat-dialog-title>Deck Details</h1>
 <div mat-dialog-content>
-  <p>Details about the deck...</p>
   <div *ngFor="let card of data.cards">
-    {{ card }}
+    <app-flashcard [card]="card"></app-flashcard>
   </div>
 </div>
 <div mat-dialog-actions>

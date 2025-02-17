@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DeckDialogComponent } from './deck-dialog/deck-dialog.component';
 import { FlashcardComponent } from "../flashcard/flashcard.component";
+import { Flashcard } from '../models/flashcard.model';
 
 @Component({
   selector: 'card-deck',
@@ -17,9 +18,15 @@ import { FlashcardComponent } from "../flashcard/flashcard.component";
 
 export class DeckComponent {
   name: string='Deck';
-  cards = ['card1', 'card2', 'card3'];
+  cards: Flashcard[] = [];
 
-  constructor(public dialog: MatDialog, private router: Router) {}
+  constructor(public dialog: MatDialog, private router: Router) {
+    this.cards = [
+      new Flashcard('Angular', 'A front-end framework'),
+      new Flashcard('TypeScript', 'A superset of JavaScript'),
+      new Flashcard('Component', 'A reusable UI building block in Angular')
+    ];
+  }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DeckDialogComponent, {
