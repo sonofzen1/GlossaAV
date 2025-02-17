@@ -24,7 +24,8 @@ export class DeckComponent {
     const dialogRef = this.dialog.open(DeckDialogComponent, {
       width: '250px',
       height: '400px',
-      autoFocus: false
+      autoFocus: false,
+      data: { cards: this.cards }
     });
 
     dialogRef.afterClosed().subscribe(result => {

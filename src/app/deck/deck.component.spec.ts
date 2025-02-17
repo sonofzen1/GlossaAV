@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DeckComponent } from './deck.component';
+import { CommonModule } from '@angular/common';
 
 describe('DeckComponent', () => {
   let component: DeckComponent;
