@@ -8,7 +8,7 @@ import { Inject } from '@angular/core';
   templateUrl: './deck-dialog.component.html',
   imports: [CommonModule],
   styleUrls: ['./deck-dialog.component.css']
-})
+}) 
 export class DeckDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<DeckDialogComponent>,
