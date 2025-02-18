@@ -10,7 +10,7 @@
   position: relative;
   margin: 20px;
   border-radius: 10px; /* Add border-radius for smooth edges */
-  overflow: hidden; /* Ensure content doesn't overflow */
+  overflow: visible; /* Ensure content doesn't get cut off */
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
 }
 
@@ -28,8 +28,8 @@
   width: 100%;
   height: 100%;
   background: rgba(255, 255, 255, 0);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Lighter shadow */
-  transform: rotate(-3deg);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.24); /* Lighter shadow */
+  transform: rotate(-5deg); /* More pronounced rotation for a sloppy effect */
   z-index: -1;
   border-radius: 10px; /* Add border-radius for smooth edges */
 }
@@ -37,7 +37,7 @@
 .stacked-card::after {
   top: 20px;
   left: 20px;
-  transform: rotate(3deg);
+  transform: rotate(5deg); /* More pronounced rotation for a sloppy effect */
   z-index: -2;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Lighter shadow */
   border-radius: 10px; /* Add border-radius for smooth edges */
