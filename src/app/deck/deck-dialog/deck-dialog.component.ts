@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Inject } from '@angular/core';
 import { Flashcard } from '../../models/flashcard.model';
 import { FlashcardComponent } from '../../flashcard/flashcard.component';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'deck-dialog',

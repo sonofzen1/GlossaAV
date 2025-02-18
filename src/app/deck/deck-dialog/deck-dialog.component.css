@@ -10,3 +10,20 @@
   text-align: center;
   width: 100%;
 }
+
+.dialog-title-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.top-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.white-background {
+  background-color: white;
+}
