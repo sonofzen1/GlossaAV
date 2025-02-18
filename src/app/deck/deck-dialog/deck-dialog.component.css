@@ -2,3 +2,11 @@
   max-height: 300px;
   overflow: auto;
 }
+
+.mat-dialog-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}

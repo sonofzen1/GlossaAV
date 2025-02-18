@@ -30,8 +30,9 @@ export class DeckComponent {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DeckDialogComponent, {
-      width: '250px',
-      height: '400px',
+      width: '90%',
+      maxWidth: '2000px',
+      height: '90%',
       autoFocus: false,
       data: { cards: this.cards }
     });

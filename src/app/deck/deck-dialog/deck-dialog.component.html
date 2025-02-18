@@ -1,6 +1,7 @@
-<h1 mat-dialog-title>Deck Details</h1>
-<div mat-dialog-actions>
-    <button mat-button (click)="onClose()">Close</button>
+<div class="dialog-title-container">
+  <h1 mat-dialog-title align="center">Deck Details 
+    <button mat-button class="close-button" (click)="onClose()">Close</button>
+</h1>
 </div>
 <div mat-dialog-content>
   <div *ngFor="let card of data.cards">
