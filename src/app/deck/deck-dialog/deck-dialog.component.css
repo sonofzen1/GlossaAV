@@ -18,6 +18,10 @@
   align-items: center;
 }
 
+.dialog-title-container h1 {
+  word-spacing: 10px;
+}
+
 .top-right {
   position: absolute;
   top: 0;
@@ -27,4 +31,3 @@
 .white-background {
   background-color: white;
 }
-

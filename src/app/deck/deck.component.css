@@ -9,7 +9,7 @@
 .stacked-card {
   position: relative;
   margin: 20px;
-  border-radius: 10px; /* Add border-radius for smooth edges */
+ border-radius: 10px; /* Add border-radius for smooth edges */
 }
 
 .stacked-card::before,
