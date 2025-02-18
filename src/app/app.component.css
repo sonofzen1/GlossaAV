@@ -14,3 +14,26 @@
   height: 100%;
   /* Add any additional styling as needed */
 }
+
+.button-container {
+  display: flex;
+  gap: 10px;
+}
+
+.sunken-button {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+  color: #333;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.sunken-button:hover {
+  background-color: #e0e0e0;
+  box-shadow: inset 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.sunken-button:active {
+  background-color: #d0d0d0;
+  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
