@@ -48,4 +48,8 @@ export class AppComponent {
     new Flashcard('Backbone', 'Give your JS app some Backbone with Models, Views, Collections, and Events'),
     new Flashcard('Marionette', 'A composite application library for Backbone.js')
   ]);
+
+  decks = [this.deck1, this.deck2, this.deck3, this.deck4, this.deck5, this.deck6];
+
+
 }
