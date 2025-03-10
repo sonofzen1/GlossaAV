@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,16 +17,9 @@ import { Deck } from '../models/deck.model';
   styleUrl: './deck.component.css'
 })
 export class DeckComponent {
-  deck: Deck;
-  
-  constructor(public dialog: MatDialog, private router: Router) {
-    const cards = [
-      new Flashcard('Angular', 'A front-end framework'),
-      new Flashcard('TypeScript', 'A superset of JavaScript'),
-      new Flashcard('Component', 'A reusable UI building block in Angular')
-    ];
-    this.deck = new Deck('Deck', cards);
-  }
+  @Input() deck!: Deck;
+
+  constructor(public dialog: MatDialog, private router: Router) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DeckDialogComponent, {
