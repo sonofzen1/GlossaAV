@@ -20,3 +20,56 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-color: #d0d0d0;
   box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.4);
 }
+
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+body.dark-mode .mat-card {
+  background-color: #2a2a2a; /* Brighter background for cards */
+  color: #ffffff;
+}
+
+body.dark-mode .mat-toolbar {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+body.dark-mode .mat-grid-list {
+  background-color: #121212;
+}
+
+
+
+/* Override deck name color in dark mode */
+body.dark-mode .mat-card-title {
+  color: #000000; /* Keep deck name black */
+}
+
+/* Dark mode styles for stacked cards */
+body.dark-mode .stacked-card {
+  background-color: #2a2a2a; /* Brighter background for stacked cards */
+  color: #ffffff;
+}
+
+body.dark-mode .stacked-card::before,
+body.dark-mode .stacked-card::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 100%;
+  height: 100%;
+  background: rgba(42, 42, 42, 0.8); /* Brighter background for pseudo-elements */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Darker shadow */
+  border-radius: 10px; /* Add border-radius for smooth edges */
+  z-index: -1; /* Ensure they are behind the main card */
+}
+
+body.dark-mode .stacked-card::after {
+  top: 20px;
+  left: 20px;
+  transform: rotate(5deg); /* More pronounced rotation for a sloppy effect */
+  z-index: -2;
+}
