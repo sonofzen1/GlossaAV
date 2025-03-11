@@ -1,1 +1,19 @@
-<p>flashcard-modal works!</p>
+<div class="modal-header">
+  <h2>Add Flashcard</h2>
+  <button mat-icon-button>
+    <i class="fa-solid fa-circle-xmark"></i>
+  </button>
+</div>
+<div class="modal-body">
+  <mat-form-field appearance="fill">
+    <mat-label>Term</mat-label>
+    <input matInput placeholder="Enter term">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Definition</mat-label>
+    <input matInput placeholder="Enter definition">
+  </mat-form-field>
+</div>
+<div class="modal-footer">
+  <button mat-flat-button color="primary" >Submit</button>
+</div>
