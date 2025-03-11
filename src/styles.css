@@ -23,23 +23,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 body.dark-mode {
   background-color: #121212;
-  color: #ffffff;
+ 
 }
 
 body.dark-mode .mat-card {
   background-color: #2a2a2a; /* Brighter background for cards */
-  color: #ffffff;
+  
 }
 
 body.dark-mode .mat-toolbar {
   background-color: #333333;
-  color: #ffffff;
+ 
 }
 
 body.dark-mode .mat-grid-list {
   background-color: #121212;
 }
-
 
 
 /* Override deck name color in dark mode */
@@ -50,7 +49,7 @@ body.dark-mode .mat-card-title {
 /* Dark mode styles for stacked cards */
 body.dark-mode .stacked-card {
   background-color: #2a2a2a; /* Brighter background for stacked cards */
-  color: #ffffff;
+ 
 }
 
 body.dark-mode .stacked-card::before,

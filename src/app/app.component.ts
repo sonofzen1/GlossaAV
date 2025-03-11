@@ -20,7 +20,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 })
 export class AppComponent {
   title = 'Glossa';
-isDarkMode = false;
+  isDarkMode = false;
 
 toggleDarkMode(event: any): void {
   this.isDarkMode = event.checked;
