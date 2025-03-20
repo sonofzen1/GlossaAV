@@ -8,29 +8,31 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { Deck } from './models/deck.model';
 import { Flashcard } from './models/flashcard.model';
 import {MatButtonModule} from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-
+import { FlashcardModalComponent } from './dialog/flashcard-modal/flashcard-modal.component';
+import {MatSelectModule} from '@angular/material/select';
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink, DeckComponent, MatGridListModule, MatCardModule, MatToolbarModule, MatButtonModule, MatDialogModule, MatSlideToggleModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'Glossa';
   isDarkMode = false;
 
-toggleDarkMode(event: any): void {
-  this.isDarkMode = event.checked;
-  if (this.isDarkMode) {
-    document.body.classList.add('dark-mode');
-  } else {
-    document.body.classList.remove('dark-mode');
-  }
-}
+  constructor(public dialog: MatDialog) {}
 
+  toggleDarkMode(event: any): void {
+    this.isDarkMode = event.checked;
+    if (this.isDarkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }
 
   deck1 = new Deck('Deck 1', [
     new Flashcard('Angular', 'A front-end framework'),
@@ -135,6 +137,25 @@ toggleDarkMode(event: any): void {
 
   decks = [this.deck1, this.deck2, this.deck3, this.deck4, this.deck5, this.deck6, this.deck7, this.deck8, this.deck9, this.deck10, this.deck11, this.deck12, this.deck13, this.deck14, this.deck15, this.deck16, this.deck17, this.deck18, this.deck19, this.deck20];
 
- 
+  
+  openMenu(): void {
 
+    console.log('Opening dialog');
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.panelClass = 'my-dialog-styles'; // Apply custom class
+    dialogConfig.width = '90%';
+    dialogConfig.height = '90%';
+    dialogConfig.maxHeight = '900vh';
+    dialogConfig.maxWidth = '900vw';
+    dialogConfig.autoFocus = '.modal-header'; // Focus the modal header element
+    dialogConfig.data = { decks: this.decks }; // Pass the decks list as data
+
+    const dialogRef = this.dialog.open(FlashcardModalComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // Manually restore focus if needed
+      // document.querySelector('.menu-trigger')?.focus();
+    });
+  }
 }

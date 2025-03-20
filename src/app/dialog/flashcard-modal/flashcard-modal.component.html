@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h2>Add Flashcard</h2>
-  <button mat-icon-button>
+  <button mat-icon-button (click)="onClose()">
     <i class="fa-solid fa-circle-xmark"></i>
   </button>
 </div>
@@ -13,7 +13,14 @@
     <mat-label>Definition</mat-label>
     <input matInput placeholder="Enter definition">
   </mat-form-field>
+ 
 </div>
-<div class="modal-footer">
-  <button mat-flat-button color="primary" >Submit</button>
-</div>
+<mat-form-field appearance="fill">
+  <mat-label>Deck</mat-label>
+  <mat-select [(value)]="selectedDeck">
+    <mat-option *ngFor="let deck of data.decks" [value]="deck">
+      {{ deck.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
