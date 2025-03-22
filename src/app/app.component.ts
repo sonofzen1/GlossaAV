@@ -15,7 +15,7 @@ import {MatSelectModule} from '@angular/material/select';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, DeckComponent, MatGridListModule, MatCardModule, MatToolbarModule, MatButtonModule, MatDialogModule, MatSlideToggleModule],
+  imports: [RouterOutlet, RouterLink, DeckComponent, MatGridListModule, MatCardModule, MatToolbarModule, MatButtonModule, MatDialogModule, MatSlideToggleModule, MatSelectModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -143,8 +143,8 @@ export class AppComponent {
     console.log('Opening dialog');
     const dialogConfig = new MatDialogConfig();
     dialogConfig.panelClass = 'my-dialog-styles'; // Apply custom class
-    dialogConfig.width = '90%';
-    dialogConfig.height = '90%';
+    dialogConfig.width = '40%';
+    dialogConfig.height = '70%';
     dialogConfig.maxHeight = '900vh';
     dialogConfig.maxWidth = '900vw';
     dialogConfig.autoFocus = '.modal-header'; // Focus the modal header element
@@ -153,7 +153,16 @@ export class AppComponent {
     const dialogRef = this.dialog.open(FlashcardModalComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      if (result) {
+        // Find the updated deck in the decks array and update it
+        const updatedDeckIndex = this.decks.findIndex(deck => deck.name === result.name);
+        if (updatedDeckIndex !== -1) {
+          this.decks[updatedDeckIndex] = result;
+        }
+        console.log('The dialog was closed with result:', result);
+      } else {
+        console.log('The dialog was closed without result');
+      }
       // Manually restore focus if needed
       // document.querySelector('.menu-trigger')?.focus();
     });

@@ -1,0 +1,23 @@
+.modal-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #ccc;
+}
+
+.modal-body {
+  padding: 16px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+  border-top: 1px solid #ccc;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}

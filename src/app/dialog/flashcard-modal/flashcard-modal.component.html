@@ -5,22 +5,28 @@
   </button>
 </div>
 <div class="modal-body">
-  <mat-form-field appearance="fill">
-    <mat-label>Term</mat-label>
-    <input matInput placeholder="Enter term">
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Definition</mat-label>
-    <input matInput placeholder="Enter definition">
-  </mat-form-field>
- 
+  <div mat-dialog-content>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Term</mat-label>
+      <input matInput placeholder="Enter term" [(ngModel)]="term">
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Definition</mat-label>
+      <input matInput placeholder="Enter definition" [(ngModel)]="definition">
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Deck</mat-label>
+      <mat-select [(value)]="selectedDeck">
+        <mat-option *ngFor="let deck of data.decks" [value]="deck">
+          {{ deck.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 </div>
-<mat-form-field appearance="fill">
-  <mat-label>Deck</mat-label>
-  <mat-select [(value)]="selectedDeck">
-    <mat-option *ngFor="let deck of data.decks" [value]="deck">
-      {{ deck.name }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+<div class="modal-footer">
+  <button mat-flat-button color="primary" (click)="submit()">Submit</button>
+</div>
+
+
 
