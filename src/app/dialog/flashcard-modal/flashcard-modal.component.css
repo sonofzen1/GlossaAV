@@ -1,0 +1,35 @@
+.modal-header {
+  display: flex;
+  justify-content: space-between; /* Ensure space between title and button */
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #ccc;
+}
+
+.modal-header h2 {
+  margin: 0;
+}
+
+.modal-header button {
+  background-color: blue; /* Blue background */
+  color: white; /* White icon color */
+  font-size: 1.5rem; /* Bigger icon */
+  border-radius: 50%; /* Circular background */
+  padding: 8px; /* Padding around the icon */
+}
+
+.modal-body {
+  padding: 16px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+  border-top: 1px solid #ccc;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
