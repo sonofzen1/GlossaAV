@@ -33,24 +33,28 @@ body.dark-mode .mat-card {
 
 body.dark-mode .mat-toolbar {
   background-color: #333333;
- 
+  color: #ffffff;
 }
 
-
-body.dark-mode.center-title {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  text-align: center;
+body.dark-mode .mat-grid-list {
 }
 
+body.dark-mode #deck-dialog .mat-dialog-container {
+  background-color: #333 !important;
+  color: #fff !important;
+}
+
+/* Override deck name color in dark mode */
+body.dark-mode .mat-card-title {
+  color: #000000; /* Keep deck name black */
+}
 
 /* Dark mode styles for stacked cards */
 body.dark-mode .stacked-card {
   background-color: #2a2a2a; /* Brighter background for stacked cards */
   color: #ffffff;
 }
+
 
 
 body.dark-mode .stacked-card::before,
