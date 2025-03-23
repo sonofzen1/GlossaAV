@@ -5,14 +5,17 @@ import { Inject } from '@angular/core';
 import { Flashcard } from '../../models/flashcard.model';
 import { FlashcardComponent } from '../../flashcard/flashcard.component';
 import { MatCardModule } from '@angular/material/card';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faRectangleXmark } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'deck-dialog',
   templateUrl: './deck-dialog.component.html',
-  imports: [CommonModule, FlashcardComponent],
+  imports: [CommonModule, FlashcardComponent, FontAwesomeModule, MatCardModule],
   styleUrls: ['./deck-dialog.component.css']
 }) 
 export class DeckDialogComponent {
+  faRectangleXmark = faRectangleXmark;
   constructor(
     public dialogRef: MatDialogRef<DeckDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { cards: Flashcard[] }

@@ -12,10 +12,12 @@ import { MatDialogModule, MatDialog, MatDialogConfig } from '@angular/material/d
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { FlashcardModalComponent } from './dialog/flashcard-modal/flashcard-modal.component';
 import {MatSelectModule} from '@angular/material/select';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, DeckComponent, MatGridListModule, MatCardModule, MatToolbarModule, MatButtonModule, MatDialogModule, MatSlideToggleModule, MatSelectModule],
+  imports: [RouterOutlet, RouterLink, DeckComponent, MatGridListModule, MatCardModule, MatToolbarModule, MatButtonModule, MatDialogModule, MatSlideToggleModule, MatSelectModule, FontAwesomeModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
