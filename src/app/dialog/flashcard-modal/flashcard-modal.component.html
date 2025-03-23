@@ -1,8 +1,6 @@
 <div class="modal-header">
   <h2>Add Flashcard</h2>
-  <button mat-icon-button class="close-button" (click)="onClose()">
-    <i class="fa-solid fa-circle-xmark"></i>
-  </button>
+  <fa-icon [icon]="faRectangleXmark" (click)="onClose()" class="close-icon"></fa-icon>
 </div>
 <div class="modal-body">
   <div mat-dialog-content>

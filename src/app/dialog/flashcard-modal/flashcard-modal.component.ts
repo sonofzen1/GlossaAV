@@ -6,14 +6,17 @@ import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Flashcard } from '../../models/flashcard.model'; // Import the Flashcard model
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faRectangleXmark } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-flashcard-modal',
-  imports: [MatButtonModule, MatInputModule, MatSelectModule, CommonModule, FormsModule, ],
+  imports: [MatButtonModule, MatInputModule, MatSelectModule, CommonModule, FormsModule, FontAwesomeModule],
   templateUrl: './flashcard-modal.component.html',
   styleUrl: './flashcard-modal.component.css'
 })
 export class FlashcardModalComponent {
+  faRectangleXmark = faRectangleXmark;
   term: string = '';
   definition: string = '';
   selectedDeck: any;
