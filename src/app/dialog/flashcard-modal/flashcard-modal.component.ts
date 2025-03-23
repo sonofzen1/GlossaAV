@@ -9,7 +9,7 @@ import { Flashcard } from '../../models/flashcard.model'; // Import the Flashcar
 
 @Component({
   selector: 'app-flashcard-modal',
-  imports: [MatButtonModule, MatInputModule, MatSelectModule, CommonModule, FormsModule],
+  imports: [MatButtonModule, MatInputModule, MatSelectModule, CommonModule, FormsModule, ],
   templateUrl: './flashcard-modal.component.html',
   styleUrl: './flashcard-modal.component.css'
 })

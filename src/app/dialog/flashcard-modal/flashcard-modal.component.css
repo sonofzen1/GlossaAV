@@ -1,9 +1,14 @@
 .modal-header {
   display: flex;
-  justify-content: space-between; /* Ensure space between title and button */
-  align-items: center;
+  justify-content: center; /* Ensure space between title and button */
   padding: 16px;
   border-bottom: 1px solid #ccc;
+}
+
+.close-button {
+  position: absolute; /* Position the button */
+  right: 16px; /* Align the button to the right */
+  top: 16px; /* Align the button to the top */
 }
 
 .modal-header h2 {
