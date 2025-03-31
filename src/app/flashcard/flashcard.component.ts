@@ -21,5 +21,3 @@ export class FlashcardComponent {
   }
 
 }
-
-// pr linking to be deleted 
