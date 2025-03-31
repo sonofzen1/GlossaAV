@@ -1,0 +1,13 @@
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-icon {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: red;
+  font-size: 1.3rem;
+}
