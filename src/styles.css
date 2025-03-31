@@ -33,6 +33,10 @@ body.dark-mode {
   /* Darker background for the page */
 
 }
+body.dark-mode .card-deck {
+  background-color: #1d1d1d;
+  /* Darker background for buttons */
+}
 
 body.dark-mode .mat-card {
   background-color: #2a2a2a;

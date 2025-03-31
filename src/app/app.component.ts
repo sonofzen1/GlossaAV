@@ -10,14 +10,17 @@ import { Flashcard } from './models/flashcard.model';
 import {MatButtonModule} from '@angular/material/button';
 import { MatDialogModule, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import { FlashcardModalComponent } from './dialog/flashcard-modal/flashcard-modal.component';
 import {MatSelectModule} from '@angular/material/select';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { DeckDialogComponent } from './deck/deck-dialog/deck-dialog.component';
+import { FlashcardModalComponent } from './dialog/flashcard-modal/flashcard-modal.component';
+import { DeckMenuModalComponent } from './dialog/deck-menu-modal/deck-menu-modal.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, DeckComponent, MatGridListModule, MatCardModule, MatToolbarModule, MatButtonModule, MatDialogModule, MatSlideToggleModule, MatSelectModule, FontAwesomeModule],
+  imports: [RouterOutlet, RouterLink, DeckComponent, MatGridListModule, MatCardModule, MatToolbarModule, MatButtonModule, MatDialogModule, MatSlideToggleModule, MatSelectModule, FontAwesomeModule, CommonModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -166,6 +169,29 @@ export class AppComponent {
         console.log('The dialog was closed without result');
       }
       // Manually restore focus if needed
+      // document.querySelector('.menu-trigger')?.focus();
+    });
+  }
+
+    openDeckMenu(): void {
+
+    console.log('Opening deck menu dialog');
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.panelClass = 'my-dialog-styles'; // Apply custom class
+    dialogConfig.width = '40%';
+    dialogConfig.height = '70%';
+    dialogConfig.maxHeight = '900vh';
+    dialogConfig.maxWidth = '900vw';
+    dialogConfig.autoFocus = '.modal-header'; // Focus the modal header element
+    dialogConfig.data = { decks: this.decks }; // Pass the decks list as data
+
+    const dialogRef = this.dialog.open(DeckMenuModalComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.decks = result;// Add the new deck to the decks array
+      }
+        // Manually restore focus if needed
       // document.querySelector('.menu-trigger')?.focus();
     });
   }
