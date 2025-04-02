@@ -24,4 +24,11 @@ export class DeckDialogComponent {
   onClose(): void {
     this.dialogRef.close();
   }
+
+  deleteFlashcard(card: Flashcard): void {
+    const index = this.data.cards.indexOf(card);
+    if (index > -1) {
+      this.data.cards.splice(index, 1);
+    }
+  }
 }

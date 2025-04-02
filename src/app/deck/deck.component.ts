@@ -9,10 +9,12 @@ import { DeckDialogComponent } from './deck-dialog/deck-dialog.component';
 import { FlashcardComponent } from "../flashcard/flashcard.component";
 import { Flashcard } from '../models/flashcard.model';
 import { Deck } from '../models/deck.model';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'card-deck',
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatDialogModule, FlashcardComponent],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatDialogModule, FlashcardComponent, MatMenuModule, MatIconModule],
   templateUrl: './deck.component.html',
   styleUrl: './deck.component.css'
 })
