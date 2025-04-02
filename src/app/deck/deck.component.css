@@ -1,9 +1,18 @@
 .center-title {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  text-align: center;
+}
+
+.menu-button{
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
 }
 
 .stacked-card {
