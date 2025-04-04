@@ -12,13 +12,17 @@
 <body>
   <mat-tab-group mat-align-tabs="center">
     <mat-tab label="Dashboard">
-      <mat-grid-list cols="5" rowHeight="220px" gutterSize="1px">
+      <mat-grid-list [cols]="getDynamicCols()" rowHeight="220px" gutterSize="1px">
         <mat-grid-tile *ngFor="let deck of decks">
           <card-deck class="large-card-deck" [deck]="deck" (delete)="deleteDeck($event)"></card-deck>
         </mat-grid-tile>
       </mat-grid-list>
     </mat-tab>
-    <mat-tab label="Library">Content 2</mat-tab>
+    <mat-tab label="Library">
+      <mat-grid-list cols="5" rowHeight="460px" gutterSize="1px">
+        <app-song [song]="song1"></app-song>
+      </mat-grid-list>
+    </mat-tab>
   </mat-tab-group>
 
  
