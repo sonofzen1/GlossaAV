@@ -12,7 +12,7 @@
 <body>
   <mat-grid-list cols="5" rowHeight="220px" gutterSize="1px">
     <mat-grid-tile *ngFor="let deck of decks">
-      <card-deck class="large-card-deck" [deck]="deck"></card-deck>
+      <card-deck class="large-card-deck" [deck]="deck" (delete)="deleteDeck($event)"></card-deck>
     </mat-grid-tile>
   </mat-grid-list>
 </body>

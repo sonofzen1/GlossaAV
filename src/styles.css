@@ -113,6 +113,32 @@ body.dark-mode .stacked-card::after {
   /* Add border-radius for smooth edges */
 }
 
+.custom-rename-menu .mat-menu-panel {
+  position: absolute !important; /* Override default positioning */
+  top: -50px !important; /* Adjust the top position to align with the title */
+  left: 0 !important; /* Adjust the left position as needed */
+  transform: none !important; /* Disable default transform */
+  z-index: 1000; /* Ensure it appears above other elements */
+}
+
+/* Optional: Add a transition for smooth appearance */
+.custom-rename-menu .mat-menu-panel {
+  transition: all 0.3s ease-in-out;
+}
+
+.rename-menu-overlay .mat-menu-panel {
+  position: absolute !important; /* Override default positioning */
+  top: 50% !important; /* Adjust to align with the title */
+  left: 50% !important; /* Center horizontally */
+  transform: translate(-50%, -50%) !important; /* Center the menu */
+  z-index: 1000; /* Ensure it appears above other elements */
+}
+
+/* Optional: Add a transition for smooth appearance */
+.rename-menu-overlay .mat-menu-panel {
+  transition: all 0.3s ease-in-out;
+}
+
 @media (max-width: 768px) {
   .stacked-card {
     margin: 10px;
@@ -132,3 +158,4 @@ body.dark-mode .stacked-card::after {
   /*errmm what the sigma */
 
 }
+

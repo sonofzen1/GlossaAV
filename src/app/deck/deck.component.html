@@ -1,17 +1,24 @@
 <mat-card class="stacked-card">
   <mat-card-header class="center-title">
-    <mat-card-title align="center">
+    <mat-card-title *ngIf="!isRenaming" align="center">
       <h2 align="center">{{deck.name}}</h2>
     </mat-card-title>
+    <form *ngIf="isRenaming" class="rename-form" (click)="$event.stopPropagation();" (submit)="onRenameKeydown($event)">
+      <mat-form-field>
+        <mat-label>Press Enter to save</mat-label>
+        <input matInput placeholder="Deck" [(ngModel)]="deck.name" name="name">
+      </mat-form-field>
+    </form>
+    <div *ngIf="isRenaming" class="backdrop" (click)="cancelRename()"></div>
     <button mat-icon-button class="menu-button" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
+      <button mat-menu-item (click)="deleteDeck()">
         <span>Delete</span>
         <mat-icon>clear</mat-icon>
       </button>
-      <button mat-menu-item>
+      <button mat-menu-item (click)="renameDeck()">
         <span>Rename</span>
         <mat-icon>create</mat-icon>
       </button>
