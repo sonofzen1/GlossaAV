@@ -17,10 +17,11 @@ import { DeckDialogComponent } from './deck/deck-dialog/deck-dialog.component';
 import { FlashcardModalComponent } from './dialog/flashcard-modal/flashcard-modal.component';
 import { DeckMenuModalComponent } from './dialog/deck-menu-modal/deck-menu-modal.component';
 import { CommonModule } from '@angular/common';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, DeckComponent, MatGridListModule, MatCardModule, MatToolbarModule, MatButtonModule, MatDialogModule, MatSlideToggleModule, MatSelectModule, FontAwesomeModule, CommonModule],
+  imports: [RouterOutlet, RouterLink, DeckComponent, MatGridListModule, MatCardModule, MatToolbarModule, MatButtonModule, MatDialogModule, MatSlideToggleModule, MatSelectModule, FontAwesomeModule, CommonModule, MatTabsModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
