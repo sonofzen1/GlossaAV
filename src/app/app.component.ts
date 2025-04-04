@@ -17,10 +17,13 @@ import { DeckDialogComponent } from './deck/deck-dialog/deck-dialog.component';
 import { FlashcardModalComponent } from './dialog/flashcard-modal/flashcard-modal.component';
 import { DeckMenuModalComponent } from './dialog/deck-menu-modal/deck-menu-modal.component';
 import { CommonModule } from '@angular/common';
+import { MatTabsModule } from '@angular/material/tabs';
+import { SongComponent } from './song/song.component';
+import { Song } from './models/song.model';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, DeckComponent, MatGridListModule, MatCardModule, MatToolbarModule, MatButtonModule, MatDialogModule, MatSlideToggleModule, MatSelectModule, FontAwesomeModule, CommonModule],
+  imports: [RouterOutlet, RouterLink, DeckComponent, MatGridListModule, MatCardModule, MatToolbarModule, MatButtonModule, MatDialogModule, MatSlideToggleModule, MatSelectModule, FontAwesomeModule, CommonModule, MatTabsModule, SongComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -37,6 +40,11 @@ export class AppComponent {
     } else {
       document.body.classList.remove('dark-mode');
     }
+  }
+
+  getDynamicCols(): number {
+    const screenWidth = window.innerWidth;
+    return Math.max(1, Math.floor(screenWidth / 380)); // Ensure at least 1 column
   }
 
   deck1 = new Deck('Deck 1', [
@@ -139,9 +147,10 @@ export class AppComponent {
     new Flashcard('Marionette', 'A composite application library for Backbone.js')
   ]);
 
+  song1 = new Song('Song 1', 'Artist 1', 'sjakdjaskj','hjashdjhasdaj');
 
   decks = [this.deck1, this.deck2, this.deck3, this.deck4, this.deck5, this.deck6, this.deck7, this.deck8, this.deck9, this.deck10, this.deck11, this.deck12, this.deck13, this.deck14, this.deck15, this.deck16, this.deck17, this.deck18, this.deck19, this.deck20];
-
+  songs = [this.song1];
   
   openMenu(): void {
 
