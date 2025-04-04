@@ -56,6 +56,19 @@
   border-radius: 10px; /* Add border-radius for smooth edges */
 }
 
+.backdrop{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+}
+
+.rename-form{
+  z-index: 1000;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .stacked-card {

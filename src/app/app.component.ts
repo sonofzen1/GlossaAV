@@ -195,4 +195,12 @@ export class AppComponent {
       // document.querySelector('.menu-trigger')?.focus();
     });
   }
+
+  deleteDeck(deckToDelete: Deck): void {
+    const index = this.decks.indexOf(deckToDelete);
+    if (index !== -1) {
+      this.decks.splice(index, 1); // Remove the deck from the array
+      console.log('Deck deleted:', deckToDelete.name);
+    }
+  }
 }
