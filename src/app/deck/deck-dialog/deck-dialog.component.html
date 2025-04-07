@@ -6,10 +6,9 @@
   <div mat-dialog-content>
     <div *ngFor="let card of data.cards">
       <app-flashcard 
-        [card]="card"
+        [card]="card" 
         (deleteFlashcard)="deleteFlashcard($event)">
       </app-flashcard>
-      
     </div>
   </div>
 </div>
