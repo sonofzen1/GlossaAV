@@ -62,7 +62,7 @@ export class SongModalComponent {
   @HostListener('document:mouseup', ['$event'])
   onMouseUp(event: MouseEvent): void {
     const selection = window.getSelection()?.toString() || '';
-    this.buttonX = event.clientX - 50;
+    this.buttonX = event.clientX + 50;
     this.buttonY = event.clientY - 30;
     this.showAddButton = selection.trim().length > 0; // Show button if text is selected
   }

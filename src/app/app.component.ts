@@ -20,10 +20,13 @@ import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { SongComponent } from './song/song.component';
 import { Song } from './models/song.model';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
+import { AddSongModalComponent } from './dialog/add-song-modal/add-song-modal.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, DeckComponent, MatGridListModule, MatCardModule, MatToolbarModule, MatButtonModule, MatDialogModule, MatSlideToggleModule, MatSelectModule, FontAwesomeModule, CommonModule, MatTabsModule, SongComponent],
+  imports: [RouterOutlet, RouterLink, DeckComponent, MatGridListModule, MatCardModule, MatToolbarModule, MatButtonModule, MatDialogModule, MatSlideToggleModule, MatSelectModule, FontAwesomeModule, CommonModule, MatTabsModule, SongComponent, MatIcon, MatTooltip, MatTooltipModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -374,8 +377,7 @@ export class AppComponent {
     });
   }
 
-    openDeckMenu(): void {
-
+  openDeckMenu(): void {
     console.log('Opening deck menu dialog');
     const dialogConfig = new MatDialogConfig();
     dialogConfig.panelClass = 'my-dialog-styles'; // Apply custom class
@@ -403,5 +405,24 @@ export class AppComponent {
       this.decks.splice(index, 1); // Remove the deck from the array
       console.log('Deck deleted:', deckToDelete.name);
     }
+  }
+
+  openSongMenu(): void {
+    console.log('Opening deck menu dialog');
+      let dialogRef = this.dialog.open(AddSongModalComponent, {
+      height: '200px',
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.songs.push(result); // Add the new song to the songs array
+        console.log('The dialog was closed with result:', result);
+      } else {
+        console.log('The dialog was closed without result');
+      }
+      // Manually restore focus if needed
+      // document.querySelector('.menu-trigger')?.focus();
+    });
   }
 }
