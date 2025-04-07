@@ -6,7 +6,7 @@
   <div mat-dialog-content>
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Term</mat-label>
-      <input matInput placeholder="Enter term" [(ngModel)]="term">
+      <input matInput placeholder="Enter Term" [(ngModel)]="term" [value]="data.text || ''">
     </mat-form-field>
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Definition</mat-label>
