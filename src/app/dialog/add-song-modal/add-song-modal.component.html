@@ -2,7 +2,10 @@
 <mat-dialog-content style="display:flex; justify-content:center;">
     <mat-form-field>
         <mat-label>Enter Genius URL Link</mat-label>
-        <input matInput placeholder="Ex. https://genius.com/Luis-fonsi-despacito-lyrics" />
+        <input matInput name="songURL" [(ngModel)]="songURL" #urlInput="ngModel" placeholder="Ex. https://genius.com/Luis-fonsi-despacito-lyrics" required
+        pattern="^https:\/\/genius\.com\/.+$" />
+        <mat-error *ngIf="urlInput.errors?.['required']">URL is required</mat-error>
+        <mat-error *ngIf="urlInput.errors?.['pattern']">Must be a valid Genius URL</mat-error>
     </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions style="display:flex; justify-content:center;">
