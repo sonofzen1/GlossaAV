@@ -1,0 +1,6 @@
+@GlossaAPI_HostAddress = http://localhost:5116
+
+GET {{GlossaAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
