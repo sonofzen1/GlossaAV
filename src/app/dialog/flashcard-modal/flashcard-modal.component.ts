@@ -9,6 +9,7 @@ import { Flashcard } from '../../models/flashcard.model'; // Import the Flashcar
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faRectangleXmark } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslationService } from '../../services/translation.service';
 
 @Component({
   selector: 'app-flashcard-modal',
@@ -25,7 +26,7 @@ export class FlashcardModalComponent {
   constructor(
     public dialogRef: MatDialogRef<FlashcardModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { text?: string; decks: any[] }, // Receive the injected data
-    private http: HttpClient
+    private translationService: TranslationService
   ) {
         if (data.text) {
           this.term = data.text;
@@ -34,36 +35,19 @@ export class FlashcardModalComponent {
 
   }
 
-    async translateTerm(): Promise<void> {
-    if (!this.term) {
-      return;
-    }
-
-    const apiUrl = 'https://translation.googleapis.com/language/translate/v2';
-    const apiKey = 'AIzaSyB0QOTZdGNH7_3WtPoYios1OX_L37tsfC0'; // Replace with your API key
-
-    const requestBody = {
-      q: this.term,
-      target: 'en', // Target language (e.g., English)
-      source: 'es'  // Source language (e.g., Spanish)
-    };
-
-    try {
-      const response: any = await this.http
-        .post(apiUrl, requestBody, { params: { key: apiKey } })
-        .toPromise();
-
-      if (response && response.data && response.data.translations) {
-        this.definition = response.data.translations[0].translatedText;
+    translateTerm(): void {
+    this.translationService.translateText(this.term, 'es', 'en').subscribe({
+      next: (translatedText) => {
+        this.definition = translatedText;
         console.log('Translated Text:', this.definition);
-      } else {
-        console.error('Unexpected response format:', response);
+      },
+      error: (error) => {
+        console.error('Error during translation:', error);
+        this.definition = 'Translation failed';
       }
-    } catch (error) {
-      console.error('Error during translation:', error);
-    }
+    });
   }
-
+  
   onClose(): void {
     console.log('Button pressed, closing dialog'); // Debug statement
     this.dialogRef.close();
