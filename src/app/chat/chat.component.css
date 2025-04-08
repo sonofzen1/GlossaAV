@@ -1,0 +1,17 @@
+.chat-box {
+    position: fixed; /* Fix the position so it doesn't move on scroll */
+    bottom: 20px; /* Adjust the distance from the bottom of the viewport */
+    right: 20px; /* Adjust the distance from the right of the viewport */
+    width: 300px; /* Set the width of the chat box */
+    height: 400px; /* Set the height of the chat box */
+    border-radius: 10px; /* Rounded corners */
+    background-color: white; /* White background */
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* Shadow below */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    z-index: 1000; /* Ensure it stays above other elements */
+    transition: box-shadow 0.3s ease; /* Smooth transition for hover effect */
+  }
+  

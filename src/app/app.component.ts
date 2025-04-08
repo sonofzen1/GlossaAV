@@ -425,4 +425,27 @@ export class AppComponent {
       // document.querySelector('.menu-trigger')?.focus();
     });
   }
+
+  openChat(): void {
+    console.log('Opening chat dialog');
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.panelClass = 'my-dialog-styles'; // Apply custom class
+    dialogConfig.width = '40%';
+    dialogConfig.height = '70%';
+    dialogConfig.maxHeight = '900vh';
+    dialogConfig.maxWidth = '900vw';
+    dialogConfig.autoFocus = '.modal-header'; // Focus the modal header element
+
+    const dialogRef = this.dialog.open(DeckMenuModalComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('The dialog was closed with result:', result);
+      } else {
+        console.log('The dialog was closed without result');
+      }
+      // Manually restore focus if needed
+      // document.querySelector('.menu-trigger')?.focus();
+    });
+  }
 }

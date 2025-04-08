@@ -60,4 +60,23 @@
   transition: box-shadow 0.3s ease; /* Smooth transition for hover effect */
 }
 
+.chat-button {
+  position: fixed;
+  border-radius: 50%;
+  width: 80px; /* Adjust size as needed */
+  height: 80px; /* Adjust size as needed */
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  background-color: #ffffff; /* Primary color for the button */
+  color: #3f51b5; 
+}
 
+.chat-button:hover {
+  background-color: #303f9f; /* Darker shade on hover */
+}
+
+.chat-icon {
+  font-size: 25px; /* Adjust icon size */
+  color: #3f51b5; /* Primary color for the icon */
+}
