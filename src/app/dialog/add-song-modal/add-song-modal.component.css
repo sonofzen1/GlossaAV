@@ -1,0 +1,26 @@
+/* Center and stretch the mat-input label */
+.mat-form-field {
+    width: 100%;
+    /* Stretch the input field to full width */
+    text-align: center;
+    /* Center-align the label */
+}
+
+mat-label {
+    width: 100%;
+    max-width: 400px;
+    /* Stretch the label */
+    text-align: center;
+    /* Center-align the label text */
+}
+
+/* Remove the scroll bar */
+body {
+    overflow: hidden;
+    /* Prevent scrolling */
+}
+
+html {
+    overflow: hidden;
+    /* Prevent scrolling */
+}

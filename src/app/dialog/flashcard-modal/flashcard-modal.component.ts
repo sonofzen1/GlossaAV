@@ -8,10 +8,12 @@ import { FormsModule } from '@angular/forms';
 import { Flashcard } from '../../models/flashcard.model'; // Import the Flashcard model
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faRectangleXmark } from '@fortawesome/free-solid-svg-icons';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslationService } from '../../services/translation.service';
 
 @Component({
   selector: 'app-flashcard-modal',
-  imports: [MatButtonModule, MatInputModule, MatSelectModule, CommonModule, FormsModule, FontAwesomeModule],
+  imports: [MatButtonModule, MatInputModule, MatSelectModule, CommonModule, FormsModule, FontAwesomeModule, HttpClientModule],
   templateUrl: './flashcard-modal.component.html',
   styleUrl: './flashcard-modal.component.css'
 })
@@ -23,9 +25,29 @@ export class FlashcardModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<FlashcardModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { decks: any[] } // Receive the injected data
-  ) {}
+    @Inject(MAT_DIALOG_DATA) public data: { text?: string; decks: any[] }, // Receive the injected data
+    private translationService: TranslationService
+  ) {
+        if (data.text) {
+          this.term = data.text;
+          this.translateTerm(); // Call the translation function if text is provided
+        }
 
+  }
+
+    translateTerm(): void {
+    this.translationService.translateText(this.term, 'es', 'en').subscribe({
+      next: (translatedText) => {
+        this.definition = translatedText;
+        console.log('Translated Text:', this.definition);
+      },
+      error: (error) => {
+        console.error('Error during translation:', error);
+        this.definition = 'Translation failed';
+      }
+    });
+  }
+  
   onClose(): void {
     console.log('Button pressed, closing dialog'); // Debug statement
     this.dialogRef.close();
