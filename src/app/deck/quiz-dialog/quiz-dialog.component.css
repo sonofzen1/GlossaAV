@@ -1,0 +1,60 @@
+app-quizcard {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.correct-icon {
+  color: green;
+  margin-left: 5px;
+}
+
+.incorrect-icon {
+  color: red;
+  margin-right: 5px;
+}
+
+.mat-dialog-content {
+  max-height: 300px;
+  overflow: auto;
+}
+
+.mat-dialog-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.dialog-title-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog-title-container h1 {
+  word-spacing: 10px;
+}
+
+.top-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.white-background {
+  background-color: white;
+}
+
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 40px; /* Makes the icon bigger */
+  background-color: rgb(255, 255, 255); /* Blue background */
+  color: rgb(255, 0, 0); /* White color for the icon */
+  padding-right: 20px;
+}

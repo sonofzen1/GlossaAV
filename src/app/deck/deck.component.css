@@ -25,10 +25,7 @@
 
 .stacked-card:hover {
   transition: 0.2s ease-in-out;
-  translate: 0px -5px 100px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Smooth shadow on hover */
-  z-index: 1;
-  opacity: 1;
 }
 /*asdasd*/
 
@@ -36,24 +33,30 @@
 .stacked-card::after {
   content: '';
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 5px;
+  left: 5px;
   width: 100%;
   height: 100%;
   background: rgba(255, 255, 255, 0);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.24); /* Lighter shadow */
-  transform: rotate(-5deg); /* More pronounced rotation for a sloppy effect */
+  transform: rotate(0px); /* More pronounced rotation for a sloppy effect */
   z-index: -1;
   border-radius: 10px; /* Add border-radius for smooth edges */
+  transition: 0.2s ease-in-out;
+  transform-origin: 100% 100%;
 }
 
 .stacked-card::after {
-  top: 20px;
-  left: 20px;
-  transform: rotate(5deg); /* More pronounced rotation for a sloppy effect */
-  z-index: -2;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Lighter shadow */
-  border-radius: 10px; /* Add border-radius for smooth edges */
+  top: 10px;
+  left: 10px;
+}
+
+.stacked-card:hover::before {
+  transform: rotate(-2.5deg); /* More pronounced rotation for a sloppy effect */
+}
+
+.stacked-card:hover::after {
+  transform: rotate(-5deg); /* More pronounced rotation for a sloppy effect */
 }
 
 .backdrop{
@@ -85,6 +88,4 @@
     top: 10px;
     left: 10px;
   }
-
-  
 }
