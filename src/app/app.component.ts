@@ -23,10 +23,11 @@ import { Song } from './models/song.model';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
 import { AddSongModalComponent } from './dialog/add-song-modal/add-song-modal.component';
+import { ChatComponent } from './chat/chat.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, DeckComponent, MatGridListModule, MatCardModule, MatToolbarModule, MatButtonModule, MatDialogModule, MatSlideToggleModule, MatSelectModule, FontAwesomeModule, CommonModule, MatTabsModule, SongComponent, MatIcon, MatTooltip, MatTooltipModule],
+  imports: [RouterOutlet, RouterLink, DeckComponent, MatGridListModule, MatCardModule, MatToolbarModule, MatButtonModule, MatDialogModule, MatSlideToggleModule, MatSelectModule, FontAwesomeModule, CommonModule, MatTabsModule, SongComponent, MatIcon, MatTooltip, MatTooltipModule, ChatComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -426,26 +427,10 @@ export class AppComponent {
     });
   }
 
+  chatOpened: boolean = false; // Track if the chat is open
+
   openChat(): void {
-    console.log('Opening chat dialog');
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = 'my-dialog-styles'; // Apply custom class
-    dialogConfig.width = '40%';
-    dialogConfig.height = '70%';
-    dialogConfig.maxHeight = '900vh';
-    dialogConfig.maxWidth = '900vw';
-    dialogConfig.autoFocus = '.modal-header'; // Focus the modal header element
-
-    const dialogRef = this.dialog.open(DeckMenuModalComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('The dialog was closed with result:', result);
-      } else {
-        console.log('The dialog was closed without result');
-      }
-      // Manually restore focus if needed
-      // document.querySelector('.menu-trigger')?.focus();
-    });
+    this.chatOpened = !this.chatOpened; // Toggle chat open state
+    
   }
 }

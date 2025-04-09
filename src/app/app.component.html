@@ -17,9 +17,10 @@
           <card-deck class="large-card-deck" [deck]="deck" (delete)="deleteDeck($event)"></card-deck>
         </mat-grid-tile>
       </mat-grid-list>
-      <button mat-fab class="chat-button" matTooltip="Chat with Sofia!" (click)="openChat()">
+      <button *ngIf="!chatOpened" mat-fab class="chat-button" matTooltip="Chat with Sofia!" (click)="openChat()">
         <mat-icon class="chat-icon">mode_comment</mat-icon>
       </button>
+      <app-chat *ngIf="chatOpened"></app-chat>
 
     </mat-tab>
     <mat-tab label="Library">
