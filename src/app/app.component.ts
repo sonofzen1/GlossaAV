@@ -49,7 +49,9 @@ export class AppComponent {
 
   deck1 = new Deck('Deck 1', [
     new Flashcard('Angular', 'A front-end framework'),
-    new Flashcard('TypeScript', 'A superset of JavaScript')
+    new Flashcard('TypeScript', 'A superset of JavaScript'),
+    new Flashcard('Python', 'A simple programming language'),
+    new Flashcard('CSS', 'Used to style HTML')
   ]);
 
   deck2 = new Deck('Deck 2', [

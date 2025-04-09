@@ -6,6 +6,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DeckDialogComponent } from './deck-dialog/deck-dialog.component';
+import { QuizDialogComponent } from './quiz-dialog/quiz-dialog.component';
 import { FlashcardComponent } from "../flashcard/flashcard.component";
 import { Flashcard } from '../models/flashcard.model';
 import { Deck } from '../models/deck.model';
@@ -28,6 +29,21 @@ export class DeckComponent {
   oldDeckName: string = "";
 
   constructor(public dialog: MatDialog, private router: Router, private elementRef: ElementRef) {}
+
+  openQuiz(): void {
+    const quizRef = this.dialog.open(QuizDialogComponent, {
+      width: '90%',
+      height: '90%',
+      maxHeight: '100vh',
+      maxWidth: '100vw',
+      autoFocus: false,
+      data: { cards: this.deck.flashcards }
+    });
+
+    quizRef.afterClosed().subscribe(result => {
+      console.log('The quiz was closed');
+    });
+  }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DeckDialogComponent, {

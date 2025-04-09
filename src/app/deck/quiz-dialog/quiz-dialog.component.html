@@ -1,0 +1,24 @@
+<div class="dialog-title-container">
+  <h1 mat-dialog-title align="center">Deck Quiz</h1>
+  <fa-icon [icon]="faRectangleXmark" (click)="onClose()" class="close-icon"></fa-icon>
+</div>
+<div>
+  <div mat-dialog-content>
+    <div>
+      <div *ngFor="let card of data.cards.reverse()" style="width: 100%;">
+        <app-quizcard [card]="card">
+        </app-quizcard>
+      </div>
+    </div>
+    <div style="display: flex; margin-top: 310px;">
+      <button mat-menu-item (click)="incorrect()" style="justify-content: center;">
+        <fa-icon [icon]="faXmark" class="incorrect-icon"></fa-icon>
+        <span style="margin-left: 5px;">Still learning</span>
+      </button>
+      <button mat-menu-item (click)="correct()" style="justify-content: center;">
+        <span style="margin-right: 5px;">Got it</span>
+        <fa-icon [icon]="faCheck" class="correct-icon"></fa-icon>
+      </button>
+    </div>
+  </div>
+</div>
