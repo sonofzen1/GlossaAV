@@ -11,3 +11,21 @@
   color: red;
   font-size: 1.3rem;
 }
+
+.term {
+  flex: 1; /* Allow the term to take up available space on the left */
+  max-width: 40%; /* Set a fixed maximum width */
+  word-wrap: break-word; /* Ensure long words break to the next line */
+  white-space: normal; /* Allow text to wrap */
+  text-align: left; /* Align text to the left */
+}
+
+.definition {
+  flex: 1; /* Allow the definition to take up available space on the right */
+  max-width: 50%; /* Set a fixed maximum width */
+  word-wrap: break-word; /* Ensure long words break to the next line */
+  white-space: normal; /* Allow text to wrap */
+  text-align: left; /* Align text to the left */
+  border-left: 1px solid #ccc; /* Add a faint gray line to the left */
+  padding-left: 10px; /* Add spacing between the line and the text */
+}

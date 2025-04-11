@@ -1,23 +1,25 @@
-<mat-card class="example-card" appearance="outlined">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Shiba Inu</mat-card-title>
-      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-    <mat-card-content>
-      <p>
-        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-        bred for hunting.
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-        <form class="example-form">
-            <mat-form-field class="example-full-width">
-              <mat-label>Leave a comment</mat-label>
-              <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
-            </mat-form-field>
-          </form>
-    </mat-card-actions>
-  </mat-card>
+<mat-card class="chat-box" [class.enlarged]="isEnlarged" appearance="outlined" style="display: flex; flex-direction: column;">
+  <mat-card-header class="chat-header">
+    <img mat-card-avatar class="chat-avatar" [src]="'Sofia.png'" alt="Test" />
+    <mat-card-title class="chat-title">Sofia</mat-card-title>
+    <mat-icon *ngIf="!isEnlarged" class="chat-enlarge-button" (click)="toggleEnlarge()">open_in_full</mat-icon>
+    <mat-icon *ngIf="isEnlarged" class="chat-enlarge-button" (click)="toggleEnlarge()">remove</mat-icon>
+    <mat-icon class="chat-close-button" (click)="onClose()">close</mat-icon>
+  </mat-card-header>
+  <mat-card-content class="chat-container" [class.enlarged]="isEnlarged" style="flex: 1; overflow-y: auto; padding: 10px; box-sizing: border-box;">
+    <!-- Messages go here -->
+    <div
+      matTooltip="Try highlighting the message!"
+      *ngFor="let msg of messages"
+      [class.user]="msg.isUser"
+      [class.bot]="!msg.isUser"
+      (mouseup)="!msg.isUser && onBotMessageMouseUp($event, msg.text)"
+    >
+      {{ msg.text }}
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="input-area">
+    <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" placeholder="Type your message here..." class="chat-input" />
+    <button (click)="sendMessage()" class="send-button">Send</button>
+  </mat-card-actions>
+</mat-card>

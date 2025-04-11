@@ -1,17 +1,187 @@
 .chat-box {
-    position: fixed; /* Fix the position so it doesn't move on scroll */
-    bottom: 20px; /* Adjust the distance from the bottom of the viewport */
-    right: 20px; /* Adjust the distance from the right of the viewport */
-    width: 300px; /* Set the width of the chat box */
-    height: 400px; /* Set the height of the chat box */
-    border-radius: 10px; /* Rounded corners */
-    background-color: white; /* White background */
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* Shadow below */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 10px;
-    z-index: 1000; /* Ensure it stays above other elements */
-    transition: box-shadow 0.3s ease; /* Smooth transition for hover effect */
-  }
+  position: fixed; /* Fix the position so it doesn't move on scroll */
+  bottom: 20px; /* Adjust the distance from the bottom of the viewport */
+  right: 20px; /* Adjust the distance from the right of the viewport */
+  width: 300px; /* Set the width of the chat box */
+  height: 400px; /* Set the height of the chat box */
+  border-radius: 10px; /* Rounded corners */
+  background-color: white; /* White background */
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* Shadow below */
+  display: flex;
+  flex-direction: column; /* Ensure children stack vertically */
+  justify-content: space-between;
+  padding: 10px;
+  z-index: 1000; /* Ensure it stays above other elements */
+  transition: all 0.3s ease; /* Smooth transition for resizing and repositioning */
+}
+
+.chat-box.enlarged {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%; /* Adjust width for enlarged state */
+  height: 80%; /* Adjust height for enlarged state */
+  border-radius: 20px; /* Slightly larger border radius for enlarged state */
+}
+
+.chat-avatar {
+  width: 50px; /* Adjust size as needed */
+  height: 50px; /* Adjust size as needed */
+  border-radius: 50%; /* Circular avatar */
+  margin-bottom: 4%;
+}
+
+.chat-close-button {
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  cursor: pointer;
+  font-size: 15px; /* Adjust size as needed */
+}
+
+.chat-enlarge-button {
+  position: absolute;
+  top: 10px;
+  /* Adjust as needed */
+  right: 35px;
+  /* Adjust as needed */
+  cursor: pointer;
+  font-size: 15px;
+  /* Adjust size as needed */
+}
+
+.chat-header {
+  padding: 8px 16px;
+  /* Reduce padding from default ~24px */
+  min-height: 0;
+  /* Override Material's default min-height */
+  display: flex;
+  align-items: center;
+  /* Vertically center title and button */
+  height: 40px;
+  /* Space title and button apart */
+  background-color: #ffffff;
+  /* Light gray for contrast */
+}
+
+.chat-box.enlarged .chat-header {
+  height: 60px; /* Adjust height for enlarged state */
+}
+
+.chat-box.enlarged .chat-avatar{
+  width: 60px; /* Adjust size for enlarged state */
+  height: 60px;
+  margin-bottom: 0%;
+}
   
+.chat-container {
+  flex: 1; /* Allow the chat-container to take up remaining space */
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 10px; /* Add padding for better spacing */
+  box-sizing: border-box; /* Ensure padding doesn't affect the height */
+  border-top: 1px solid #ccc; /* Optional: Add a border for separation */
+  border-bottom: 1px solid #ccc; /* Optional: Add a border for separation */
+}
+
+.chat-box.enlarged .chat-container {
+  flex: 1; /* Ensure it still takes up remaining space in enlarged mode */
+  padding: 20px; /* Adjust padding for enlarged state */
+  border: none; /* Remove borders for a cleaner look */
+}
+
+.messages {
+  flex: 1;
+  /* Takes up remaining space */
+  overflow-y: auto;
+  /* Scrollable messages */
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.user {
+  text-align: right;
+  color: #007bff;
+  /* Blue for user messages */
+  margin: 5px 0;
+  padding: 8px;
+  background-color: #e7f1ff;
+  border-radius: 5px;
+  max-width: 200px;
+  word-wrap: break-word; /* Ensure long words break to the next line */
+  white-space: normal; /* Allow text to wrap */
+  margin-left: auto;
+}
+
+.chat-box.enlarged .user {
+  max-width: 50%; /* Allow more space in enlarged mode */
+  width: fit-content; /* Dynamically adjust width to the content */
+  word-wrap: break-word; /* Ensure long words break to the next line */
+  white-space: normal; /* Allow text to wrap */
+  margin-left: auto; /* Keep alignment to the right */
+}
+
+.bot {
+  text-align: left;
+  color: #d400ff;
+  /* Green for bot messages */
+  margin: 5px 0;
+  padding: 8px;
+  background-color: #fee9ff;
+  border-radius: 5px;
+  max-width: 200px;
+  word-wrap: break-word; /* Ensure long words break to the next line */
+  white-space: normal; /* Allow text to wrap */
+  margin-right: auto;
+}
+
+.chat-box.enlarged .bot {
+  max-width: 50%; /* Allow more space in enlarged mode */
+  width: fit-content; /* Dynamically adjust width to the content */
+  word-wrap: break-word; /* Ensure long words break to the next line */
+  white-space: normal; /* Allow text to wrap */
+  margin-right: auto; /* Keep alignment to the left */
+}
+
+.input-area {
+  display: flex;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.chat-input {
+  flex: 1;
+  /* Takes up available space */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  /* Rounded left corners */
+  outline: none;
+  font-size: 14px;
+}
+
+.chat-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.send-button {
+  padding: 8px 16px;
+  border: 1px solid #007bff;
+  border-left: none;
+  /* Seamless with input */
+  border-radius: 0 4px 4px 0;
+  /* Rounded right corners */
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.send-button:hover {
+  background-color: #0056b3;
+}
+
+.send-button:active {
+  background-color: #004085;
+}
