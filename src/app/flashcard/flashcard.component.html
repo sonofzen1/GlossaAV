@@ -1,8 +1,8 @@
 <div style="display:flexbox; padding: 10px;">
     <mat-card appearance="outlined">
         <mat-card-content class="card-content">
-            <p>{{card.term}}</p>
-            <p>{{card.definition}}</p>
+            <p class="term">{{card.term}}</p>
+            <p class="definition">{{card.definition}}</p>
             <fa-icon [icon]="faTrash" (click)="delete()" class="delete-icon"></fa-icon>
         </mat-card-content>
     </mat-card>
