@@ -36,3 +36,9 @@ C:\Users\ld-j_\source\repos\GlossaAV\GlossaAPI\obj\Debug\net9.0\refint\GlossaAPI
 C:\Users\ld-j_\source\repos\GlossaAV\GlossaAPI\obj\Debug\net9.0\GlossaAPI.pdb
 C:\Users\ld-j_\source\repos\GlossaAV\GlossaAPI\obj\Debug\net9.0\GlossaAPI.genruntimeconfig.cache
 C:\Users\ld-j_\source\repos\GlossaAV\GlossaAPI\obj\Debug\net9.0\ref\GlossaAPI.dll
+C:\Users\ld-j_\source\repos\GlossaAV\GlossaAPI\bin\Debug\net9.0\DnsClient.dll
+C:\Users\ld-j_\source\repos\GlossaAV\GlossaAPI\bin\Debug\net9.0\MongoDB.Bson.dll
+C:\Users\ld-j_\source\repos\GlossaAV\GlossaAPI\bin\Debug\net9.0\MongoDB.Driver.dll
+C:\Users\ld-j_\source\repos\GlossaAV\GlossaAPI\bin\Debug\net9.0\SharpCompress.dll
+C:\Users\ld-j_\source\repos\GlossaAV\GlossaAPI\bin\Debug\net9.0\Snappier.dll
+C:\Users\ld-j_\source\repos\GlossaAV\GlossaAPI\bin\Debug\net9.0\ZstdSharp.dll

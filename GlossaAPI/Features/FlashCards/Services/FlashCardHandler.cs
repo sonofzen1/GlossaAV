@@ -1,49 +1,42 @@
 using GlossaAPI.Features.FlashCards.Models;
+using GlossaAPI.Mongo;
+using MongoDB.Driver;
 using System.Data.Common;
 
 namespace GlossaAPI.Features.FlashCards.Services
 {
-  public class FlashCardHandler
+  public class FlashCardHandler<T> : IMongoDbService<T>
   {
-    private DbDataSource dataSource;
-    public FlashCardHandler(MongoConnection? connection) { }
-
-    // Gets All Decks for a user
-    public List<Deck> GetDecks()
+    private readonly IMongoCollection<T> _collection;
+    public FlashCardHandler(IMongoClient client, MongoDbSettings settings, string collectionName)
     {
-      return new List<Deck>();
+      var database = client.GetDatabase(settings.DatabaseName);
+      _collection = database.GetCollection<T>(collectionName);
     }
 
-    // Gets all Flashcards for a deck
-    public List<FlashCard> GetFlashCardForDeck(string deckId)
+    public async Task<List<T>> GetAllAsync()
     {
-      return new List<FlashCard>();
+      return await _collection.Find(_ => true).ToListAsync();
     }
 
-    public void AddDeck(Deck deck)
+    public async Task<T?> GetByIdAsync(string id)
     {
-
-    }
-    public void AddFlashCardsToDeck(List<FlashCard> flashCards, string deckId)
-    {
-
+      return await _collection.Find(Builders<T>.Filter.Eq("Id", id)).FirstOrDefaultAsync();
     }
 
-    public void UpdateDeck(Deck deck)
+    public async Task CreateAsync(T item)
     {
-      // retrieve deck from cluster
-
-      // compare data
+      await _collection.InsertOneAsync(item);
     }
 
-    public void DeleteDeck(string deckId)
+    public async Task UpdateAsync(string id, T item)
     {
-
+      await _collection.ReplaceOneAsync(Builders<T>.Filter.Eq("Id", id), item);
     }
 
-    public void ChangeDeckName(string deckId, string title)
+    public async Task DeleteAsync(string id)
     {
-
+      await _collection.DeleteOneAsync(Builders<T>.Filter.Eq("Id", id));
     }
   }
 }

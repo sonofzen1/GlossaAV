@@ -1,0 +1,44 @@
+[
+  {
+    "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
+    "Method": "AddDeck",
+    "RelativePath": "api/FlashCards/AddDeck",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deck",
+        "Type": "GlossaAPI.Features.FlashCards.Models.Deck",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
+    "Method": "GetAllDecks",
+    "RelativePath": "api/FlashCards/GetAllDecks",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
+    "Method": "UpdateDeck",
+    "RelativePath": "api/FlashCards/UpdateDeck",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deck",
+        "Type": "GlossaAPI.Features.FlashCards.Models.Deck",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
