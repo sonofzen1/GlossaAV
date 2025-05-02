@@ -11,6 +11,7 @@
 npm-debug.log
 yarn-error.log
 
+
 # IDEs and editors
 .idea/
 .project
@@ -27,6 +28,7 @@ yarn-error.log
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
+.vs/
 
 # Miscellaneous
 /.angular/cache

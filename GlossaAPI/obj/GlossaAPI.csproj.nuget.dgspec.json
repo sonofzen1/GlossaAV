@@ -1,25 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sonof\\Documents\\AngularProjects\\GlossaAV\\GlossaAPI\\GlossaAPI.csproj": {}
+    "C:\\Users\\ld-j_\\source\\repos\\GlossaAV\\GlossaAPI\\GlossaAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sonof\\Documents\\AngularProjects\\GlossaAV\\GlossaAPI\\GlossaAPI.csproj": {
+    "C:\\Users\\ld-j_\\source\\repos\\GlossaAV\\GlossaAPI\\GlossaAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sonof\\Documents\\AngularProjects\\GlossaAV\\GlossaAPI\\GlossaAPI.csproj",
+        "projectUniqueName": "C:\\Users\\ld-j_\\source\\repos\\GlossaAV\\GlossaAPI\\GlossaAPI.csproj",
         "projectName": "GlossaAPI",
-        "projectPath": "C:\\Users\\sonof\\Documents\\AngularProjects\\GlossaAV\\GlossaAPI\\GlossaAPI.csproj",
-        "packagesPath": "C:\\Users\\sonof\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sonof\\Documents\\AngularProjects\\GlossaAV\\GlossaAPI\\obj\\",
+        "projectPath": "C:\\Users\\ld-j_\\source\\repos\\GlossaAV\\GlossaAPI\\GlossaAPI.csproj",
+        "packagesPath": "C:\\Users\\ld-j_\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ld-j_\\source\\repos\\GlossaAV\\GlossaAPI\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\sonof\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\ld-j_\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -47,6 +53,22 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.4, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[3.4.0, )"
+            },
+            "Swashbuckle.AspNetCore.Swagger": {
+              "target": "Package",
+              "version": "[8.1.1, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerGen": {
+              "target": "Package",
+              "version": "[8.1.1, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerUI": {
+              "target": "Package",
+              "version": "[8.1.1, )"
             }
           },
           "imports": [
