@@ -3,16 +3,17 @@ using GlossaAPI.Features.FlashCards.Models.Requests;
 using GlossaAPI.Features.FlashCards.Services;
 using GlossaAPI.Mongo;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace GlossaAPI.Features.FlashCards.Controllers
 {
   [Route("api/FlashCards")]
   public class FlashCardsController : ControllerBase
   {
-    private readonly IMongoDbService<FlashCard> _flashCardContext;
-    private readonly IMongoDbService<Deck> _deckContext;
+    private readonly FlashCardHandler<FlashCard> _flashCardContext;
+    private readonly FlashCardHandler<Deck> _deckContext;
 
-    public FlashCardsController(IMongoDbService<FlashCard> flashCardContext, IMongoDbService<Deck> deckContext)
+    public FlashCardsController(FlashCardHandler<FlashCard> flashCardContext, FlashCardHandler<Deck> deckContext)
     {
       _flashCardContext = flashCardContext;
       _deckContext = deckContext;
@@ -54,6 +55,20 @@ namespace GlossaAPI.Features.FlashCards.Controllers
       try
       {
         return Ok(_deckContext.UpdateAsync(deck.Id, deck));
+      }
+      catch (Exception ex)
+      {
+        return BadRequest(ex.Message);
+      }
+    }
+
+    [HttpGet]
+    [Route("GetAllFlashCards")]
+    public async Task<IActionResult> GetAllFlashCards()
+    {
+      try
+      {
+        return Ok(await _flashCardContext.GetAllAsync());
       }
       catch (Exception ex)
       {

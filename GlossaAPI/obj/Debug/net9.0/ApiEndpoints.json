@@ -27,6 +27,16 @@
   },
   {
     "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
+    "Method": "GetAllFlashCards",
+    "RelativePath": "api/FlashCards/GetAllFlashCards",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
     "Method": "UpdateDeck",
     "RelativePath": "api/FlashCards/UpdateDeck",
     "HttpMethod": "PUT",

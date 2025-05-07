@@ -1,5 +1,6 @@
 using GlossaAPI.Features.FlashCards.Models;
 using GlossaAPI.Mongo;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Data.Common;
 
