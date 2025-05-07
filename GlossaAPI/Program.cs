@@ -2,6 +2,7 @@ using GlossaAPI.Features.FlashCards.Models;
 using GlossaAPI.Features.FlashCards.Services;
 using GlossaAPI.Mongo;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,6 +48,7 @@ builder.Services.AddScoped(x =>
     "Decks"
     )
 );
+
 
 var app = builder.Build();
 
