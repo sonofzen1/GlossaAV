@@ -22,7 +22,8 @@ namespace GlossaAPI.Features.FlashCards.Services
 
     public async Task<T?> GetByIdAsync(string id)
     {
-      return await _collection.Find(Builders<T>.Filter.Eq("Id", id)).FirstOrDefaultAsync();
+      var objectId = new ObjectId(id);
+      return await _collection.Find(Builders<T>.Filter.Eq("_id", objectId)).FirstOrDefaultAsync();
     }
 
     public async Task CreateAsync(T item)
