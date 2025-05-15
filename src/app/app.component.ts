@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { OnInit, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterOutlet, RouterLink, Routes } from '@angular/router';
 import { DeckComponent } from "./deck/deck.component";
@@ -24,6 +24,8 @@ import { MatIcon } from '@angular/material/icon';
 import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
 import { AddSongModalComponent } from './dialog/add-song-modal/add-song-modal.component';
 import { ChatComponent } from './chat/chat.component';
+import { DeckAPIService } from './services/deck-api.service';
+
 
 @Component({
   selector: 'app-root',
@@ -31,11 +33,14 @@ import { ChatComponent } from './chat/chat.component';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Glossa';
   isDarkMode = false;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private deckService: DeckAPIService
+  ) {}
 
   toggleDarkMode(event: any): void {
     this.isDarkMode = event.checked;
@@ -345,8 +350,25 @@ export class AppComponent {
     ],
     new URL("https://t2.genius.com/unsafe/340x340/https%3A%2F%2Fimages.genius.com%2F6dbadaf716039dad3841a1640755ac3a.1000x1000x1.png"));
 
-  decks = [this.deck1, this.deck2, this.deck3, this.deck4, this.deck5, this.deck6, this.deck7, this.deck8, this.deck9, this.deck10, this.deck11, this.deck12, this.deck13, this.deck14, this.deck15, this.deck16, this.deck17, this.deck18, this.deck19, this.deck20];
+  decks: Deck[] = [this.deck1, this.deck2, this.deck3, this.deck4, this.deck5, this.deck6, this.deck7, this.deck8, this.deck9, this.deck10, this.deck11, this.deck12, this.deck13, this.deck14, this.deck15, this.deck16, this.deck17, this.deck18, this.deck19, this.deck20];
   songs = [this.song1];
+
+   ngOnInit(): void {
+    console.log('Initializing AppComponent');
+    this.deckService.getAllDecks().subscribe({
+      next: (data) => {
+        //this.decks = data;
+        console.log('Decks:', data);
+
+      },
+      error: (err) => {
+        console.error('Failed to fetch decks', err);
+      }
+      
+    });
+  }
+
+  /*huhbulubub*/
   
   openMenu(): void {
 

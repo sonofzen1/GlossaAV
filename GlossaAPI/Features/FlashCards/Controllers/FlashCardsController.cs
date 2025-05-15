@@ -75,5 +75,18 @@ namespace GlossaAPI.Features.FlashCards.Controllers
         return BadRequest(ex.Message);
       }
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(string id)
+    {
+      try
+      {
+        return Ok(await _flashCardContext.GetByIdAsync(id));
+      }
+      catch (Exception ex)
+      {
+        return BadRequest(ex.Message);
+      }
+    }
   }
 }

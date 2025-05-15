@@ -780,23 +780,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ld-j_\\.nuget\\packages\\": {},
+    "C:\\Users\\sonof\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ld-j_\\source\\repos\\GlossaAV\\GlossaAPI\\GlossaAPI.csproj",
+      "projectUniqueName": "C:\\Users\\sonof\\Documents\\AngularProjects\\GlossaAV\\GlossaAPI\\GlossaAPI.csproj",
       "projectName": "GlossaAPI",
-      "projectPath": "C:\\Users\\ld-j_\\source\\repos\\GlossaAV\\GlossaAPI\\GlossaAPI.csproj",
-      "packagesPath": "C:\\Users\\ld-j_\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ld-j_\\source\\repos\\GlossaAV\\GlossaAPI\\obj\\",
+      "projectPath": "C:\\Users\\sonof\\Documents\\AngularProjects\\GlossaAV\\GlossaAPI\\GlossaAPI.csproj",
+      "packagesPath": "C:\\Users\\sonof\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\sonof\\Documents\\AngularProjects\\GlossaAV\\GlossaAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\ld-j_\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\sonof\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
