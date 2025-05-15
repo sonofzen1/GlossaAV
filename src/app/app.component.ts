@@ -367,6 +367,8 @@ export class AppComponent implements OnInit {
       
     });
   }
+
+  /*huhbulubub*/
   
   openMenu(): void {
 

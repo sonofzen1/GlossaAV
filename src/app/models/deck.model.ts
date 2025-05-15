@@ -13,4 +13,4 @@ export class Deck {
   addFlashcard(flashcard: Flashcard): void {
     this.flashcards.push(flashcard);
   }
-}
+} 
