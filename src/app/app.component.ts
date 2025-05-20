@@ -357,8 +357,8 @@ export class AppComponent implements OnInit {
     console.log('Initializing AppComponent');
     this.deckService.getAllDecks().subscribe({
       next: (data) => {
-        //this.decks = data;
-        console.log('Decks:', data);
+        this.decks.push(...data.map((deck: any) => {return new Deck(deck.title, deck.flashcards);}));//Flashcards is an array of strings that map to other flashcards
+        console.log('Decks:', this.decks);
 
       },
       error: (err) => {
