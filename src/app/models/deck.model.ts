@@ -5,12 +5,18 @@ export class Deck {
   flashcards: Flashcard[];
   flashCardIDs: string[] = []; // Array to hold flashcard IDs
 
-  constructor(name: string, flashcards: Flashcard[]) {
+  constructor(name: string, flashcardsOrIDs: Flashcard[] | string[]) {
     this.name = name;
-    this.flashcards = flashcards;
+    if (Array.isArray(flashcardsOrIDs) && flashcardsOrIDs.length > 0 && typeof flashcardsOrIDs[0] !== 'string') {
+      this.flashcards = flashcardsOrIDs as Flashcard[];
+      this.flashCardIDs = [];
+    } else {
+      this.flashcards = [];
+      this.flashCardIDs = flashcardsOrIDs as string[];
+    }
   }
 
   addFlashcard(flashcard: Flashcard): void {
     this.flashcards.push(flashcard);
   }
-} 
+}
