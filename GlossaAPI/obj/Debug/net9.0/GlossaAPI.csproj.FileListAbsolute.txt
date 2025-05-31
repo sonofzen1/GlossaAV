@@ -133,3 +133,4 @@ C:\Users\Owner\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\run
 C:\Users\Owner\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\runtimes\osx\native\libmongocrypt.dylib
 C:\Users\Owner\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\runtimes\win\native\mongocrypt.dll
 C:\Users\Owner\Documents\AngularProjects\GlossaAV\GlossaAPI\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\Users\Owner\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\HtmlAgilityPack.dll
