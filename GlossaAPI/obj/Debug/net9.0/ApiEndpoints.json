@@ -53,6 +53,22 @@
   },
   {
     "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
+    "Method": "ScrapeLyrics",
+    "RelativePath": "api/FlashCards/scrape",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "url",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
     "Method": "UpdateDeck",
     "RelativePath": "api/FlashCards/UpdateDeck",
     "HttpMethod": "PUT",
