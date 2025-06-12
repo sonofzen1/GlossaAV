@@ -15,6 +15,9 @@ import {
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { CommonModule } from '@angular/common';
+import { Song } from '../../models/song.model';
+import {Inject} from '@angular/core';
+import { SongsService } from '../../services/songs.service';
 
 @Component({
   selector: 'app-add-song-modal',
@@ -24,16 +27,37 @@ import { CommonModule } from '@angular/common';
 })
 export class AddSongModalComponent {
   songURL: string = '';
+  errorMessage: string = '';
   constructor(
       public dialogRef: MatDialogRef<AddSongModalComponent>,
+      private songsService: SongsService
     ) {}
 
 
    submit(): void {
     const urlPattern = /^https:\/\/genius\.com\/.+$/; // Regex pattern to match Genius song URLs
     if (this.songURL.trim() && urlPattern.test(this.songURL)) {
-      console.log('Submitted song URL:', this.songURL); // Debug statement
-      this.dialogRef.close(this.songURL); // Pass the song URL back to the parent
+
+      this.songsService.scrapeLyrics(this.songURL).subscribe({
+        next: (response) => {
+            
+            const song: Song = {
+                title: response.title,
+                artist: response.artist,
+                spanishLyrics: response.spanishLyrics,
+                englishLyrics: response.englishLyrics,
+                image: response.image,
+            };
+
+            console.log(response);
+            this.dialogRef.close(song);
+        },
+        error: (err) => {
+            this.errorMessage = 'Failed to fetch song data. Please check the URL or try again.';
+            console.error('Error fetching song:', err);
+        }
+    });
+
     } else {
       console.log('No URL provided'); // Debug statement
     }

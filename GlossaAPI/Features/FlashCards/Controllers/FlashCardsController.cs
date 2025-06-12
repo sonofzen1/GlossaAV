@@ -11,7 +11,10 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace GlossaAPI.Features.FlashCards.Controllers
 {
@@ -21,13 +24,15 @@ namespace GlossaAPI.Features.FlashCards.Controllers
     private readonly FlashCardHandler<FlashCard> _flashCardContext;
     private readonly FlashCardHandler<Deck> _deckContext;
     private readonly HttpClient _httpClient;
+    private readonly string _geniusAccessToken;
 
-    public FlashCardsController(FlashCardHandler<FlashCard> flashCardContext, FlashCardHandler<Deck> deckContext, IHttpClientFactory httpClientFactory)
+    public FlashCardsController(FlashCardHandler<FlashCard> flashCardContext, FlashCardHandler<Deck> deckContext, IHttpClientFactory httpClientFactory, IConfiguration configuration)
     {
       _flashCardContext = flashCardContext;
       _deckContext = deckContext;
       _httpClient = httpClientFactory.CreateClient();
       _httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36");
+      _geniusAccessToken = configuration["Genius:AccessToken"] ?? throw new InvalidOperationException("Genius Access Token is not configured.");
     }
 
     [HttpGet]
@@ -103,61 +108,118 @@ namespace GlossaAPI.Features.FlashCards.Controllers
     [HttpGet("scrape")]
     public async Task<IActionResult> ScrapeLyrics([FromQuery] string url)
     {
+        try
+            {
+                // Extract search query from URL (e.g., "Tate-mcrae-sports-car")
+                var searchQuery = url.Split('/').Last().Replace("-lyrics", "");
+                Console.WriteLine($"Search query: {searchQuery}");
 
-      try
-      {
-        // Fetch the page
-        var response = await _httpClient.GetStringAsync(url);
+                // Fetch webpage for lyrics
+                Console.WriteLine($"Fetching webpage: {url}");
+                await Task.Delay(1000); // Respectful delay
+                var html = await _httpClient.GetStringAsync(url);
 
-        // Parse HTML
-        var htmlDocument = new HtmlDocument();
-        htmlDocument.LoadHtml(response);
+                // Parse HTML
+                var htmlDocument = new HtmlDocument();
+                htmlDocument.LoadHtml(html);
 
-        // Extract lyrics from Lyrics__Container divs
-        
-        var lyricsNodes = htmlDocument.DocumentNode
-            .SelectNodes("//*[contains(@class, 'Lyrics__Container')]");
-        var artist = htmlDocument.DocumentNode.SelectSingleNode("//*[contains(@class, 'PortalTooltip__Trigger')]//a/text()");
-        var imageParent = htmlDocument.DocumentNode.SelectSingleNode("//div[contains(@class, 'CoverArt')]").OuterHtml;
-        var image = htmlDocument.DocumentNode.SelectSingleNode("//div[contains(@class, 'CoverArt')]/img")?.Attributes["src"]?.Value ?? htmlDocument.DocumentNode.SelectSingleNode("//div[contains(@class, 'CoverArt')]/img").OuterHtml;
-        var primaryAlbum = htmlDocument.DocumentNode.SelectSingleNode("//a[contains(@href, '#primary-album')]/text()");
-        var title = htmlDocument.DocumentNode.SelectSingleNode("//h1[contains(@class, 'Title-sc')]//div//div//div//span/text()");//Generated from the XPATH that inspect element gave
-        if (lyricsNodes == null || !lyricsNodes.Any())
+        var lyricsBuilder = new StringBuilder();
+
+        var lyricsContainers = htmlDocument.DocumentNode
+            .SelectNodes("//div[starts-with(@class, 'Lyrics__Container')]");
+
+        if (lyricsContainers == null || !lyricsContainers.Any())
         {
-          return NotFound("No lyrics found on the page.");
-        }
-        if (artist == null)
-        {
-          return NotFound("No artist found on the page.");
-        }
-        if (image == null)
-        {
-          return NotFound("No album cover found on the page.");
-        }
-        if (primaryAlbum == null)
-        {
-          return NotFound("No primary album found on the page.");
-        }
-        if(title == null)
-        {
-          return NotFound("No title found on the page.");
+          return NotFound("No lyrics containers found.");
         }
 
-        // Combine lyrics, removing HTML tags
-        var lyrics = string.Join("\n", lyricsNodes
-            .Select(node => node.InnerText.Trim())
-            .Where(text => !string.IsNullOrWhiteSpace(text)));
+        foreach (var container in lyricsContainers)
+        {
+          foreach (var node in container.ChildNodes)
+          {
+            if (node.Name == "br")
+            {
+              lyricsBuilder.Append("\n");
+            }
+            else if (node.Name == "#text" || node.Name == "a" || node.Name == "span")
+            {
+              lyricsBuilder.Append(HttpUtility.HtmlDecode(node.InnerText));
+            }
+            else if (node.Name == "div")
+            {
+              // Skip header or metadata divs inside the container
+              continue;
+            }
+            else
+            {
+              lyricsBuilder.Append(HttpUtility.HtmlDecode(node.InnerText));
+            }
+          }
 
-        return Ok(new { Lyrics = lyrics, Artist = artist.InnerText, ImageURL = image, PrimaryAlbum = primaryAlbum.InnerText, Title = title.InnerText, ImageParent = imageParent});
-      }
-      catch (HttpRequestException ex)
-      {
-        return StatusCode(500, $"Failed to fetch the page: {ex.Message}");
-      }
-      catch (Exception ex)
-      {
-        return StatusCode(500, $"An error occurred: {ex.Message}");
-      }
+          lyricsBuilder.Append("\n");
+        }
+
+        var cleanedLyrics = lyricsBuilder.ToString().Trim();
+
+
+        // Search Genius API for metadata
+        var searchApiUrl = $"https://api.genius.com/search?q={Uri.EscapeDataString(searchQuery)}&access_token={_geniusAccessToken}";
+                Console.WriteLine($"Search API: {searchApiUrl}");
+                var searchResponse = await _httpClient.GetStringAsync(searchApiUrl);
+                var searchJson = JsonDocument.Parse(searchResponse);
+
+                // Get first song hit
+                var song = searchJson.RootElement
+                    .GetProperty("response")
+                    .GetProperty("hits")
+                    .EnumerateArray()
+                    .Where(h => h.GetProperty("type").GetString() == "song")
+                    .Select(h => h.GetProperty("result"))
+                    .FirstOrDefault();
+
+                // Extract metadata from search API
+                var artistTextApi = song
+                    .GetProperty("primary_artist")
+                    .GetProperty("name")
+                    .GetString() ?? "Unknown Artist";
+                var titleTextApi = song
+                    .GetProperty("title")
+                    .GetString() ?? "Unknown Title";
+                var imageUrlApi = song
+                    .GetProperty("song_art_image_url")
+                    .GetString() ?? "No Image";
+
+                // Return JSON response
+                return Ok(new ScrapeLyricsResponse
+                {
+                    Lyrics = cleanedLyrics,
+                    Artist = artistTextApi,
+                    ImageURL = imageUrlApi,
+                    Title = titleTextApi
+                });
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"HTTP error: {ex.Message}");
+                return StatusCode(500, $"Failed to fetch data: {ex.Message}");
+            }
+            catch (JsonException ex)
+            {
+                Console.WriteLine($"JSON error: {ex.Message}");
+                return StatusCode(500, $"Failed to parse API response: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"General error: {ex.Message}");
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+    }
+    public class ScrapeLyricsResponse
+    {
+      public string Lyrics { get; set; }
+      public string Artist { get; set; }
+      public string ImageURL { get; set; }
+      public string Title { get; set; }
     }
   }
-}
