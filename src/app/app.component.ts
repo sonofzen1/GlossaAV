@@ -56,6 +56,8 @@ export class AppComponent implements OnInit {
     return Math.max(1, Math.floor(screenWidth / 380)); // Ensure at least 1 column
   }
 
+  
+
   deck1 = new Deck('Deck 1', [
     new Flashcard('Angular', 'A front-end framework'),
     new Flashcard('TypeScript', 'A superset of JavaScript')
@@ -351,7 +353,7 @@ export class AppComponent implements OnInit {
     new URL("https://t2.genius.com/unsafe/340x340/https%3A%2F%2Fimages.genius.com%2F6dbadaf716039dad3841a1640755ac3a.1000x1000x1.png"));
 
   decks: Deck[] = [this.deck1, this.deck2, this.deck3, this.deck4, this.deck5, this.deck6, this.deck7, this.deck8, this.deck9, this.deck10, this.deck11, this.deck12, this.deck13, this.deck14, this.deck15, this.deck16, this.deck17, this.deck18, this.deck19, this.deck20];
-  songs = [this.song1];
+  songs: Song[] = [this.song1];
 
    ngOnInit(): void {
     console.log('Initializing AppComponent');
@@ -439,8 +441,10 @@ export class AppComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.songs.push(result); // Add the new song to the songs array
+        const newSong = new Song(result.title, result.artist, result.spanishLyrics, result.englishLyrics, result.image);
+        this.songs.push(newSong); // Add the new song to the songs array
         console.log('The dialog was closed with result:', result);
+        console.log('Songs:', this.songs);
       } else {
         console.log('The dialog was closed without result');
       }

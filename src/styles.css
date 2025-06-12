@@ -133,5 +133,12 @@ body.dark-mode .stacked-card::after {
 
 }
 
+.songs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 16px;
+  justify-content: center;
+  /* centers the grid within the container */
+}
 
 

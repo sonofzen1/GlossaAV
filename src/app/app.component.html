@@ -24,9 +24,10 @@
 
     </mat-tab>
     <mat-tab label="Library">
-      <mat-grid-list cols="5" rowHeight="460px" gutterSize="1px">
-        <app-song [song]="song1" [decks]="decks"></app-song>
-      </mat-grid-list>
+      <div class="songs-grid">
+        <app-song *ngFor="let song of songs" [song]="song" [decks]="decks"></app-song>
+      </div>
+      
       <button mat-fab class="fixed-circle-button" matTooltip="Add a song" (click)="openSongMenu()">
         <mat-icon>add</mat-icon>
       </button>

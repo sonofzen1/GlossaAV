@@ -12,6 +12,12 @@ export class TranslationService {
 
   constructor(private http: HttpClient) {}
 
+  private decodeHtmlEntities(text: string): string {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = text;
+    return textarea.value;
+  }
+
   translateText(text: string, sourceLang: string = 'es', targetLang: string = 'en'): Observable<string> {
     if (!text) {
       return throwError(() => new Error('No text provided for translation'));
@@ -28,7 +34,8 @@ export class TranslationService {
       .pipe(
         map((response: any) => {
           if (response && response.data && response.data.translations) {
-            return response.data.translations[0].translatedText;
+            const rawText = response.data.translations[0].translatedText;
+            return this.decodeHtmlEntities(rawText);
           }
           throw new Error('Unexpected response format');
         }),
