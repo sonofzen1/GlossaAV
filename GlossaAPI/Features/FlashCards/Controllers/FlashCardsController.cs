@@ -109,61 +109,13 @@ namespace GlossaAPI.Features.FlashCards.Controllers
     public async Task<IActionResult> ScrapeLyrics([FromQuery] string url)
     {
         try
-            {
+        {
                 // Extract search query from URL (e.g., "Tate-mcrae-sports-car")
                 var searchQuery = url.Split('/').Last().Replace("-lyrics", "");
                 Console.WriteLine($"Search query: {searchQuery}");
 
-                // Fetch webpage for lyrics
-                Console.WriteLine($"Fetching webpage: {url}");
-                await Task.Delay(1000); // Respectful delay
-                var html = await _httpClient.GetStringAsync(url);
-
-                // Parse HTML
-                var htmlDocument = new HtmlDocument();
-                htmlDocument.LoadHtml(html);
-
-        var lyricsBuilder = new StringBuilder();
-
-        var lyricsContainers = htmlDocument.DocumentNode
-            .SelectNodes("//div[starts-with(@class, 'Lyrics__Container')]");
-
-        if (lyricsContainers == null || !lyricsContainers.Any())
-        {
-          return NotFound("No lyrics containers found.");
-        }
-
-        foreach (var container in lyricsContainers)
-        {
-          foreach (var node in container.ChildNodes)
-          {
-            if (node.Name == "br")
-            {
-              lyricsBuilder.Append("\n");
-            }
-            else if (node.Name == "#text" || node.Name == "a" || node.Name == "span")
-            {
-              lyricsBuilder.Append(HttpUtility.HtmlDecode(node.InnerText));
-            }
-            else if (node.Name == "div")
-            {
-              // Skip header or metadata divs inside the container
-              continue;
-            }
-            else
-            {
-              lyricsBuilder.Append(HttpUtility.HtmlDecode(node.InnerText));
-            }
-          }
-
-          lyricsBuilder.Append("\n");
-        }
-
-        var cleanedLyrics = lyricsBuilder.ToString().Trim();
-
-
-        // Search Genius API for metadata
-        var searchApiUrl = $"https://api.genius.com/search?q={Uri.EscapeDataString(searchQuery)}&access_token={_geniusAccessToken}";
+                // Search Genius API for metadata
+                var searchApiUrl = $"https://api.genius.com/search?q={Uri.EscapeDataString(searchQuery)}&access_token={_geniusAccessToken}";
                 Console.WriteLine($"Search API: {searchApiUrl}");
                 var searchResponse = await _httpClient.GetStringAsync(searchApiUrl);
                 var searchJson = JsonDocument.Parse(searchResponse);
@@ -177,7 +129,8 @@ namespace GlossaAPI.Features.FlashCards.Controllers
                     .Select(h => h.GetProperty("result"))
                     .FirstOrDefault();
 
-                // Extract metadata from search API
+        // Extract metadata from search API\
+                var geniusSongId = song.GetProperty("id").GetInt32();
                 var artistTextApi = song
                     .GetProperty("primary_artist")
                     .GetProperty("name")
@@ -189,13 +142,60 @@ namespace GlossaAPI.Features.FlashCards.Controllers
                     .GetProperty("song_art_image_url")
                     .GetString() ?? "No Image";
 
+                // Fetch webpage for lyrics
+                Console.WriteLine($"Fetching webpage: {url}");
+                        await Task.Delay(1000); // Respectful delay
+                        var html = await _httpClient.GetStringAsync(url);
+
+                // Parse HTML
+                var htmlDocument = new HtmlDocument();
+                htmlDocument.LoadHtml(html);
+
+              var lyricsBuilder = new StringBuilder();
+
+              var lyricsContainers = htmlDocument.DocumentNode
+                  .SelectNodes("//div[starts-with(@class, 'Lyrics__Container')]");
+
+              if (lyricsContainers == null || !lyricsContainers.Any())
+              {
+                return NotFound("No lyrics containers found.");
+              }
+
+              foreach (var container in lyricsContainers)
+              {
+                foreach (var node in container.ChildNodes)
+                {
+                  if (node.Name == "br")
+                  {
+                    lyricsBuilder.Append("\n");
+                  }
+                  else if (node.Name == "#text" || node.Name == "a" || node.Name == "span")
+                  {
+                    lyricsBuilder.Append(HttpUtility.HtmlDecode(node.InnerText));
+                  }
+                  else if (node.Name == "div")
+                  {
+                    // Skip header or metadata divs inside the container
+                    continue;
+                  }
+                  else
+                  {
+                    lyricsBuilder.Append(HttpUtility.HtmlDecode(node.InnerText));
+                  }
+                }
+
+                lyricsBuilder.Append("\n");
+              }
+
+              var cleanedLyrics = lyricsBuilder.ToString().Trim();
+
                 // Return JSON response
                 return Ok(new ScrapeLyricsResponse
                 {
                     Lyrics = cleanedLyrics,
                     Artist = artistTextApi,
                     ImageURL = imageUrlApi,
-                    Title = titleTextApi
+                    Title = titleTextApi,
                 });
             }
             catch (HttpRequestException ex)
