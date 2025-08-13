@@ -1,3 +1,3 @@
 export class Flashcard {
-  constructor(public term: string, public definition: string) {}
+  constructor(public Term: string, public Definition: string) {}
 }

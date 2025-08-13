@@ -34,22 +34,24 @@ builder.Services.AddSingleton<IMongoClient>(x =>
 });
 
 // Adds the Flash Cards Service to the DI list. Each new Service needs to do the same, also targetting a xecifc cluster.
+
+builder.Services.AddSingleton<IUserContextService, UserContextService>();
+
 builder.Services.AddScoped(x =>
-  new FlashCardHandler<FlashCard> (
+  new FlashCardHandler<User>(
     x.GetRequiredService<IMongoClient>(),
     x.GetRequiredService<IOptions<MongoDbSettings>>().Value,
-    "FlashCards"
+    "User"
     )
 );
 
 builder.Services.AddScoped(x =>
-  new FlashCardHandler<Deck>(
+  new FlashCardHandler<Song>(
     x.GetRequiredService<IMongoClient>(),
     x.GetRequiredService<IOptions<MongoDbSettings>>().Value,
-    "Decks"
+    "Songs"
     )
 );
-
 
 var app = builder.Build();
 

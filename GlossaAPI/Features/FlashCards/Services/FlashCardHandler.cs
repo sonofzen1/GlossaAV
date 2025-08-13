@@ -6,6 +6,14 @@ using System.Data.Common;
 
 namespace GlossaAPI.Features.FlashCards.Services
 {
+  public interface IUserContextService
+  {
+    string Username { get; }
+  }
+  public class UserContextService : IUserContextService
+  {
+    public string Username => "mycooluser"; // Replace with logic later
+  }
   public class FlashCardHandler<T> : IMongoDbService<T>
   {
     private readonly IMongoCollection<T> _collection;
@@ -26,6 +34,17 @@ namespace GlossaAPI.Features.FlashCards.Services
       return await _collection.Find(Builders<T>.Filter.Eq("_id", objectId)).FirstOrDefaultAsync();
     }
 
+    public async Task<List<T>> Find(FilterDefinition<T> filter)
+    {
+      return await _collection.Find(filter).ToListAsync();
+    }
+
+    public async Task<T?> FindByFieldAsync(string fieldName, string value)
+    {
+      var filter = Builders<T>.Filter.Eq(fieldName, value);
+      return await _collection.Find(filter).FirstOrDefaultAsync();
+    }
+
     public async Task CreateAsync(T item)
     {
       await _collection.InsertOneAsync(item);
@@ -35,6 +54,18 @@ namespace GlossaAPI.Features.FlashCards.Services
     {
       await _collection.ReplaceOneAsync(Builders<T>.Filter.Eq("Id", id), item);
     }
+
+    public async Task<UpdateResult> UpdateOneAsync(FilterDefinition<T> filter, UpdateDefinition<T> update)
+    {
+      return await _collection.UpdateOneAsync(filter, update);
+    }
+
+    public async Task<UpdateResult> UpdateOneAsync(string fieldName, string fieldValue, UpdateDefinition<T> update)
+    {
+      var filter = Builders<T>.Filter.Eq(fieldName, fieldValue);
+      return await _collection.UpdateOneAsync(filter, update);
+    }
+
 
     public async Task DeleteAsync(string id)
     {

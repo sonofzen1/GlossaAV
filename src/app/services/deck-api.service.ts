@@ -12,22 +12,29 @@ export class DeckAPIService {
   constructor(private http: HttpClient) {}
 
   getAllDecks(): Observable<Deck[]> {
-    return this.http.get<Deck[]>(`${this.apiUrl}/GetAllDecks`);
+    return this.http.get<Deck[]>(`${this.apiUrl}/decks`);
   }
-
-  getDeckById(id: string): Observable<Deck> {
-    return this.http.get<Deck>(`${this.apiUrl}/${id}`);
+  
+  addDeck(deck: Deck): Observable<any> {
+    return this.http.post(`${this.apiUrl}/decks`, deck);
   }
 
   createDeck(deck: Deck): Observable<Deck> {
     return this.http.post<Deck>(this.apiUrl, deck);
   }
 
-  updateDeck(id: string, deck: Deck): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, deck);
+  updateDeckTitle(oldTitle: string, newTitle: string): Observable<any> {
+  return this.http.put(`${this.apiUrl}/deck`, null, {
+    params: {
+      oldTitle: oldTitle,
+      newTitle: newTitle
+    }
+    });
   }
 
-  deleteDeck(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+  deleteDeck(deckTitle: string): Observable<any> {
+  return this.http.delete(`${this.apiUrl}/deck`, {
+      params: { deckTitle }
+    });
   }
 }

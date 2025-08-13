@@ -11,8 +11,17 @@ export class FlashcardAPIService {
 
   constructor(private http: HttpClient) {}
 
-  getById(id: string): Observable<Flashcard> {
-    return this.http.get<Flashcard>(`${this.apiUrl}/${id}`);
+  getFlashcards(deckTitle: string): Observable<Flashcard[]> {
+    return this.http.get<Flashcard[]>(`${this.apiUrl}/decks/${encodeURIComponent(deckTitle)}`);
+  }
+
+  addFlashcard(deckTitle: string, flashcard: Flashcard): Observable<any> {
+    return this.http.post(`${this.apiUrl}/decks/${encodeURIComponent(deckTitle)}/Flashcards`, flashcard);
+  }
+  
+  deleteFlashcard(deckTitle: string, termToDelete: string): Observable<any> {
+    const url = `${this.apiUrl}/flashcard?deckTitle=${encodeURIComponent(deckTitle)}&termToDelete=${encodeURIComponent(termToDelete)}`;
+    return this.http.delete(url);
   }
 
 }

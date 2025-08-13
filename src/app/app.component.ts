@@ -25,6 +25,7 @@ import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
 import { AddSongModalComponent } from './dialog/add-song-modal/add-song-modal.component';
 import { ChatComponent } from './chat/chat.component';
 import { DeckAPIService } from './services/deck-api.service';
+import { SongsService } from './services/songs.service';
 
 
 @Component({
@@ -39,7 +40,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private deckService: DeckAPIService
+    private deckService: DeckAPIService,
+    private songsService: SongsService // Inject SongsService
   ) {}
 
   toggleDarkMode(event: any): void {
@@ -56,7 +58,7 @@ export class AppComponent implements OnInit {
     return Math.max(1, Math.floor(screenWidth / 380)); // Ensure at least 1 column
   }
 
-  
+  username: string = 'mycooluser';
 
   deck1 = new Deck('Deck 1', [
     new Flashcard('Angular', 'A front-end framework'),
@@ -158,204 +160,10 @@ export class AppComponent implements OnInit {
     new Flashcard('Marionette', 'A composite application library for Backbone.js')
   ]);
 
-  song1 = new Song('Despacito', 'Artist 1', 
-    [
-    "[Intro: Luis Fonsi & Daddy Yankee]",
-    "Ay, ¡Fonsi! ¡DY!",
-    "Oh-oh, oh, no, oh, no, oh",
-    "¡Hey, yeah!",
-    "Diri-diri-diririri, Daddy, go!",
-    "Sí, sabes que ya llevo un rato mirándote",
-    "Tengo que bailar contigo hoy (¡DY!)",
-    "Vi que tu mirada ya estaba llamándome",
-    "Muéstrame el camino que yo voy (Oh)",
-
-    "[Verso 1: Luis Fonsi & Daddy Yankee]",
-    "Tú, tú eres el imán y yo soy el metal",
-    "Me voy acercando y voy armando el plan",
-    "Solo con pensarlo, se acelera el pulso (Oh, yeah)",
-    "Ya, ya me está gustando más de lo normal",
-    "Todos mis sentidos van pidiendo más",
-    "Esto hay que tomarlo sin ningún apuro",
-
-    "[Estribillo: Luis Fonsi & Daddy Yankee]",
-    "Despacito",
-    "Quiero respirar tu cuello despacito",
-    "Deja que te diga cosas al oído",
-    "Para que te acuerdes si no estás conmigo",
-    "Despacito",
-    "Quiero desnudarte a besos despacito",
-    "Firmar las paredes de tu laberinto",
-    "Y hacer de tu cuerpo todo un manuscrito",
-    "(Sube, sube, sube), ah (Sube, sube)",
-
-    "[Post-Estribillo: Luis Fonsi & Daddy Yankee]",
-    "Quiero ver bailar tu pelo, quiero ser tu ritmo (Woah, woah)",
-    "Que le enseñes a mi boca (Woah, woah)",
-    "Tus lugares favoritos (Favorito', favorito', baby)",
-    "Déjame sobrepasar tus zonas de peligro (Eh; woah, woah)",
-    "Hasta provocar tus gritos (Woah, woah)",
-    "Y que olvides tu apellido (Rrr; DY)",
-
-    "[Verso 2: Daddy Yankee]",
-    "Si te pido un beso, ven, dámelo, yo sé que estás pensándolo (Eh)",
-    "Llevo tiempo intentándolo (Eh), mami, esto es dando y dándolo",
-    "Sabes que tu corazón conmigo te hace bam-bam",
-    "Sabes que esa beba está buscando de mi bam-bam",
-    "Ven, prueba de mi boca para ver cómo te sabe (Eh-eh; ¡plo!)",
-    "Quiero, quiero, quiero ver cuánto amor a ti te cabe",
-    "Yo no tengo prisa, yo me quiero dar el viaje",
-    "Empezamos lento, después salvaje",
-
-    "[Pre-Estribillo: Daddy Yankee]",
-    "Pasito a pasito, suave suavecito",
-    "Nos vamo' pegando, poquito a poquito",
-    "Cuando tú me besas con esa destreza",
-    "Veo que eres malicia con delicadeza",
-    "Pasito a pasito, suave suavecito",
-    "Nos vamo' pegando, poquito a poquito (Oh-oh)",
-    "Y es que esa belleza es un rompecabezas (No, no)",
-    "Pero pa' montarlo aquí tengo la pieza, oye (Yo, yo; ¡plo!)",
-
-    "[Estribillo: Luis Fonsi & Daddy Yankee]",
-    "Despacito",
-    "Quiero respirar tu cuello despacito (Yo)",
-    "Deja que te diga cosas al oído (Yo)",
-    "Para que te acuerdes si no estás conmigo (Plo, plo)",
-    "Despacito (¡Plo!)",
-    "Quiero desnudarte a besos despacito (Yeah-eh)",
-    "Firmar las paredes de tu laberinto",
-    "Y hacer de tu cuerpo todo un manuscrito",
-    "(Sube, sube, sube), ah (Sube, sube)",
-
-    "[Post-Estribillo: Luis Fonsi & Daddy Yankee]",
-    "Quiero ver bailar tu pelo, quiero ser tu ritmo (Eh, woah, woah)",
-    "Que le enseñes a mi boca (Woah, woah)",
-    "Tus lugares favoritos (Favorito', favorito', baby)",
-    "Déjame sobrepasar tus zonas de peligro (Eh, woah, woah)",
-    "Hasta provocar tus gritos (Woah, woah)",
-    "Y que olvides tu apellido",
-
-    "[Puente: Luis Fonsi]",
-    "Despacito",
-    "Vamo' a hacerlo en una playa en Puerto Rico",
-    "Hasta que las olas griten: \"¡Ay, bendito!\"",
-    "Para que mi sello se quede contigo",
-    "(Báilalo)",
-
-    "[Outro: Daddy Yankee & Luis Fonsi]",
-    "Pasito a pasito, suave suavecito (Oh, yeah-yeah)",
-    "Nos vamos pegando, poquito a poquito (No, no; oh)",
-    "Que le enseñes a mi boca",
-    "Tus lugares favoritos",
-    "Favorito', favorito', baby (Ooh)",
-    "Pasito a pasito, suave suavecito",
-    "Nos vamos pegando, poquito a poquito",
-    "Hasta provocar tus gritos (Fonsi)",
-    "Y que olvides tu apellido (DY)",
-    "Despacito"],
-    [
-    "[Intro: Luis Fonsi & Daddy Yankee]",
-    "Oh, Fonsi! DY!",
-    "Oh-oh, oh, no, oh, no, oh",
-    "Hey, yeah!",
-    "Diri-diri-diririri, Daddy, go!",
-    "Yes, you know I’ve been looking at you for a while",
-    "I have to dance with you today (DY!)",
-    "I saw that your gaze was already calling me",
-    "Show me the way that I’ll go (Oh)",
-
-    "[Verse 1: Luis Fonsi & Daddy Yankee]",
-    "You, you are the magnet and I am the metal",
-    "I’m getting closer and I’m setting up the plan",
-    "Just thinking about it accelerates the pulse (Oh, yeah)",
-    "Now, I’m already liking it more than usual",
-    "All my senses are asking for more",
-    "This must be taken without any rush",
-
-    "[Chorus: Luis Fonsi & Daddy Yankee]",
-    "Slowly",
-    "I want to breathe your neck slowly",
-    "Let me whisper things in your ear",
-    "So that you remember if you’re not with me",
-    "Slowly",
-    "I want to undress you with kisses slowly",
-    "Sign the walls of your labyrinth",
-    "And turn your body into a manuscript",
-    "(Rise, rise, rise), ah (Rise, rise)",
-
-    "[Post-Chorus: Luis Fonsi & Daddy Yankee]",
-    "I want to see your hair dance, I want to be your rhythm (Woah, woah)",
-    "Let me show my mouth (Woah, woah)",
-    "Your favorite places (Favorite, favorite, baby)",
-    "Let me surpass your danger zones (Eh; woah, woah)",
-    "Until I provoke your screams (Woah, woah)",
-    "And you forget your last name (Rrr; DY)",
-
-    "[Verse 2: Daddy Yankee]",
-    "If I ask for a kiss, come give it to me, I know you’re thinking about it (Eh)",
-    "I’ve been trying for a while (Eh), mami, this is giving and giving it",
-    "You know that your heart with me makes you go bam-bam",
-    "You know that baby is looking for my bam-bam",
-    "Come, taste my mouth to see how it tastes (Eh-eh; ¡plo!)",
-    "I want, I want, I want to see how much love fits in you",
-    "I’m not in a hurry, I want to take the trip",
-    "We start slow, then wild",
-
-    "[Pre-Chorus: Daddy Yankee]",
-    "Step by step, soft softly",
-    "We’re getting closer, little by little",
-    "When you kiss me with that skill",
-    "I see that you’re malice with delicacy",
-    "Step by step, soft softly",
-    "We’re getting closer, little by little (Oh-oh)",
-    "And that beauty is a puzzle (No, no)",
-    "But to put it together I have the piece, hey (Yo, yo; ¡plo!)",
-
-    "[Chorus: Luis Fonsi & Daddy Yankee]",
-    "Slowly",
-    "I want to breathe your neck slowly (Yo)",
-    "Let me whisper things in your ear (Yo)",
-    "So that you remember if you’re not with me (Plo, plo)",
-    "Slowly (¡Plo!)",
-    "I want to undress you with kisses slowly (Yeah-eh)",
-    "Sign the walls of your labyrinth",
-    "And turn your body into a manuscript",
-    "(Rise, rise, rise), ah (Rise, rise)",
-
-    "[Post-Chorus: Luis Fonsi & Daddy Yankee]",
-    "I want to see your hair dance, I want to be your rhythm (Eh, woah, woah)",
-    "Let me show my mouth (Woah, woah)",
-    "Your favorite places (Favorite, favorite, baby)",
-    "Let me surpass your danger zones (Eh, woah, woah)",
-    "Until I provoke your screams (Woah, woah)",
-    "And you forget your last name",
-
-    "[Bridge: Luis Fonsi]",
-    "Slowly",
-    "Let’s do it on a beach in Puerto Rico",
-    "Until the waves shout: \"Oh, blessed!\"",
-    "So that my seal stays with you",
-    "(Dance it)",
-
-    "[Outro: Daddy Yankee & Luis Fonsi]",
-    "Step by step, soft softly (Oh, yeah-yeah)",
-    "We’re getting closer, little by little (No, no; oh)",
-    "Let me show my mouth",
-    "Your favorite places",
-    "Favorite, favorite, baby (Ooh)",
-    "Step by step, soft softly",
-    "We’re getting closer, little by little",
-    "Until I provoke your screams (Fonsi)",
-    "And you forget your last name (DY)",
-    "Slowly"
-    ],
-    new URL("https://t2.genius.com/unsafe/340x340/https%3A%2F%2Fimages.genius.com%2F6dbadaf716039dad3841a1640755ac3a.1000x1000x1.png"));
-
   decks: Deck[] = [this.deck1, this.deck2, this.deck3, this.deck4, this.deck5, this.deck6, this.deck7, this.deck8, this.deck9, this.deck10, this.deck11, this.deck12, this.deck13, this.deck14, this.deck15, this.deck16, this.deck17, this.deck18, this.deck19, this.deck20];
-  songs: Song[] = [this.song1];
+  songs: Song[] = [];
 
-   ngOnInit(): void {
+  ngOnInit(): void {
     console.log('Initializing AppComponent');
     this.deckService.getAllDecks().subscribe({
       next: (data) => {
@@ -367,6 +175,19 @@ export class AppComponent implements OnInit {
         console.error('Failed to fetch decks', err);
       }
       
+    });
+    this.loadSongs();
+  }
+
+  loadSongs(): void {
+    this.songsService.getAllSongs().subscribe({
+      next: (data) => {
+        this.songs = data;
+        console.log('Songs:', this.songs);
+      },
+      error: (err) => {
+        console.error('Failed to fetch songs', err);
+      }
     });
   }
 
@@ -389,7 +210,7 @@ export class AppComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // Find the updated deck in the decks array and update it
-        const updatedDeckIndex = this.decks.findIndex(deck => deck.name === result.name);
+        const updatedDeckIndex = this.decks.findIndex(deck => deck.Title === result.name);
         if (updatedDeckIndex !== -1) {
           this.decks[updatedDeckIndex] = result;
         }
@@ -428,7 +249,15 @@ export class AppComponent implements OnInit {
     const index = this.decks.indexOf(deckToDelete);
     if (index !== -1) {
       this.decks.splice(index, 1); // Remove the deck from the array
-      console.log('Deck deleted:', deckToDelete.name);
+      console.log('Deck deleted:', deckToDelete.Title);
+      this.deckService.deleteDeck(deckToDelete.Title).subscribe({
+        next: (response) => {
+          console.log('Deck deleted successfully:', response);
+        },
+        error: (err) => {
+          console.error('Error deleting deck:', err);
+        }
+      });
     }
   }
 
@@ -439,15 +268,8 @@ export class AppComponent implements OnInit {
       width: '400px',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        const newSong = new Song(result.title, result.artist, result.spanishLyrics, result.englishLyrics, result.image);
-        this.songs.push(newSong); // Add the new song to the songs array
-        console.log('The dialog was closed with result:', result);
-        console.log('Songs:', this.songs);
-      } else {
-        console.log('The dialog was closed without result');
-      }
+    dialogRef.afterClosed().subscribe(() => {
+      this.loadSongs(); // Reload songs after adding a new one
       // Manually restore focus if needed
       // document.querySelector('.menu-trigger')?.focus();
     });

@@ -1,30 +1,61 @@
 [
   {
     "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
-    "Method": "GetById",
-    "RelativePath": "api/FlashCards/{id}",
-    "HttpMethod": "GET",
+    "Method": "DeleteDeck",
+    "RelativePath": "api/FlashCards/deck",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
+        "Name": "deckTitle",
         "Type": "System.String",
-        "IsRequired": true
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
   },
   {
     "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
-    "Method": "AddDeck",
-    "RelativePath": "api/FlashCards/AddDeck",
+    "Method": "UpdateDeckTitle",
+    "RelativePath": "api/FlashCards/deck",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "oldTitle",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "newTitle",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
+    "Method": "GetUserDeckTitles",
+    "RelativePath": "api/FlashCards/decks",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
+    "Method": "AddDeckToUser",
+    "RelativePath": "api/FlashCards/decks",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "deck",
+        "Name": "newDeck",
         "Type": "GlossaAPI.Features.FlashCards.Models.Deck",
         "IsRequired": true
       }
@@ -33,22 +64,60 @@
   },
   {
     "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
-    "Method": "GetAllDecks",
-    "RelativePath": "api/FlashCards/GetAllDecks",
+    "Method": "GetDeckFlashcards",
+    "RelativePath": "api/FlashCards/decks/{deckTitle}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "deckTitle",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
     "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
-    "Method": "GetAllFlashCards",
-    "RelativePath": "api/FlashCards/GetAllFlashCards",
-    "HttpMethod": "GET",
+    "Method": "AddFlashcardToDeck",
+    "RelativePath": "api/FlashCards/decks/{deckTitle}/Flashcards",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "deckTitle",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "newFlashcard",
+        "Type": "GlossaAPI.Features.FlashCards.Models.FlashCard",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
+    "Method": "DeleteFlashcard",
+    "RelativePath": "api/FlashCards/flashcard",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deckTitle",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "termToDelete",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -69,15 +138,25 @@
   },
   {
     "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
-    "Method": "UpdateDeck",
-    "RelativePath": "api/FlashCards/UpdateDeck",
-    "HttpMethod": "PUT",
+    "Method": "GetUserSongs",
+    "RelativePath": "api/FlashCards/songs",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
+    "Method": "GetUserByUsername",
+    "RelativePath": "api/FlashCards/user/by-username/{username}",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "deck",
-        "Type": "GlossaAPI.Features.FlashCards.Models.Deck",
+        "Name": "username",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

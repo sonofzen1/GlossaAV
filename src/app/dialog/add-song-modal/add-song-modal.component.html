@@ -1,13 +1,23 @@
 <h1 mat-dialog-title style="display:flex; justify-content:center;">Add a Song</h1>
 <mat-dialog-content style="display:flex; justify-content:center;">
-    <mat-form-field>
+    <mat-form-field appearance="fill">
         <mat-label>Enter Genius URL Link</mat-label>
-        <input matInput name="songURL" [(ngModel)]="songURL" #urlInput="ngModel" placeholder="Ex. https://genius.com/Luis-fonsi-despacito-lyrics" required
-        pattern="^https:\/\/genius\.com\/.+$" />
-        <mat-error *ngIf="urlInput.errors?.['required']">URL is required</mat-error>
-        <mat-error *ngIf="urlInput.errors?.['pattern']">Must be a valid Genius URL</mat-error>
+        <input matInput [formControl]="songURL" placeholder="Ex. https://genius.com/Luis-fonsi-despacito-lyrics" />
+            <mat-error *ngIf="songURL.hasError('required')">URL is required</mat-error>
+            <mat-error *ngIf="songURL.hasError('pattern')">Must be a valid Genius URL</mat-error>
+            <mat-error *ngIf="songURL.hasError('backendError')">{{ songURL.getError('backendError') }}</mat-error>
     </mat-form-field>
 </mat-dialog-content>
+    <mat-error *ngIf="problema" style="margin-top: 0px; width: 100%; text-align: center;">
+        {{ errorMessage }}
+    </mat-error>
 <mat-dialog-actions style="display:flex; justify-content:center;">
-    <button mat-flat-button color="primary" (click)="submit()">Submit</button>
+    <ng-container *ngIf="!isLoading; else loadingSpinner">
+        <button mat-flat-button color="primary" (click)="submit()">Submit</button>
+    </ng-container>
+
+    <ng-template #loadingSpinner>
+        <mat-progress-spinner mode="indeterminate" diameter="36" strokeWidth="4">
+        </mat-progress-spinner>
+    </ng-template>
 </mat-dialog-actions>

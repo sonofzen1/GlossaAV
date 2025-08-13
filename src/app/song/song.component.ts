@@ -17,8 +17,19 @@ export class SongComponent {
     @Input() song!: Song;
     @Input() decks: any[] = []; 
 
+    songImageUrl!: URL;
+
     constructor(private dialog: MatDialog) {} // Inject MatDialog
     
+    ngOnInit() {
+      if (this.song?.image) {
+        try {
+          this.songImageUrl = new URL(this.song.image);
+        } catch {
+          console.error('Invalid image URL:', this.song.image);
+        }
+      }
+    }
     
     openDialog(): void {
       const dialogRef = this.dialog.open(SongModalComponent, {

@@ -1,9 +1,21 @@
-/* Center and stretch the mat-input label */
+mat-dialog-content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .mat-form-field {
     width: 100%;
-    /* Stretch the input field to full width */
-    text-align: center;
-    /* Center-align the label */
+    margin: 0;
+}
+
+.mat-form-field-flex {
+    width: 100%;
+}
+
+.mat-input-element {
+    width: 100% !important;
+    box-sizing: border-box;
 }
 
 mat-label {

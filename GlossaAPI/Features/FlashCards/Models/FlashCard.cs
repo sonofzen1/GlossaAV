@@ -1,14 +1,14 @@
 using MongoDB.Bson.Serialization.Attributes;
+using System.Text.Json.Serialization;
 
 namespace GlossaAPI.Features.FlashCards.Models
 {
   public class FlashCard
   {
-    [BsonId]
-    [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-    public string Id { get; set; }
+    [JsonPropertyName("Term")]
     public string Term { get; set; }
+    [JsonPropertyName("Definition")]
     public string Definition { get; set; }
-    
+
   }
 }

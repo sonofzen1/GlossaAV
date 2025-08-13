@@ -6,16 +6,22 @@ namespace GlossaAPI.Features.FlashCards.Models
 {
   public class Song
   {
-    [BsonId] // This sets GeniusSongId as the MongoDB _id
-    [BsonRepresentation(BsonType.Int32)]
-    public int GeniusSongId { get; set; }
+    [BsonId]
+    [BsonElement("_id")]
+    public int Id { get; set; }
 
+    [BsonElement("title")]
     public string Title { get; set; }
+    [BsonElement("artist")]
     public string Artist { get; set; }
 
+    [BsonElement("spanishLyrics")]
     public List<string> SpanishLyrics { get; set; }
+
+    [BsonElement("englishLyrics")]
     public List<string> EnglishLyrics { get; set; }
 
+    [BsonElement("imageUrl")]
     public string ImageUrl { get; set; }
   }
 }

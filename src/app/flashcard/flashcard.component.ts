@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faT, faTrash} from '@fortawesome/free-solid-svg-icons';
+import { FlashcardAPIService } from '../services/flashcard-api.service';
 
 @Component({
   selector: 'app-flashcard',
@@ -17,9 +18,9 @@ export class FlashcardComponent {
   faTrash = faTrash;
 
   delete(){
+
     console.log('Delete button clicked for card:', this.card); // Debug statement
     this.deleteFlashcard.emit(this.card); // Emit the delete event with the card data
-    // Logic to delete the card can be implemented here
   }
 
 }
