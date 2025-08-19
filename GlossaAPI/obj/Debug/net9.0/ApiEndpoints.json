@@ -1,15 +1,31 @@
 [
   {
-    "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
-    "Method": "DeleteDeck",
-    "RelativePath": "api/FlashCards/deck",
-    "HttpMethod": "DELETE",
+    "ContainingType": "ChatController",
+    "Method": "Send",
+    "RelativePath": "api/chat",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "deckTitle",
-        "Type": "System.String",
+        "Name": "req",
+        "Type": "ChatController\u002BChatMessageRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ChatController",
+    "Method": "GetHistory",
+    "RelativePath": "api/chat/history",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "last",
+        "Type": "System.Int32",
         "IsRequired": false
       }
     ],
@@ -32,6 +48,43 @@
         "Name": "newTitle",
         "Type": "System.String",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
+    "Method": "DeleteDeck",
+    "RelativePath": "api/FlashCards/deck/by-index",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "index",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
+    "Method": "ReplaceDeckFlashcards",
+    "RelativePath": "api/FlashCards/deck/flashcards/by-index",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "index",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "flashcards",
+        "Type": "System.Collections.Generic.List\u00601[[GlossaAPI.Features.FlashCards.Models.FlashCard, GlossaAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -113,8 +166,8 @@
         "IsRequired": false
       },
       {
-        "Name": "termToDelete",
-        "Type": "System.String",
+        "Name": "index",
+        "Type": "System.Int32",
         "IsRequired": false
       }
     ],
@@ -144,6 +197,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
+    "Method": "RemoveSongById",
+    "RelativePath": "api/FlashCards/songs/{songId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "songId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

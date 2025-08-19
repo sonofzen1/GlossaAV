@@ -167,59 +167,95 @@ namespace GlossaAPI.Features.FlashCards.Controllers
     }
 
     [HttpDelete("flashcard")]
-    public async Task<IActionResult> DeleteFlashcard(string deckTitle, string termToDelete)
+    public async Task<IActionResult> DeleteFlashcard(string deckTitle, int index)
     {
       try
       {
         var username = _userContextService.Username;
 
-        var filter = Builders<User>.Filter.And(
-          Builders<User>.Filter.Eq(u => u.Username, username),
-          Builders<User>.Filter.ElemMatch(u => u.Decks, d => d.Title == deckTitle)
-        );
+        // 1) Load user
+        var user = await _userContext.FindByFieldAsync("Username", username);
+        if (user == null)
+          return NotFound("User not found.");
 
-        var update = Builders<User>.Update.PullFilter(
-          u => u.Decks.FirstMatchingElement().Flashcards,
-          f => f.Term == termToDelete
-        );
-
-
-        var result = await _userContext.UpdateOneAsync(filter, update);
-
-        if (result.ModifiedCount == 0)
-          return NotFound("Flashcard or deck not found.");
-
-        return Ok(new { message = "Flashcard deleted." });
-
-      }
-      catch (Exception ex)
-      {
-        return StatusCode(500, $"An error occurred: {ex.Message}");
-      }
-    }
-
-    [HttpDelete("deck")]
-    public async Task<IActionResult> DeleteDeck(string deckTitle)
-    {
-      try
-      {
-        var username = _userContextService.Username;
-
-        var filter = Builders<User>.Filter.Eq(u => u.Username, username);
-        var update = Builders<User>.Update.PullFilter(u => u.Decks, d => d.Title == deckTitle);
-
-        var result = await _userContext.UpdateOneAsync(filter, update);
-
-        if (result.ModifiedCount == 0)
+        // 2) Find the deck by title
+        var deckIdx = user.Decks.FindIndex(d => d.Title == deckTitle);
+        if (deckIdx == -1)
           return NotFound("Deck not found.");
 
-        return Ok("Deck deleted.");
+        var deck = user.Decks[deckIdx];
+
+        // 3) Bounds check for index
+        if (index < 0 || index >= (deck.Flashcards?.Count ?? 0))
+          return BadRequest("Index out of range.");
+
+        // 4) Remove exactly one flashcard at that index
+        deck.Flashcards.RemoveAt(index);
+
+        // 5) Persist user doc (consistent with your other endpoints)
+        await _userContext.UpdateAsync(user.Id, user);
+
+        return Ok(new { message = "Flashcard deleted.", index });
       }
       catch (Exception ex)
       {
         return StatusCode(500, $"An error occurred: {ex.Message}");
       }
     }
+
+    [HttpDelete("deck/by-index")]
+    public async Task<IActionResult> DeleteDeck([FromQuery] int index)
+    {
+      try
+      {
+        var username = _userContextService.Username;
+
+        // 1) Load user
+        var user = await _userContext.FindByFieldAsync("Username", username);
+        if (user == null)
+          return NotFound("User not found.");
+
+        var decks = user.Decks ?? new List<Deck>();
+        if (index < 0 || index >= decks.Count)
+          return BadRequest("Index out of range.");
+
+        // 2) Remove the deck at index
+        decks.RemoveAt(index);
+
+        // 3) Persist the updated user document
+        await _userContext.UpdateAsync(user.Id, user);
+
+        return Ok(new { message = "Deck deleted.", index });
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, $"An error occurred: {ex.Message}");
+      }
+    }
+
+
+    [HttpDelete("songs/{songId:int}")]
+    public async Task<IActionResult> RemoveSongById(int songId)
+    {
+      try
+      {
+        var username = _userContextService.Username;
+
+        var userFilter = Builders<User>.Filter.Eq(u => u.Username, username);
+        var update = Builders<User>.Update.PullFilter(u => u.Songs, s => s == songId);
+        var result = await _userContext.UpdateOneAsync(userFilter, update);
+
+        if (result.ModifiedCount == 0)
+          return NotFound("Song not found in your library.");
+
+        return Ok(new { message = "Song removed.", songId });
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, $"An error occurred: {ex.Message}");
+      }
+    }
+
 
     [HttpPut("deck")]
     public async Task<IActionResult> UpdateDeckTitle(string oldTitle, string newTitle)
@@ -243,6 +279,37 @@ namespace GlossaAPI.Features.FlashCards.Controllers
         await _userContext.UpdateAsync(user.Id, user);
 
         return Ok(new { message = "Deck title updated successfully." });
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, $"An error occurred: {ex.Message}");
+      }
+    }
+
+    // PUT /api/FlashCards/deck/flashcards/by-index?index=2
+    [HttpPut("deck/flashcards/by-index")]
+    public async Task<IActionResult> ReplaceDeckFlashcards([FromQuery] int index, [FromBody] List<FlashCard> flashcards)
+    {
+      try
+      {
+        var username = _userContextService.Username;
+
+        // Quick existence + bounds check
+        var user = await _userContext.FindByFieldAsync("Username", username);
+        if (user == null) return NotFound("User not found.");
+        if (user.Decks == null || index < 0 || index >= user.Decks.Count)
+          return BadRequest("Index out of range.");
+
+        // Atomic update: set Decks.{index}.Flashcards = flashcards
+        var filter = Builders<User>.Filter.Eq(u => u.Username, username);
+        var path = $"Decks.{index}.Flashcards";
+        var update = Builders<User>.Update.Set(path, flashcards ?? new List<FlashCard>());
+
+        var result = await _userContext.UpdateOneAsync(filter, update);
+        if (result.ModifiedCount == 0)
+          return NotFound("Deck not found or not modified.");
+
+        return Ok(new { message = "Flashcards replaced.", index, count = flashcards?.Count ?? 0 });
       }
       catch (Exception ex)
       {
@@ -337,23 +404,55 @@ namespace GlossaAPI.Features.FlashCards.Controllers
           var lyricsContainers = htmlDocument.DocumentNode
               .SelectNodes("//div[starts-with(@class, 'Lyrics__Container')]");
 
-          if (lyricsContainers == null || !lyricsContainers.Any())
-            return Ok(new ScrapeResponse { Success = false, Message = "Lyrics not found" });
+          string ExtractTextWithLineBreaks(HtmlNode node)
+          {
+            if (node.Name.Equals("br", StringComparison.OrdinalIgnoreCase))
+              return "\n";
 
+            if (node.NodeType == HtmlNodeType.Text)
+              return HttpUtility.HtmlDecode(node.InnerText);
+
+            var sb = new StringBuilder();
+            foreach (var child in node.ChildNodes)
+              sb.Append(ExtractTextWithLineBreaks(child));
+
+            // After block-level nodes, ensure a newline boundary
+            switch (node.Name.ToLowerInvariant())
+            {
+              case "div":
+              case "p":
+              case "section":
+              case "ul":
+              case "ol":
+              case "li":
+              case "h1":
+              case "h2":
+              case "h3":
+              case "h4":
+              case "h5":
+              case "h6":
+                sb.Append("\n");
+                break;
+            }
+            return sb.ToString();
+          }
+
+          // Build full lyrics text
           var lyricsBuilder = new StringBuilder();
           foreach (var container in lyricsContainers)
           {
-            foreach (var node in container.ChildNodes)
-            {
-              if (node.Name == "br")
-                lyricsBuilder.Append("\n");
-              else
-                lyricsBuilder.Append(HttpUtility.HtmlDecode(node.InnerText));
-            }
+            lyricsBuilder.Append(ExtractTextWithLineBreaks(container));
             lyricsBuilder.Append("\n");
           }
 
           var cleanedLyrics = lyricsBuilder.ToString().Trim();
+
+          // Find the first '[' and keep everything from there
+          int bracketIndex = cleanedLyrics.IndexOf('[');
+          if (bracketIndex >= 0)
+          {
+            cleanedLyrics = cleanedLyrics.Substring(bracketIndex);
+          }
 
           var spanishLyrics = cleanedLyrics
               .Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries)
@@ -416,7 +515,6 @@ namespace GlossaAPI.Features.FlashCards.Controllers
         return Ok(new ScrapeResponse { Success = false, Message = $"An error occurred: {ex.Message}" });
       }
     }
-
 
     public class ScrapeResponse
     {

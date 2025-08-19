@@ -25,7 +25,8 @@
     </mat-tab>
     <mat-tab label="Library">
       <div class="songs-grid">
-        <app-song *ngFor="let song of songs" [song]="song" [decks]="decks"></app-song>
+        <app-song *ngFor="let song of songs" [song]="song" [decks]="decks" (deleteSong)="onDeleteSong($event)">
+></app-song>
       </div>
       
       <button mat-fab class="fixed-circle-button" matTooltip="Add a song" (click)="openSongMenu()">

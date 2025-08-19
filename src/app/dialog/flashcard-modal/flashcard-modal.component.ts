@@ -30,10 +30,20 @@ export class FlashcardModalComponent {
     public flashcardService: FlashcardAPIService, // Inject FlashcardAPIService
     private translationService: TranslationService
   ) {
-        if (data.text) {
-          this.term = data.text;
-          this.translateTerm(); // Call the translation function if text is provided
-        }
+    if (data.text) {
+      const raw = data.text.trim();
+      const delim = raw.indexOf('%');
+
+      if (delim > -1) {
+        // text came as "term%definition" -> prefill both, skip translation
+        this.term = raw.slice(0, delim).trim();
+        this.definition = raw.slice(delim + 1).trim();
+      } else {
+        // original flow: only term -> translate
+        this.term = raw;
+        this.translateTerm();
+      }
+    }
 
   }
 

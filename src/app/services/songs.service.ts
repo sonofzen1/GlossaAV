@@ -25,11 +25,19 @@ export class SongsService {
                 artist: song.artist,
                 spanishLyrics: song.spanishLyrics,
                 englishLyrics: song.englishLyrics,
-                image: song.imageUrl
+                image: song.imageUrl,
+                songId: song.id
             } as Song))),
             catchError(this.handleError)
         );
     }
+
+    deleteSong(songId: number): Observable<any> {
+        return this.http.delete(`${this.apiUrl}/songs/${songId}`).pipe(
+            catchError(this.handleError)
+        );
+    }
+
 
   scrapeLyrics(url: string): Observable<ScrapeResponse> {
     return this.http.get<ScrapeResponse>(`${this.apiUrl}/scrape?url=${encodeURIComponent(url)}`);

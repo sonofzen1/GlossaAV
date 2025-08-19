@@ -4,6 +4,9 @@
 <fa-icon [icon]="faRectangleXmark" (click)="onClose()" class="close-icon"></fa-icon>
 <div class="toggle-container">
     <mat-slide-toggle (change)="toggleTranslation()">Toggle English</mat-slide-toggle>
+    <button mat-flat-button color="primary" class="convert-btn" (click)="convertToFlashcards()">
+        Convert to flashcards
+    </button>
 </div>
 <mat-dialog-content class="mat-typography">
     <div class="modal-header">

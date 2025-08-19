@@ -4,6 +4,8 @@ using GlossaAPI.Mongo;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Amazon;
+using Amazon.BedrockRuntime;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +53,19 @@ builder.Services.AddScoped(x =>
     x.GetRequiredService<IOptions<MongoDbSettings>>().Value,
     "Songs"
     )
+);
+
+// Bedrock client (reads creds from env/CLI profile)
+builder.Services.AddSingleton<IAmazonBedrockRuntime>(_ =>
+    new AmazonBedrockRuntimeClient(RegionEndpoint.USEast1));
+
+// Conversations collection handler (same pattern you use for Songs/User)
+builder.Services.AddScoped(x =>
+  new FlashCardHandler<Conversation>(
+    x.GetRequiredService<IMongoClient>(),
+    x.GetRequiredService<IOptions<MongoDbSettings>>().Value,
+    "Conversations" // <— single shared collection, not one per convo
+  )
 );
 
 var app = builder.Build();

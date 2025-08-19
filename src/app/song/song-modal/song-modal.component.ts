@@ -11,6 +11,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faRectangleXmark } from '@fortawesome/free-solid-svg-icons';
 import { FlashcardModalComponent } from '../../dialog/flashcard-modal/flashcard-modal.component';
 import { MatButtonModule } from '@angular/material/button';
+import { DeckAPIService } from '../../services/deck-api.service';
+import { switchMap } from 'rxjs/operators';
+import { Deck } from '../../models/deck.model';
 
 @Component({
   selector: 'song-modal',
@@ -26,7 +29,8 @@ export class SongModalComponent {
   constructor(
     public dialogRef: MatDialogRef<SongModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { song: Song; decks: any[] }, // Injected data
-    private dialog: MatDialog // Add MatDialog service
+    private dialog: MatDialog, // Add MatDialog service
+    private deckService: DeckAPIService // Inject DeckAPIService
   ) {}
 
   toggleTranslation(): void {
@@ -99,4 +103,78 @@ export class SongModalComponent {
       this.showAddButton = false; // Hide button after adding card
     }
   }
+
+private buildPairs(): [string, string][] {
+  const es = this.data.song.spanishLyrics ?? [];
+  const en = this.data.song.englishLyrics ?? [];
+  const len = Math.min(es.length, en.length);
+
+  const pairs: [string, string][] = [];
+  for (let i = 0; i < len; i++) {
+    const s = (es[i] ?? '').trim();
+    const e = (en[i] ?? '').trim();
+    if (!s || !e) continue;
+    if (s.startsWith('[') || e.startsWith('[')) continue; // skip headers like [Chorus]
+    pairs.push([s, e]);
+  }
+  return pairs;
+}
+
+convertToFlashcards(): void {
+  const pairs = this.buildPairs();
+  if (!pairs.length) {
+    console.warn('No convertible lyric lines found.');
+    return;
+  }
+
+  // Preview with first pair using the same modal API (text)
+  const [firstTerm, firstDef] = pairs[0];
+  const previewText = `${firstTerm}%${firstDef}`; // our simple delimiter
+
+  const dialogConfig = new MatDialogConfig();
+  dialogConfig.panelClass = 'my-dialog-styles';
+  dialogConfig.width = '40%';
+  dialogConfig.height = '70%';
+  dialogConfig.maxHeight = '900vh';
+  dialogConfig.maxWidth = '900vw';
+  dialogConfig.autoFocus = '.modal-header';
+  dialogConfig.data = { text: previewText, decks: this.data.decks };
+
+  this.dialog.open(FlashcardModalComponent, dialogConfig).afterClosed()
+    .subscribe(selectedDeck => {
+      if (!selectedDeck) return; // user cancelled
+
+      const deckName = selectedDeck.Title ?? selectedDeck.name;
+      const idx = this.data.decks.findIndex((d: any) =>
+        (d.Title ?? d.name) === deckName
+      );
+
+      // Normalize the flashcards array prop casing
+      const flashcardsKey = selectedDeck.Flashcards ? 'Flashcards' : 'flashcards';
+
+      const newCards = pairs.map(([term, definition]) => ({
+        Term: term,
+        Definition: definition
+      }));
+
+      newCards.splice(0,1); // remove the first pair used for preview
+
+      if (idx !== -1) {
+        const current = this.data.decks[idx][flashcardsKey] ?? [];
+        this.data.decks[idx][flashcardsKey] = [...current, ...newCards];
+      }
+      else{
+        return console.warn(`Deck "${deckName}" not found in local data.`);
+      }
+
+      this.deckService.replaceDeckFlashcards(idx, newCards).subscribe({
+        next: res => console.log(res.message, 'count:', res.count),
+        error: err => console.error('Replace failed', err)
+      });
+
+      console.log(`Added ${newCards.length} flashcards to deck "${deckName}" (local).`);
+      // Later: call backend bulk-add endpoint here.
+    });
+  }
+
 }

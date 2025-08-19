@@ -16,5 +16,7 @@ namespace GlossaAPI.Features.FlashCards.Models
 
     public List<Deck> Decks { get; set; } = new();
     public List<int> Songs { get; set; } = new();
+
+    public string? ConversationId { get; set; }   // nullable until first convo created
   }
 }

@@ -24,17 +24,28 @@ export class DeckAPIService {
   }
 
   updateDeckTitle(oldTitle: string, newTitle: string): Observable<any> {
-  return this.http.put(`${this.apiUrl}/deck`, null, {
-    params: {
-      oldTitle: oldTitle,
-      newTitle: newTitle
-    }
+    return this.http.put(`${this.apiUrl}/deck`, null, {
+      params: {
+        oldTitle: oldTitle,
+        newTitle: newTitle
+      }
     });
   }
 
-  deleteDeck(deckTitle: string): Observable<any> {
-  return this.http.delete(`${this.apiUrl}/deck`, {
-      params: { deckTitle }
-    });
+  deleteDeck(index: number) {
+    return this.http.delete<{ message: string; index: number }>(
+      `${this.apiUrl}/deck/by-index`,
+      { params: { index } as any}
+    );
   }
+
+
+  replaceDeckFlashcards(index: number, cards: { Term: string; Definition: string }[]) {
+    return this.http.put<{ message: string; index: number; count: number }>(
+      `${this.apiUrl}/deck/flashcards/by-index`,
+      cards,
+      { params: { index } as any }
+    );
+  }
+
 }

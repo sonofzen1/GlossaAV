@@ -28,7 +28,8 @@ export class DeckDialogComponent {
   }
 
   deleteFlashcard(card: Flashcard): void {
-    this.flashcardService.deleteFlashcard(this.data.name, card.Term).subscribe({
+    const index = this.data.cards.indexOf(card);
+    this.flashcardService.deleteFlashcard(this.data.name, index).subscribe({
       next: () => {
         const index = this.data.cards.indexOf(card);
         if (index > -1) {

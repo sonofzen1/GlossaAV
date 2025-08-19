@@ -33,8 +33,31 @@ currentSelection: any = '';
 constructor(private chatService: ChatService, private translationService: TranslationService, private dialog: MatDialog) {}
 
 ngOnInit() {
-  this.messages.push({ text: this.introduction, isUser: false }); // Push the introduction message to the chat
+  this.chatService.getHistory(12).subscribe({
+    next: (res: any) => {
+      const msgs = Array.isArray(res?.messages) ? res.messages : [];
+      if (msgs.length) {
+        this.messages = msgs.map((m: any) => ({
+          text: String(m?.text ?? ''),
+          isUser: String(m?.role ?? '') === 'user'
+        }));
+
+        // prepend intro if the history is shorter than 12
+        if (msgs.length < 12) {
+          this.messages.unshift({ text: this.introduction, isUser: false });
+        }
+      } else {
+        // no history yet: keep your intro
+        this.messages.push({ text: this.introduction, isUser: false });
+      }
+    },
+    error: () => {
+      // if history fails, still show intro so UI isn't empty
+      this.messages.push({ text: this.introduction, isUser: false });
+    }
+  });
 }
+
 
 sendMessage() {
   if (!this.newMessage.trim()) return;

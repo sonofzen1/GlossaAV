@@ -1,4 +1,7 @@
 .example-card {
+    position: relative;
+    /* so header can absolutely position inside */
+    overflow: hidden;
     max-width: 100%;  /* make sure it never exceeds tile width */
     width: 400px;      /* take full width available in tile */
     max-height: 450px;
@@ -16,56 +19,60 @@
 
 mat-card-header{
     display: flex;
-        flex-direction: column;
-        /* Stack the title and subtitle vertically */
-        align-items: center;
-        /* Center the content horizontally */
-        justify-content: center;
-        /* Center the content vertically */
-        text-align: center;
-        /* Ensure text is centered */
-        padding: 16px;
-        /* Add some spacing around the header */
+    z-index: 0;
+    flex-direction: column;
+    /* Stack the title and subtitle vertically */
+    align-items: center;
+    /* Center the content horizontally */
+    justify-content: center;
+    /* Center the content vertically */
+    text-align: center;
+    /* Ensure text is centered */
+    padding: 16px;
+    /* Add some spacing around the header */
 }
-
 mat-card-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    background-image: "https://material.angular.io/assets/img/examples/shiba2.jpg";
-    /* Ensures the image covers the area without distortion */
-    border-radius: 10px 10px 0 0;
-    /* Rounded corners for the top of the card */
+    position: absolute !important;
+    top: 0 !important;
+    /* always stuck to the very top */
+    left: 0 !important;
+    width: 100% !important;
+    height: 200px !important;
+    /* fixed height */
+    object-fit: cover !important;
+    margin: 0 !important;
+    /* remove Angular Material's default margins */
+    z-index: 2 !important;
+    /* keep it above the header */
+    border-radius: 10px 10px 0 0 !important;
 }
 .img-container {
+    height: auto;
+    /* was 100%, causing the stretch */
     width: 100%;
-    height: 100%;
-    background-image: "https://material.angular.io/assets/img/examples/shiba2.jpg";
-    overflow: hidden;
     object-fit: cover;
-    background-position: top;
-    background-size: cover;
+    overflow: hidden;
 }
-.img-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-    /* Slight gray overlay */
-    pointer-events: none;
-    /* Ensure the overlay doesn't block interactions */
-    z-index: 1000;
-    /* Place the overlay above the image */
+
+.title-container {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
 }
+
 mat-card-title {
     font-size: 1.5rem;
     font-weight: bold;
     color: #333;
     margin-bottom: 8px;
-    /* Space between title and content */
+    margin-top: 5px;
+    width: 100%;
+    text-align: center;
+    word-break: normal;
+    overflow-wrap: break-word;
+    white-space: normal;
+    display: block;
 }
 
 mat-card-actions {
@@ -77,4 +84,14 @@ mat-card-actions {
     /* Center the actions vertically (optional) */
     padding: 16px 0;
     /* Add some spacing around the actions */
+}
+
+.close-button {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    font-size: 2.2rem;
+    color: #9c9c9c; /* Lighter gray */
+    padding-right: 12px;
+    cursor: pointer;
 }

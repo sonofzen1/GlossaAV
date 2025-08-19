@@ -1,8 +1,13 @@
 <mat-card class="example-card" appearance="outlined">
     <mat-card-header>
-        <mat-card-title>{{this.song.title}}</mat-card-title>
-        <mat-card-subtitle>{{this.song.artist}}</mat-card-subtitle>
+        <div class="title-container">
+            <mat-card-title>{{ song.title }}</mat-card-title>
+        </div>
+        <div style="padding: 0px;">
+            <mat-card-subtitle>{{this.song.artist}}</mat-card-subtitle>
+        </div>
     </mat-card-header>
+    <fa-icon [icon]="faXmark" matTooltip="Delete" (click)="delete()" class="close-button"></fa-icon>
     <img mat-card-image src="{{songImageUrl}}" alt="Photo of a Shiba Inu" class="img-container">
     <mat-card-content>
         <p></p>

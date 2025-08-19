@@ -36,13 +36,15 @@ export class DeckComponent {
   ) {}
 
   openQuiz(): void {
+    const shuffled: Flashcard[] = this.deck.Flashcards.sort(() => Math.random() - 0.5); // Shuffle the flashcards
+
     const quizRef = this.dialog.open(QuizDialogComponent, {
       width: '90%',
       height: '90%',
       maxHeight: '100vh',
       maxWidth: '100vw',
       autoFocus: false,
-      data: { cards: this.deck.Flashcards }
+      data: { cards: shuffled }
     });
 
     quizRef.afterClosed().subscribe(result => {
@@ -64,7 +66,7 @@ openDialog(): void {
         maxHeight: '900vh',
         maxWidth: '900vw',
         autoFocus: false,
-        data: { cards: flashcards }
+        data: { name:this.deck.Title, cards: flashcards }
       });
     },
     error: (err) => {
