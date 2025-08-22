@@ -60,9 +60,4 @@ export class LoginComponent {
     this.router.navigate(['/signup']);
   }
 
-  forgotPassword() {
-    // Redirect to the forgot password static HTML page
-    console.log('Redirecting to forgot password page');
-    this.router.navigate(['/forgot-password']);
-  }
 }

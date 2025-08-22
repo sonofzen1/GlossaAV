@@ -18,7 +18,7 @@ export const routes: Routes = [
   { path: 'deck', component: DeckComponent },
 
     // Forgot password redirects to static HTML
-  { path: 'forgot-password', redirectTo: 'src/assets/forgot-password.html', pathMatch: 'full' },
+  { path: 'forgot-password', redirectTo: './fpword/forgot-password.html', pathMatch: 'full' },
 
   // Catch-all -> back to login
   { path: '**', redirectTo: '' },

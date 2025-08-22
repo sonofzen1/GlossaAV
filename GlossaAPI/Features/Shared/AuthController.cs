@@ -59,48 +59,54 @@ namespace GlossaAPI.Features.Shared
       // Create starter decks
       var starterDecks = new List<Deck>
         {
-            new Deck
-            {
-                Title = "Verb Conjugations",
-                Flashcards = new List<FlashCard>
-                {
-                    new FlashCard { Term = "to run (I)", Definition = "run" },
-                    new FlashCard { Term = "to run (you)", Definition = "run" },
-                    new FlashCard { Term = "to run (he/she)", Definition = "runs" },
-                    new FlashCard { Term = "to eat (I)", Definition = "eat" },
-                    new FlashCard { Term = "to eat (you)", Definition = "eat" },
-                    new FlashCard { Term = "to eat (he/she)", Definition = "eats" },
-                    new FlashCard { Term = "to sleep (I)", Definition = "sleep" },
-                    new FlashCard { Term = "to sleep (you)", Definition = "sleep" },
-                    new FlashCard { Term = "to sleep (he/she)", Definition = "sleeps" }
-                }
-            },
-            new Deck
-            {
-                Title = "Basic Nouns",
-                Flashcards = new List<FlashCard>
-                {
-                    new FlashCard { Term = "dog", Definition = "A common pet that barks" },
-                    new FlashCard { Term = "cat", Definition = "A common pet that meows" },
-                    new FlashCard { Term = "house", Definition = "A place where people live" },
-                    new FlashCard { Term = "car", Definition = "A vehicle for transportation" },
-                    new FlashCard { Term = "book", Definition = "A written or printed work" },
-                    new FlashCard { Term = "tree", Definition = "A tall plant with a trunk" }
-                }
-            },
-            new Deck
-            {
-                Title = "Greetings",
-                Flashcards = new List<FlashCard>
-                {
-                    new FlashCard { Term = "Hello", Definition = "A greeting to say hi" },
-                    new FlashCard { Term = "Goodbye", Definition = "A farewell to say bye" },
-                    new FlashCard { Term = "Thank you", Definition = "An expression of gratitude" },
-                    new FlashCard { Term = "Please", Definition = "A polite way to make a request" },
-                    new FlashCard { Term = "Good morning", Definition = "A greeting used in the morning" }
-                }
-            }
-        };
+          new Deck
+          {
+              Title = "Verb Conjugations",
+              Flashcards = new List<FlashCard>
+              {
+                  // correr (to run)
+                  new FlashCard { Term = "corro",  Definition = "I run"  },   // (I)
+                  new FlashCard { Term = "corres", Definition = "you run"  },   // (you)
+                  new FlashCard { Term = "corre",  Definition = "he/she runs" },   // (he/she)
+
+                  // comer (to eat)
+                  new FlashCard { Term = "como",   Definition = "I eat"  },   // (I)
+                  new FlashCard { Term = "comes",  Definition = "you eat"  },   // (you)
+                  new FlashCard { Term = "come",   Definition = "he/she eats" },   // (he/she)
+
+                  // dormir (to sleep) — stem-changing
+                  new FlashCard { Term = "duermo",  Definition = "I sleep"  }, // (I)
+                  new FlashCard { Term = "duermes", Definition = "you sleep"  }, // (you)
+                  new FlashCard { Term = "duerme",  Definition = "he/she sleeps" }, // (he/she)
+              }
+          },
+          new Deck
+          {
+              Title = "Basic Nouns",
+              Flashcards = new List<FlashCard>
+              {
+                  new FlashCard { Term = "perro",  Definition = "A common pet that barks" },
+                  new FlashCard { Term = "gato",   Definition = "A common pet that meows" },
+                  new FlashCard { Term = "casa",   Definition = "A place where people live" },
+                  new FlashCard { Term = "carro",  Definition = "A vehicle for transportation" }, // also 'coche' (ES), 'auto'
+                  new FlashCard { Term = "libro",  Definition = "A written or printed work" },
+                  new FlashCard { Term = "árbol",  Definition = "A tall plant with a trunk" }
+              }
+          },
+          new Deck
+          {
+              Title = "Greetings",
+              Flashcards = new List<FlashCard>
+              {
+                  new FlashCard { Term = "Hola",          Definition = "A greeting to say hi" },
+                  new FlashCard { Term = "Adiós",         Definition = "A farewell to say bye" },
+                  new FlashCard { Term = "Gracias",       Definition = "An expression of gratitude" },
+                  new FlashCard { Term = "Por favor",     Definition = "A polite way to make a request" },
+                  new FlashCard { Term = "Buenos días",   Definition = "A greeting used in the morning" }
+              }
+          }
+
+      };
 
       // Create new user
       var user = new User
@@ -110,7 +116,7 @@ namespace GlossaAPI.Features.Shared
         Email = email,
         Decks = starterDecks,
         Songs = new List<int> { 10045902, 2892211, 9614104, 3968305 },
-        ConversationId = ObjectId.GenerateNewId().ToString()
+        ConversationId = ""
       };
 
       // Insert user into MongoDB

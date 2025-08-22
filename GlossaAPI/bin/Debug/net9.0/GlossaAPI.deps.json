@@ -8,7 +8,7 @@
     ".NETCoreApp,Version=v9.0": {
       "GlossaAPI/1.0.0": {
         "dependencies": {
-          "AWSSDK.BedrockRuntime": "4.0.3.2",
+          "AWSSDK.BedrockRuntime": "4.0.4.1",
           "BCrypt.Net-Next": "4.0.3",
           "HtmlAgilityPack": "1.12.1",
           "Microsoft.AspNetCore.OpenApi": "9.0.4",
@@ -23,28 +23,28 @@
           "GlossaAPI.dll": {}
         }
       },
-      "AWSSDK.BedrockRuntime/4.0.3.2": {
+      "AWSSDK.BedrockRuntime/4.0.4.1": {
         "dependencies": {
-          "AWSSDK.Core": "4.0.0.22"
+          "AWSSDK.Core": "4.0.0.24"
         },
         "runtime": {
           "lib/net8.0/AWSSDK.BedrockRuntime.dll": {
             "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.3.2"
+            "fileVersion": "4.0.4.1"
           }
         }
       },
-      "AWSSDK.Core/4.0.0.22": {
+      "AWSSDK.Core/4.0.0.24": {
         "runtime": {
           "lib/net8.0/AWSSDK.Core.dll": {
             "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.0.22"
+            "fileVersion": "4.0.0.24"
           }
         }
       },
       "AWSSDK.SecurityToken/3.7.100.14": {
         "dependencies": {
-          "AWSSDK.Core": "4.0.0.22"
+          "AWSSDK.Core": "4.0.0.24"
         },
         "runtime": {
           "lib/netcoreapp3.1/AWSSDK.SecurityToken.dll": {
@@ -263,19 +263,19 @@
       "serviceable": false,
       "sha512": ""
     },
-    "AWSSDK.BedrockRuntime/4.0.3.2": {
+    "AWSSDK.BedrockRuntime/4.0.4.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-rZnqBBn0cbEyAyvN5ieXLmnSiqMKMRpfqqDWvh4CAhnWwXC7zukJbAW97OSvlBww1sz9SJTTFZPmjTesS1pr3Q==",
-      "path": "awssdk.bedrockruntime/4.0.3.2",
-      "hashPath": "awssdk.bedrockruntime.4.0.3.2.nupkg.sha512"
+      "sha512": "sha512-j0Ueglx42IYyt0oBQfm8Zta5ySOsfER1Y5qezs+1tnkZ2GtlGi02nAyHxWEAVll9N2Eqp9wRPadU4DAk7MLIuQ==",
+      "path": "awssdk.bedrockruntime/4.0.4.1",
+      "hashPath": "awssdk.bedrockruntime.4.0.4.1.nupkg.sha512"
     },
-    "AWSSDK.Core/4.0.0.22": {
+    "AWSSDK.Core/4.0.0.24": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-f6UnTtgtqVLycEUlXk6c/6vUczaqbtRqYsYjNhFMOLanC/VkiId4M9KVLoEcedx5Lv3sdyjS7L9dim2xnYuSew==",
-      "path": "awssdk.core/4.0.0.22",
-      "hashPath": "awssdk.core.4.0.0.22.nupkg.sha512"
+      "sha512": "sha512-YOVko+gv446g41nq39D6Kz/UgoCIW6px2VAgHMSY2hLIpxH1C1eT/trSwnChV0XCzeEkW5g5KY7kb44NZT7hzA==",
+      "path": "awssdk.core/4.0.0.24",
+      "hashPath": "awssdk.core.4.0.0.24.nupkg.sha512"
     },
     "AWSSDK.SecurityToken/3.7.100.14": {
       "type": "package",
