@@ -1,0 +1,42 @@
+<router-outlet></router-outlet>
+
+<mat-toolbar color="primary">
+    <mat-toolbar-row style="justify-content: space-between;">
+        <mat-slide-toggle (change)="toggleDarkMode($event)">Dark Mode</mat-slide-toggle>
+        <span class="mat-h1">Glossa</span>
+        <span class="button-container" style="flex-shrink: 0;">
+            <button mat-button class="sunken-button" (click)="openMenu()">Add Card</button>
+            <button mat-button class="sunken-button" (click)="openDeckMenu()">Add Deck</button>
+        </span>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="page">
+    <mat-tab-group mat-align-tabs="center">
+        <mat-tab label="Dashboard">
+            <mat-grid-list [cols]="getDynamicCols()" rowHeight="220px" gutterSize="1px">
+                <mat-grid-tile *ngFor="let deck of decks">
+                    <card-deck class="large-card-deck" [deck]="deck" (delete)="deleteDeck($event)"></card-deck>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <button *ngIf="!chatOpened" mat-fab class="chat-button" matTooltip="Chat with Sofia!" (click)="openChat()">
+                <mat-icon class="chat-icon">mode_comment</mat-icon>
+            </button>
+            <app-chat *ngIf="chatOpened" [decks]="decks" (closeChat)="closeChat()"></app-chat>
+
+        </mat-tab>
+        <mat-tab label="Library">
+            <div class="songs-grid">
+                <app-song *ngFor="let song of songs" [song]="song" [decks]="decks"
+                    (deleteSong)="onDeleteSong($event)"></app-song>
+            </div>
+
+            <button mat-fab class="fixed-circle-button" matTooltip="Add a song" (click)="openSongMenu()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </mat-tab>
+    </mat-tab-group>
+
+
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,45 @@
+<div class="page">
+    <mat-card class="card">
+        <mat-card-header class = "center-title">
+            <mat-card-title class="title">Login</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
+                <mat-form-field appearance="outline" class="full">
+                    <mat-label>Username or Email</mat-label>
+                    <input matInput name="username" [(ngModel)]="username" required #usernameCtrl="ngModel"
+                        autocomplete="username" />
+                    <mat-error *ngIf="submitted && usernameCtrl.invalid">
+                        Username or email is required
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" name="password" [(ngModel)]="password" required
+                        #passwordCtrl="ngModel" autocomplete="current-password" />
+                    <mat-error *ngIf="submitted && passwordCtrl.invalid">
+                        Password is required
+                    </mat-error>
+                </mat-form-field>
+                <div class="error" *ngIf="formError">
+                    <p class="forgot-password" >
+                        <a (click)="forgotPassword()">Forgot your password?</a>
+                    </p>
+                </div>
+                <!-- General error area (for backend/auth errors later) -->
+                <div class="form-error" *ngIf="formError">{{ formError }}</div>
+
+                <button mat-raised-button color="primary" class="submit" type="submit" [disabled]="!username || !password">
+                    Log in
+                </button>
+            </form>
+
+            <div class="alt">
+                <div class="muted">Don’t have an account?</div>
+                <div class="signup-link" (click)="onSignUpClick()">Sign up</div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

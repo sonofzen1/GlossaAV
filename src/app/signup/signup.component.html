@@ -1,0 +1,52 @@
+<div class="page">
+    <mat-card class="card">
+        <mat-card-header class="center-title">
+            <mat-card-title class="title">Sign Up</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <form (ngSubmit)="onSubmit()">
+                <mat-form-field appearance="outline" class="full">
+                    <mat-label>Email</mat-label>
+                    <input matInput name="email" [(ngModel)]="email" required email #emailCtrl="ngModel"
+                        autocomplete="email" />
+                    <mat-error *ngIf="submitted && emailCtrl.errors?.['required']">
+                        Email is required
+                    </mat-error>
+                    <mat-error *ngIf="submitted && emailCtrl.errors?.['email']">
+                        Please enter a valid email address
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full">
+                    <mat-label>Username</mat-label>
+                    <input matInput name="username" [(ngModel)]="username" required #usernameCtrl="ngModel" autocomplete="username" />
+                    <mat-error *ngIf="submitted && usernameCtrl.invalid">
+                        Username or email is required
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" name="password" [(ngModel)]="password" required
+                        #passwordCtrl="ngModel" autocomplete="current-password" />
+                    <mat-error *ngIf="submitted && passwordCtrl.invalid">
+                        Password is required
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- General error area (for backend/auth errors later) -->
+                <div class="form-error" *ngIf="formError">{{ formError }}</div>
+
+                <button mat-raised-button color="primary" class="submit" type="submit">
+                    Sign Up
+                </button>
+            </form>
+
+            <div class="alt">
+                <div class="muted">Already have an account?</div>
+                <div class="signup-link" (click)="onLoginClick()">Log In</div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

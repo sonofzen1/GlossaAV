@@ -8,11 +8,29 @@ namespace GlossaAPI.Features.FlashCards.Services
 {
   public interface IUserContextService
   {
-    string Username { get; }
+    string Username { get; set; }
+    void SetUsername(string username);
+    void ClearUsername();
   }
   public class UserContextService : IUserContextService
   {
-    public string Username => "mycooluser"; // Replace with logic later
+    private string _username;
+
+    public string Username
+    {
+      get => _username ?? "mycooluser"; // Fallback to "Guest" if not set
+      set => _username = value;
+    }
+
+    public void SetUsername(string username)
+    {
+      _username = username;
+    }
+
+    public void ClearUsername()
+    {
+      _username = null;
+    }
   }
   public class FlashCardHandler<T> : IMongoDbService<T>
   {

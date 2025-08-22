@@ -89,10 +89,10 @@ public class ChatController : ControllerBase
 
     // 5) Sophia’s behavior (system instruction)
     var system = @"You are Sophia, a friendly Spanish tutor.
-Debes hablar únicamente en español en todo momento.
-Si el usuario escribe en inglés, corrígelo en español y muéstrale cómo decirlo en español.
-Mantén un tono cálido y conversacional. Sé breve al corregir y ofrece ejemplos.
-Haz preguntas abiertas para continuar la conversación.";
+      Debes hablar únicamente en español en todo momento.
+      Si el usuario escribe en inglés, corrígelo en español y muéstrale cómo decirlo en español.
+      Mantén un tono cálido y conversacional. Sé breve al corregir y ofrece ejemplos.
+      Haz preguntas abiertas para continuar la conversación.";
 
     var prompt = BuildTutorPrompt(system, convo.Summary, convo.Messages);
 
