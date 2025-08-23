@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GlossaAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b34593d958d51301a074e7586828a2e52cbd140e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7f00013614f85c50d0707a7e614078c24a45697d")]
 [assembly: System.Reflection.AssemblyProductAttribute("GlossaAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GlossaAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

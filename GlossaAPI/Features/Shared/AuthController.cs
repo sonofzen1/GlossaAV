@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using MongoDB.Bson;
 using System.Web;
 using GlossaAPI.Features.FlashCards.Services;
+using Amazon.BedrockRuntime.Model;
 
 namespace GlossaAPI.Features.Shared
 {
@@ -128,6 +129,8 @@ namespace GlossaAPI.Features.Shared
     [HttpPost("login")]
     public async Task<IActionResult> Login(string username, string password)
     {
+      username = HttpUtility.UrlDecode(username);
+      password = HttpUtility.UrlDecode(password);
 
       // Simple email regex: checks for format like "something@domain.com"
       bool isEmail = Regex.IsMatch(username ?? "", @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
