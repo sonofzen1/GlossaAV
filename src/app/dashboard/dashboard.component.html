@@ -2,7 +2,11 @@
 
 <mat-toolbar color="primary">
     <mat-toolbar-row style="justify-content: space-between;">
-        <mat-slide-toggle (change)="toggleDarkMode($event)">Dark Mode</mat-slide-toggle>
+        <div class = "left-container">
+            <div class="log-out-button" (click)="logout()">Log Out</div>
+            <mat-slide-toggle (change)="toggleDarkMode($event)">Dark Mode</mat-slide-toggle>
+        </div>
+        
         <span class="mat-h1">Glossa</span>
         <span class="button-container" style="flex-shrink: 0;">
             <button mat-button class="sunken-button" (click)="openMenu()">Add Card</button>

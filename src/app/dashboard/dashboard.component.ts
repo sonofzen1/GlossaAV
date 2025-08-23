@@ -26,6 +26,7 @@ import { AddSongModalComponent } from '../dialog/add-song-modal/add-song-modal.c
 import { ChatComponent } from '../chat/chat.component';
 import { DeckAPIService } from '../services/deck-api.service';
 import { SongsService } from '../services/songs.service';
+import { Router } from '@angular/router';
 import { filter, map, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -42,7 +43,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private deckService: DeckAPIService,
-    private songsService: SongsService // Inject SongsService
+    private songsService: SongsService, // Inject SongsService
+    private router: Router // Inject Router for navigation
   ) {
     
   }
@@ -201,5 +203,12 @@ export class DashboardComponent implements OnInit {
 
   closeChat(): void {
     this.chatOpened = false; // Close the chat
+  }
+
+  logout(): void {
+    // Implement logout logic here
+    console.log('User logged out');
+    
+    this.router.navigate(['']); // Navigate to login page after logout
   }
 }

@@ -24,6 +24,21 @@
     gap: 10px;
 }
 
+.left-container {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.log-out-button {
+    cursor: pointer;
+    padding: 6px 14px;
+    text-transform: none;
+    font-weight: 350;
+}
+
 .sunken-button {
     background-color: #f0f0f0;
     border: 1px solid #ccc;
