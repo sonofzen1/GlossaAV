@@ -79,6 +79,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ChatController",
+    "Method": "Translate",
+    "RelativePath": "api/chat/translate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "ChatController\u002BTranslateRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "GlossaAPI.Features.FlashCards.Controllers.FlashCardsController",
     "Method": "UpdateDeckTitle",
     "RelativePath": "api/FlashCards/deck",

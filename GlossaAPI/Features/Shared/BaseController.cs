@@ -5,8 +5,11 @@ using GlossaAPI.Features.FlashCards.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using MongoDB.Driver;
+using System.Net;
 using System.Text;
 using System.Text.Json;
+using System.Net; // for WebUtility.HtmlDecode
+using static System.Net.WebRequestMethods;
 
 [ApiController]
 [Route("api/chat")]
@@ -16,18 +19,74 @@ public class ChatController : ControllerBase
   private readonly FlashCardHandler<Conversation> _convos;
   private readonly FlashCardHandler<User> _users;
   private readonly IUserContextService _userCtx;
+  private readonly string _googleApiKey;
+  private readonly string _googleEndpoint;
+  private readonly HttpClient _http;
 
   public ChatController(
     IAmazonBedrockRuntime bedrock,
     FlashCardHandler<Conversation> convos,
     FlashCardHandler<User> users,
-    IUserContextService userCtx)
+    IUserContextService userCtx,
+    IConfiguration config,
+    IHttpClientFactory httpFactory)
   {
     _bedrock = bedrock;
     _convos = convos;
     _users = users;
     _userCtx = userCtx;
+
+    _googleApiKey = config["GoogleTranslate:ApiKey"] ?? throw new Exception("Google API key missing");
+    _googleEndpoint = config["GoogleTranslate:Endpoint"] ?? "https://translation.googleapis.com/language/translate/v2";
+    _http = httpFactory.CreateClient();
   }
+
+  public class TranslateRequest
+  {
+    public string Text { get; set; } = "";
+    public string Source { get; set; } = "es";
+    public string Target { get; set; } = "en";
+  }
+
+  [HttpPost("translate")]
+  public async Task<IActionResult> Translate([FromBody] TranslateRequest req)
+  {
+    if (string.IsNullOrWhiteSpace(req?.Text))
+      return BadRequest("text is required");
+
+    var url = $"{_googleEndpoint}?key={_googleApiKey}";
+    var payload = new
+    {
+      q = req.Text,             // single string; array also supported if you want batch
+      source = req.Source,
+      target = req.Target,
+      format = "text"
+    };
+
+    using var resp = await _http.PostAsJsonAsync(url, payload);
+    var body = await resp.Content.ReadAsStringAsync();
+    if (!resp.IsSuccessStatusCode)
+      return StatusCode((int)resp.StatusCode, body);
+
+    using var doc = JsonDocument.Parse(body);
+    var translations = doc.RootElement
+        .GetProperty("data")
+        .GetProperty("translations");
+
+    // Google returns an array; we’ll take the first item and HTML-decode it.
+    var raw = translations[0].GetProperty("translatedText").GetString() ?? string.Empty;
+
+    // Decode HTML entities (some responses are double-encoded, so decode twice if needed).
+    string Decoded(string s)
+    {
+      var once = WebUtility.HtmlDecode(s);
+      return once == s ? s : WebUtility.HtmlDecode(once);
+    }
+
+    var decoded = Decoded(raw);
+    return Ok(new { translatedText = decoded });
+  }
+
 
   public class ChatMessageRequest { public string Message { get; set; } = ""; }
 
