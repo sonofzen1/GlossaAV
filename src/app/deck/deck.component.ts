@@ -53,7 +53,7 @@ export class DeckComponent {
   }
 
 openDialog(): void {
-  if(this.deck.Loaded === false) {
+  if(!this.deck.Loaded) {
     // Lazy-load flashcards from the server
     this.flashcardService.getFlashcards(this.deck.Title).subscribe({
     next: (flashcards) => {

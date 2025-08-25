@@ -84,7 +84,7 @@ export class FlashcardModalComponent {
     });
 
     // check if flashcards were preloaded
-    if(this.selectedDeck.Loaded === false) {
+    if(!this.selectedDeck.Loaded) {
     // Lazy-load flashcards from the server
       this.flashcardService.getFlashcards(this.selectedDeck.Title).subscribe({
         next: (flashcards) => {
