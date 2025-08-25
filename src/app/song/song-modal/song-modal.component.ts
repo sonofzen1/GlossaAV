@@ -87,11 +87,6 @@ export class SongModalComponent {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          // Find the updated deck in the decks array and update it
-          const updatedDeckIndex = this.data.decks.findIndex(deck => deck.name === result.name);
-          if (updatedDeckIndex !== -1) {
-            this.data.decks[updatedDeckIndex] = result;
-          }
           console.log('The dialog was closed with result:', result);
         } else {
           console.log('The dialog was closed without result');

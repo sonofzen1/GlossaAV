@@ -5,8 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class TranslationService {
-private apiUrl = 'https://localhost:5001/api/chat/translate'; // adjust port
-
+  private apiUrl = 'https://localhost:5001/api/chat/translate'; // adjust port
 
   constructor(private http: HttpClient) {}
 

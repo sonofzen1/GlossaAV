@@ -82,11 +82,29 @@ export class FlashcardModalComponent {
         // Optionally show a user-facing error message
       }
     });
-    
 
-    // Add the new flashcard to the selected deck
-    this.selectedDeck.Flashcards.push(newFlashcard);
-    console.log('Updated Deck:', this.selectedDeck);
+    // check if flashcards were preloaded
+    if(this.selectedDeck.Loaded === false) {
+    // Lazy-load flashcards from the server
+      this.flashcardService.getFlashcards(this.selectedDeck.Title).subscribe({
+        next: (flashcards) => {
+          this.selectedDeck.Flashcards = flashcards; // Store in local deck
+          this.selectedDeck.Flashcards.push(newFlashcard);
+          this.selectedDeck.Loaded = true; // Mark as loaded
+          console.log('Loaded flashcards:', flashcards);
+        },
+        error: (err) => {
+          console.error('Failed to load flashcards:', err);
+        }
+      });
+    }
+    else{
+      // Add the new flashcard to the selected deck
+      this.selectedDeck.Flashcards.push(newFlashcard);
+      console.log('Updated Deck:', this.selectedDeck);
+    }
+      
+
 
     // Pass the updated deck back to the parent component
     this.dialogRef.close(this.selectedDeck);

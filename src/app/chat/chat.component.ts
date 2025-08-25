@@ -80,9 +80,6 @@ onBotMessageMouseUp(event: MouseEvent, message: string): void {
   const selection = window.getSelection()?.toString().trim();
   if (selection) {
     console.log('Selected text:', selection); // Debug statement
-    this.translationService.translateText(selection).subscribe({
-      next: (translation: any) => {
-        console.log('Translation:', translation); // Debug statement
 
         // Open the flashcard modal dialog
         const dialogConfig = new MatDialogConfig();
@@ -92,7 +89,7 @@ onBotMessageMouseUp(event: MouseEvent, message: string): void {
         dialogConfig.maxHeight = '900vh';
         dialogConfig.maxWidth = '900vw';
         dialogConfig.autoFocus = '.modal-header'; // Focus the modal header element
-        dialogConfig.data = { text: selection, definition: translation, decks: this.decks }; // Pass the selection, translation, and decks
+        dialogConfig.data = { text: selection, decks: this.decks }; // Pass the selection, translation, and decks
 
         const dialogRef = this.dialog.open(FlashcardModalComponent, dialogConfig);
 
@@ -103,14 +100,9 @@ onBotMessageMouseUp(event: MouseEvent, message: string): void {
             console.log('Flashcard modal closed without result'); // Debug statement
           }
         });
-      },
-      error: (err: any) => {
-        console.error('Translation error:', err);
-        this.messages.push({ text: 'Error: Could not translate text', isUser: false });
       }
-    });
   }
-}
+
 
 onClose(): void {
   this.closeChat.emit(); // Emit the close event

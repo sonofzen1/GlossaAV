@@ -53,11 +53,12 @@ export class DeckComponent {
   }
 
 openDialog(): void {
-  if(this.deck.Flashcards.length === 0) {
+  if(this.deck.Loaded === false) {
     // Lazy-load flashcards from the server
     this.flashcardService.getFlashcards(this.deck.Title).subscribe({
     next: (flashcards) => {
       this.deck.Flashcards = flashcards; // Store in local deck
+      this.deck.Loaded = true; // Mark as loaded
       console.log('Loaded flashcards:', flashcards);
       // Open the dialog with loaded cards
       this.dialog.open(DeckDialogComponent, {
