@@ -10,6 +10,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faRectangleXmark } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslationService } from '../../services/translation.service';
+import { FlashcardAPIService } from '../../services/flashcard-api.service';
 
 @Component({
   selector: 'app-flashcard-modal',
@@ -26,12 +27,23 @@ export class FlashcardModalComponent {
   constructor(
     public dialogRef: MatDialogRef<FlashcardModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { text?: string; decks: any[] }, // Receive the injected data
+    public flashcardService: FlashcardAPIService, // Inject FlashcardAPIService
     private translationService: TranslationService
   ) {
-        if (data.text) {
-          this.term = data.text;
-          this.translateTerm(); // Call the translation function if text is provided
-        }
+    if (data.text) {
+      const raw = data.text.trim();
+      const delim = raw.indexOf('%');
+
+      if (delim > -1) {
+        // text came as "term%definition" -> prefill both, skip translation
+        this.term = raw.slice(0, delim).trim();
+        this.definition = raw.slice(delim + 1).trim();
+      } else {
+        // original flow: only term -> translate
+        this.term = raw;
+        this.translateTerm();
+      }
+    }
 
   }
 
@@ -54,13 +66,45 @@ export class FlashcardModalComponent {
   }
 
   submit(): void {
+    this.term = this.term.trim();
+    this.definition = this.definition.trim();
     const newFlashcard = new Flashcard(this.term, this.definition); // Create a new flashcard model
     console.log('New Flashcard:', newFlashcard);
     
+    // Add the new flashcard using the service
+    this.flashcardService.addFlashcard(this.selectedDeck.Title, newFlashcard).subscribe({
+      next: (response) => {
+        console.log('Flashcard added:', response);
+    
+      },
+      error: (err) => {
+        console.error('Failed to add flashcard:', err);
+        // Optionally show a user-facing error message
+      }
+    });
 
-    // Add the new flashcard to the selected deck
-    this.selectedDeck.flashcards.push(newFlashcard);
-    console.log('Updated Deck:', this.selectedDeck);
+    // check if flashcards were preloaded
+    if(!this.selectedDeck.Loaded) {
+    // Lazy-load flashcards from the server
+      this.flashcardService.getFlashcards(this.selectedDeck.Title).subscribe({
+        next: (flashcards) => {
+          this.selectedDeck.Flashcards = flashcards; // Store in local deck
+          this.selectedDeck.Flashcards.push(newFlashcard);
+          this.selectedDeck.Loaded = true; // Mark as loaded
+          console.log('Loaded flashcards:', flashcards);
+        },
+        error: (err) => {
+          console.error('Failed to load flashcards:', err);
+        }
+      });
+    }
+    else{
+      // Add the new flashcard to the selected deck
+      this.selectedDeck.Flashcards.push(newFlashcard);
+      console.log('Updated Deck:', this.selectedDeck);
+    }
+      
+
 
     // Pass the updated deck back to the parent component
     this.dialogRef.close(this.selectedDeck);

@@ -11,6 +11,7 @@ import { faRectangleXmark } from '@fortawesome/free-solid-svg-icons';
 import { Deck } from '../../models/deck.model'; // Import the Deck model
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { DeckAPIService } from '../../services/deck-api.service';
 
 @Component({
   selector: 'app-deck-menu-modal',
@@ -25,18 +26,27 @@ export class DeckMenuModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<DeckMenuModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { decks: any[] } // Receive the injected data
+    @Inject(MAT_DIALOG_DATA) public data: { decks: any[] }, // Receive the injected data
+    public deckService: DeckAPIService // Inject DeckAPIService
   ) {}
 
   onClose(): void {
-    console.log('Button pressed, closing dialog'); // Debug statement
     this.dialogRef.close();
   }
 
   submit(): void {
-    const newDeck = new Deck(this.name,[]); // Create a new flashcard model
-    console.log('New Flashcard:', newDeck);
-    
+    const newDeck = new Deck(this.name,[]); // Create a new deck model
+
+    this.deckService.addDeck(newDeck).subscribe({
+      next: (response) => {
+        console.log('Deck created successfully:', response);
+        // Optional: show a toast/snackbar or navigate
+      },
+      error: (err) => {
+        console.error('Error creating deck:', err);
+        // Optional: show an error message to the user
+      },
+    });
 
     const updatedDecks = [...this.data.decks, newDeck];
     console.log('Updated Decks:', updatedDecks);

@@ -33,8 +33,31 @@ currentSelection: any = '';
 constructor(private chatService: ChatService, private translationService: TranslationService, private dialog: MatDialog) {}
 
 ngOnInit() {
-  this.messages.push({ text: this.introduction, isUser: false }); // Push the introduction message to the chat
+  this.chatService.getHistory(12).subscribe({
+    next: (res: any) => {
+      const msgs = Array.isArray(res?.messages) ? res.messages : [];
+      if (msgs.length) {
+        this.messages = msgs.map((m: any) => ({
+          text: String(m?.text ?? ''),
+          isUser: String(m?.role ?? '') === 'user'
+        }));
+
+        // prepend intro if the history is shorter than 12
+        if (msgs.length < 12) {
+          this.messages.unshift({ text: this.introduction, isUser: false });
+        }
+      } else {
+        // no history yet: keep your intro
+        this.messages.push({ text: this.introduction, isUser: false });
+      }
+    },
+    error: () => {
+      // if history fails, still show intro so UI isn't empty
+      this.messages.push({ text: this.introduction, isUser: false });
+    }
+  });
 }
+
 
 sendMessage() {
   if (!this.newMessage.trim()) return;
@@ -57,9 +80,6 @@ onBotMessageMouseUp(event: MouseEvent, message: string): void {
   const selection = window.getSelection()?.toString().trim();
   if (selection) {
     console.log('Selected text:', selection); // Debug statement
-    this.translationService.translateText(selection).subscribe({
-      next: (translation: any) => {
-        console.log('Translation:', translation); // Debug statement
 
         // Open the flashcard modal dialog
         const dialogConfig = new MatDialogConfig();
@@ -69,7 +89,7 @@ onBotMessageMouseUp(event: MouseEvent, message: string): void {
         dialogConfig.maxHeight = '900vh';
         dialogConfig.maxWidth = '900vw';
         dialogConfig.autoFocus = '.modal-header'; // Focus the modal header element
-        dialogConfig.data = { text: selection, definition: translation, decks: this.decks }; // Pass the selection, translation, and decks
+        dialogConfig.data = { text: selection, decks: this.decks }; // Pass the selection, translation, and decks
 
         const dialogRef = this.dialog.open(FlashcardModalComponent, dialogConfig);
 
@@ -80,14 +100,9 @@ onBotMessageMouseUp(event: MouseEvent, message: string): void {
             console.log('Flashcard modal closed without result'); // Debug statement
           }
         });
-      },
-      error: (err: any) => {
-        console.error('Translation error:', err);
-        this.messages.push({ text: 'Error: Could not translate text', isUser: false });
       }
-    });
   }
-}
+
 
 onClose(): void {
   this.closeChat.emit(); // Emit the close event

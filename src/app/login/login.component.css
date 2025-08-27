@@ -1,0 +1,83 @@
+/* Full-page light-blue background and center card */
+:host,
+.page {
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background: #e6f3ff;
+}
+
+.card {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+}
+
+.title {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+.center-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    padding-bottom: 10px;
+}
+/* Layout helpers */
+.full {
+    width: 100%;
+    display: block;
+}
+
+.submit {
+    width: 100%;
+    margin-top: 8px;
+}
+
+/* General form error (for backend messages) */
+.form-error {
+    padding-top: 10px ;
+    justify-self: center;
+    text-align: center;
+    color: #d32f2f;
+    /* material error color */
+    font-size: 12px;
+    margin: 4px 0 8px;
+}
+
+.forgot-password {
+    text-align: center;
+    font-size: 14px;
+}
+
+.forgot-password a {
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* “Sign up” link styling + pointer on hover */
+.alt {
+    margin-top: 16px;
+    text-align: center;
+}
+
+.muted {
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 2px;
+}
+
+.signup-link {
+    color: #1976d2;
+    cursor: pointer;
+    /* <- pointer on hover */
+}
+
+.signup-link:hover {
+    text-decoration: underline;
+}

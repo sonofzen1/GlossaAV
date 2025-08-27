@@ -8,6 +8,8 @@
     ".NETCoreApp,Version=v9.0": {
       "GlossaAPI/1.0.0": {
         "dependencies": {
+          "AWSSDK.BedrockRuntime": "4.0.4.1",
+          "BCrypt.Net-Next": "4.0.3",
           "HtmlAgilityPack": "1.12.1",
           "Microsoft.AspNetCore.OpenApi": "9.0.4",
           "MongoDB.Driver": "3.4.0",
@@ -21,22 +23,41 @@
           "GlossaAPI.dll": {}
         }
       },
-      "AWSSDK.Core/3.7.100.14": {
+      "AWSSDK.BedrockRuntime/4.0.4.1": {
+        "dependencies": {
+          "AWSSDK.Core": "4.0.0.24"
+        },
         "runtime": {
-          "lib/netcoreapp3.1/AWSSDK.Core.dll": {
-            "assemblyVersion": "3.3.0.0",
-            "fileVersion": "3.7.100.14"
+          "lib/net8.0/AWSSDK.BedrockRuntime.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.4.1"
+          }
+        }
+      },
+      "AWSSDK.Core/4.0.0.24": {
+        "runtime": {
+          "lib/net8.0/AWSSDK.Core.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.0.24"
           }
         }
       },
       "AWSSDK.SecurityToken/3.7.100.14": {
         "dependencies": {
-          "AWSSDK.Core": "3.7.100.14"
+          "AWSSDK.Core": "4.0.0.24"
         },
         "runtime": {
           "lib/netcoreapp3.1/AWSSDK.SecurityToken.dll": {
             "assemblyVersion": "3.3.0.0",
             "fileVersion": "3.7.100.14"
+          }
+        }
+      },
+      "BCrypt.Net-Next/4.0.3": {
+        "runtime": {
+          "lib/net6.0/BCrypt.Net-Next.dll": {
+            "assemblyVersion": "4.0.3.0",
+            "fileVersion": "4.0.3.0"
           }
         }
       },
@@ -242,12 +263,19 @@
       "serviceable": false,
       "sha512": ""
     },
-    "AWSSDK.Core/3.7.100.14": {
+    "AWSSDK.BedrockRuntime/4.0.4.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-gnEgxBlk4PFEfdPE8Lkf4+D16MZFYSaW7/o6Wwe5e035QWUkTJX0Dn4LfTCdV5QSEL/fOFxu+yCAm55eIIBgog==",
-      "path": "awssdk.core/3.7.100.14",
-      "hashPath": "awssdk.core.3.7.100.14.nupkg.sha512"
+      "sha512": "sha512-j0Ueglx42IYyt0oBQfm8Zta5ySOsfER1Y5qezs+1tnkZ2GtlGi02nAyHxWEAVll9N2Eqp9wRPadU4DAk7MLIuQ==",
+      "path": "awssdk.bedrockruntime/4.0.4.1",
+      "hashPath": "awssdk.bedrockruntime.4.0.4.1.nupkg.sha512"
+    },
+    "AWSSDK.Core/4.0.0.24": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-YOVko+gv446g41nq39D6Kz/UgoCIW6px2VAgHMSY2hLIpxH1C1eT/trSwnChV0XCzeEkW5g5KY7kb44NZT7hzA==",
+      "path": "awssdk.core/4.0.0.24",
+      "hashPath": "awssdk.core.4.0.0.24.nupkg.sha512"
     },
     "AWSSDK.SecurityToken/3.7.100.14": {
       "type": "package",
@@ -255,6 +283,13 @@
       "sha512": "sha512-dGCVuVo0CFUKWW85W8YENO+aREf8sCBDjvGbnNvxJuNW4Ss+brEU9ltHhq2KfZze2VUNK1/wygbPG1bmbpyXEw==",
       "path": "awssdk.securitytoken/3.7.100.14",
       "hashPath": "awssdk.securitytoken.3.7.100.14.nupkg.sha512"
+    },
+    "BCrypt.Net-Next/4.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-W+U9WvmZQgi5cX6FS5GDtDoPzUCV4LkBLkywq/kRZhuDwcbavOzcDAr3LXJFqHUi952Yj3LEYoWW0jbEUQChsA==",
+      "path": "bcrypt.net-next/4.0.3",
+      "hashPath": "bcrypt.net-next.4.0.3.nupkg.sha512"
     },
     "DnsClient/1.6.1": {
       "type": "package",

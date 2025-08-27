@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Flashcard } from '../models/flashcard.model';
 
@@ -11,8 +11,18 @@ export class FlashcardAPIService {
 
   constructor(private http: HttpClient) {}
 
-  getById(id: string): Observable<Flashcard> {
-    return this.http.get<Flashcard>(`${this.apiUrl}/${id}`);
+  getFlashcards(deckTitle: string): Observable<Flashcard[]> {
+    return this.http.get<Flashcard[]>(`${this.apiUrl}/decks/${encodeURIComponent(deckTitle)}`);
+  }
+
+  addFlashcard(deckTitle: string, flashcard: Flashcard): Observable<any> {
+    return this.http.post(`${this.apiUrl}/decks/${encodeURIComponent(deckTitle)}/Flashcards`, flashcard);
+  }
+  
+  deleteFlashcard(deckTitle: string, flashcardIndex: number): Observable<any> {
+    console.log('Deleting flashcard', { deckTitle, flashcardIndex });
+    const url = `${this.apiUrl}/flashcard?deckTitle=${encodeURIComponent(deckTitle)}&index=${flashcardIndex}`;
+    return this.http.delete(url);
   }
 
 }

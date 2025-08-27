@@ -1,12 +1,12 @@
 <mat-card class="stacked-card">
   <mat-card-header class="center-title">
     <mat-card-title *ngIf="!isRenaming" align="center">
-      <h2 align="center">{{deck.name}}</h2>
+      <h2 align="center">{{deck.Title}}</h2>
     </mat-card-title>
     <form *ngIf="isRenaming" class="rename-form" (click)="$event.stopPropagation();" (submit)="onRenameKeydown($event)">
       <mat-form-field>
         <mat-label>Press Enter to save</mat-label>
-        <input matInput placeholder="Deck" [(ngModel)]="deck.name" name="name">
+        <input matInput placeholder="Deck" [(ngModel)]="deck.Title" name="name">
       </mat-form-field>
     </form>
     <div *ngIf="isRenaming" class="backdrop" (click)="cancelRename()"></div>

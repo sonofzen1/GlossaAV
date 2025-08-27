@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "lfQX82jdeSk=",
+  "dgSpecHash": "KYsHxhAnZ7o=",
   "success": true,
   "projectFilePath": "C:\\Users\\sonof\\Documents\\AngularProjects\\GlossaAV\\GlossaAPI\\GlossaAPI.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\sonof\\.nuget\\packages\\awssdk.core\\3.7.100.14\\awssdk.core.3.7.100.14.nupkg.sha512",
+    "C:\\Users\\sonof\\.nuget\\packages\\awssdk.bedrockruntime\\4.0.4.1\\awssdk.bedrockruntime.4.0.4.1.nupkg.sha512",
+    "C:\\Users\\sonof\\.nuget\\packages\\awssdk.core\\4.0.0.24\\awssdk.core.4.0.0.24.nupkg.sha512",
     "C:\\Users\\sonof\\.nuget\\packages\\awssdk.securitytoken\\3.7.100.14\\awssdk.securitytoken.3.7.100.14.nupkg.sha512",
+    "C:\\Users\\sonof\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\sonof\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
     "C:\\Users\\sonof\\.nuget\\packages\\htmlagilitypack\\1.12.1\\htmlagilitypack.1.12.1.nupkg.sha512",
     "C:\\Users\\sonof\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.4\\microsoft.aspnetcore.openapi.9.0.4.nupkg.sha512",
@@ -30,5 +32,16 @@
     "C:\\Users\\sonof\\.nuget\\packages\\system.security.principal.windows\\5.0.0\\system.security.principal.windows.5.0.0.nupkg.sha512",
     "C:\\Users\\sonof\\.nuget\\packages\\zstdsharp.port\\0.7.3\\zstdsharp.port.0.7.3.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1608",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Detected package version outside of dependency constraint: AWSSDK.SecurityToken 3.7.100.14 requires AWSSDK.Core (>= 3.7.100.14 && < 4.0.0) but version AWSSDK.Core 4.0.0.24 was resolved.",
+      "libraryId": "AWSSDK.Core",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    }
+  ]
 }

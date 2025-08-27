@@ -4,6 +4,8 @@ using GlossaAPI.Mongo;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Amazon;
+using Amazon.BedrockRuntime;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,22 +36,37 @@ builder.Services.AddSingleton<IMongoClient>(x =>
 });
 
 // Adds the Flash Cards Service to the DI list. Each new Service needs to do the same, also targetting a xecifc cluster.
+
+builder.Services.AddSingleton<IUserContextService, UserContextService>();
+
 builder.Services.AddScoped(x =>
-  new FlashCardHandler<FlashCard> (
+  new FlashCardHandler<User>(
     x.GetRequiredService<IMongoClient>(),
     x.GetRequiredService<IOptions<MongoDbSettings>>().Value,
-    "FlashCards"
+    "User"
     )
 );
 
 builder.Services.AddScoped(x =>
-  new FlashCardHandler<Deck>(
+  new FlashCardHandler<Song>(
     x.GetRequiredService<IMongoClient>(),
     x.GetRequiredService<IOptions<MongoDbSettings>>().Value,
-    "Decks"
+    "Songs"
     )
 );
 
+// Bedrock client (reads creds from env/CLI profile)
+builder.Services.AddSingleton<IAmazonBedrockRuntime>(_ =>
+    new AmazonBedrockRuntimeClient(RegionEndpoint.USEast1));
+
+// Conversations collection handler (same pattern you use for Songs/User)
+builder.Services.AddScoped(x =>
+  new FlashCardHandler<Conversation>(
+    x.GetRequiredService<IMongoClient>(),
+    x.GetRequiredService<IOptions<MongoDbSettings>>().Value,
+    "Conversations" // <— single shared collection, not one per convo
+  )
+);
 
 var app = builder.Build();
 

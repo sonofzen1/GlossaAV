@@ -3,46 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root' // Singleton, available app-wide
-})
+@Injectable({ providedIn: 'root' })
 export class TranslationService {
-  private apiUrl = 'https://translation.googleapis.com/language/translate/v2';
-  private apiKey = 'AIzaSyB0QOTZdGNH7_3WtPoYios1OX_L37tsfC0'; // Replace with your API key or use environment variables
+  private apiUrl = 'https://localhost:5001/api/chat/translate'; // adjust port
 
   constructor(private http: HttpClient) {}
 
-  private decodeHtmlEntities(text: string): string {
-    const textarea = document.createElement('textarea');
-    textarea.innerHTML = text;
-    return textarea.value;
-  }
-
-  translateText(text: string, sourceLang: string = 'es', targetLang: string = 'en'): Observable<string> {
-    if (!text) {
-      return throwError(() => new Error('No text provided for translation'));
-    }
-
-    const requestBody = {
-      q: text,
-      target: targetLang,
-      source: sourceLang
-    };
-
-    return this.http
-      .post(this.apiUrl, requestBody, { params: { key: this.apiKey } })
-      .pipe(
-        map((response: any) => {
-          if (response && response.data && response.data.translations) {
-            const rawText = response.data.translations[0].translatedText;
-            return this.decodeHtmlEntities(rawText);
-          }
-          throw new Error('Unexpected response format');
-        }),
-        catchError((error) => {
-          console.error('Translation error:', error);
-          return throwError(() => error);
-        })
-      );
+  translateText(text: string, source = 'es', target = 'en'): Observable<string> {
+    return this.http.post<{ translatedText: string }>(this.apiUrl, {
+      text, source, target
+    }).pipe(map(r => r.translatedText));
   }
 }

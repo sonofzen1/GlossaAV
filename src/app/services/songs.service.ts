@@ -3,6 +3,12 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { TranslationService } from './translation.service';
+import { Song } from '../models/song.model'; // Assuming you have a Song model defined
+
+export interface ScrapeResponse {
+  success: boolean;
+  message: string;
+}
 
 @Injectable({
     providedIn: 'root'
@@ -12,44 +18,30 @@ export class SongsService {
 
     constructor(private http: HttpClient, private translationService: TranslationService) {}
 
-    scrapeLyrics(url: string): Observable<{
-        title: string;
-        artist: string;
-        spanishLyrics: string[];
-        englishLyrics: string[];
-        image: URL;
-    }> {
-        return this.http.get<any>(`${this.apiUrl}/scrape?url=${encodeURIComponent(url)}`).pipe(
-            mergeMap(response => {
-              const verses = this.splitIntoVerses(response.lyrics);
-              const rawLyrics = verses.join('/');
-        
-              return this.translationService.translateText(rawLyrics, 'es', 'en').pipe(
-                map(translated => {
-                  const englishLyrics = translated.split('/').map(line => line.trim()).filter(Boolean);
-        
-                  return {
-                    title: response.title,
-                    artist: response.artist,
-                    spanishLyrics: verses,
-                    englishLyrics,
-                    image: new URL(response.imageURL || 'https://via.placeholder.com/150')
-                  };
-                })
-              );
-            }),
+    getAllSongs(): Observable<Song[]> {
+        return this.http.get<any[]>(`${this.apiUrl}/songs`).pipe(
+            map((songs: any[]) => songs.map(song => ({
+                title: song.title,
+                artist: song.artist,
+                spanishLyrics: song.spanishLyrics,
+                englishLyrics: song.englishLyrics,
+                image: song.imageUrl,
+                songId: song.id
+            } as Song))),
             catchError(this.handleError)
         );
     }
 
-    private splitIntoVerses(cleanedLyrics: string): string[] {
-        if (!cleanedLyrics) return [];
-    
-        return cleanedLyrics
-            .split(/\n{1,}/) // split on 1 or more line breaks
-            .map(line => line.trim())
-            .filter(Boolean);
+    deleteSong(songId: number): Observable<any> {
+        return this.http.delete(`${this.apiUrl}/songs/${songId}`).pipe(
+            catchError(this.handleError)
+        );
     }
+
+
+  scrapeLyrics(url: string): Observable<ScrapeResponse> {
+    return this.http.get<ScrapeResponse>(`${this.apiUrl}/scrape?url=${encodeURIComponent(url)}`);
+  }
 
     private handleError(error: HttpErrorResponse): Observable<never> {
         let errorMessage = 'An error occurred';

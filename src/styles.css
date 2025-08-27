@@ -87,6 +87,66 @@ body.dark-mode .stacked-card::after {
   /* Add border-radius for smooth edges */
 }
 
+/* -------- Tabs: dark mode text colors -------- */
+body.dark-mode .mat-mdc-tab .mdc-tab__text-label {
+  color: #fff !important;
+  /* MDC tabs (Angular Material v15+) */
+  opacity: 1;
+  /* ensure full opacity */
+}
+
+body.dark-mode .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+  color: #fff !important;
+}
+
+/* Fallback for older tab labels (pre-MDC) */
+body.dark-mode .mat-tab-label,
+body.dark-mode .mat-tab-label .mat-tab-label-content {
+  color: #fff !important;
+}
+
+/* Tab header/background (optional but nice) */
+body.dark-mode .mat-mdc-tab-header,
+body.dark-mode .mat-tab-header {
+  background-color: #2a2a2a;
+}
+
+/* Active underline (ink bar) color */
+body.dark-mode .mdc-tab-indicator__content--underline {
+  border-color: #90caf9 !important;
+  /* light blue */
+}
+
+/* Ripple on tabs (subtle white) */
+body.dark-mode .mat-mdc-tab .mat-ripple-element {
+  background-color: rgba(255, 255, 255, .2) !important;
+}
+
+/* -------- Raised Button: dark mode -------- */
+body.dark-mode .mat-mdc-raised-button {
+  background-color: #424242 !important;
+  /* dark gray background */
+  color: #ffffff !important;
+  /* white text */
+}
+
+/* Hover & focus: slightly lighter gray */
+body.dark-mode .mat-mdc-raised-button:hover,
+body.dark-mode .mat-mdc-raised-button:focus {
+  background-color: #616161 !important;
+}
+
+/* Disabled state: softer gray and dimmed text */
+body.dark-mode .mat-mdc-raised-button.mat-mdc-button-disabled {
+  background-color: #2e2e2e !important;
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Ripple effect color */
+body.dark-mode .mat-mdc-raised-button .mat-ripple-element {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
 .custom-rename-menu .mat-menu-panel {
   position: absolute !important; /* Override default positioning */
   top: -50px !important; /* Adjust the top position to align with the title */
@@ -130,7 +190,6 @@ body.dark-mode .stacked-card::after {
   }
 
   /*errmm what the sigma */
-
 }
 
 .songs-grid {
@@ -141,4 +200,133 @@ body.dark-mode .stacked-card::after {
   /* centers the grid within the container */
 }
 
+.mat-toolbar {
+  text-align: center;
+}
+
+.mat-h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.007);
+  z-index: 1000;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #000000;
+}
+
+.large-card-deck {
+  width: 100%;
+  height: 100%;
+  /* Add any additional styling as needed */
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+}
+
+.sunken-button {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+  color: #333;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.sunken-button:hover {
+  background-color: #e0e0e0;
+  box-shadow: inset 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.sunken-button:active {
+  background-color: #d0d0d0;
+  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.fixed-circle-button {
+  position: fixed;
+  /* Fix the position so it doesn't move on scroll */
+  bottom: 50px;
+  /* Adjust the distance from the bottom of the viewport */
+  right: 50px;
+  /* Adjust the distance from the right of the viewport */
+  width: 80px;
+  /* Set the width of the button */
+  height: 80px;
+  /* Set the height of the button */
+  border-radius: 50%;
+  /* Make it circular */
+  background-color: white;
+  /* White background */
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2),
+    /* Shadow below */
+    0px -5px 10px rgba(0, 0, 0, 0.1),
+    /* Shadow above */
+    -5px 5px 10px rgba(0, 0, 0, 0.2),
+    /* Shadow left */
+    5px 5px 10px rgba(0, 0, 0, 0.2);
+  /* Shadow right */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  /* Adjust font size for the "+" */
+  color: rgb(0, 119, 255);
+  /* Set the "+" color */
+  cursor: pointer;
+  /* Change cursor to pointer on hover */
+  z-index: 1000;
+  /* Ensure it stays above other elements */
+  transition: box-shadow 0.3s ease;
+  /* Smooth transition for hover effect */
+}
+
+.chat-button {
+  position: fixed;
+  border-radius: 50%;
+  width: 80px;
+  /* Adjust size as needed */
+  height: 80px;
+  /* Adjust size as needed */
+  bottom: 50px;
+  right: 50px;
+  z-index: 1000;
+  background-color: #ffffff;
+  /* Primary color for the button */
+  color: #3f51b5;
+}
+
+.chat-button:hover {
+  background-color: #303f9f;
+  /* Darker shade on hover */
+}
+
+.chat-icon {
+  font-size: 25px;
+  /* Adjust icon size */
+  color: #3f51b5;
+  /* Primary color for the icon */
+}
+
+.songs-container {
+  display: flex;
+  gap: 16px;
+  /* space between cards */
+  overflow-x: auto;
+  /* horizontal scroll if overflow */
+  padding: 10px;
+  /* Optional: hide vertical scrollbar */
+  scrollbar-width: thin;
+  /* Firefox */
+}
+
+.songs-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.songs-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
 

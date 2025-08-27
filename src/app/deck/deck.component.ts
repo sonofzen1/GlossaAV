@@ -32,17 +32,19 @@ export class DeckComponent {
   isRenaming: boolean = false;
   oldDeckName: string = "";
 
-  constructor(public dialog: MatDialog, private router: Router, private elementRef: ElementRef, private flashcardService: FlashcardAPIService
+  constructor(public dialog: MatDialog, private router: Router, private elementRef: ElementRef, private flashcardService: FlashcardAPIService, private deckService: DeckAPIService
   ) {}
 
   openQuiz(): void {
+    const shuffled: Flashcard[] = this.deck.Flashcards.sort(() => Math.random() - 0.5); // Shuffle the flashcards
+
     const quizRef = this.dialog.open(QuizDialogComponent, {
       width: '90%',
       height: '90%',
       maxHeight: '100vh',
       maxWidth: '100vw',
       autoFocus: false,
-      data: { cards: this.deck.flashcards }
+      data: { cards: shuffled }
     });
 
     quizRef.afterClosed().subscribe(result => {
@@ -51,24 +53,26 @@ export class DeckComponent {
   }
 
 openDialog(): void {
-  if(!this.deck.flashCardIDs || this.deck.flashCardIDs.length > this.deck.flashcards.length) {
-  const requests = this.deck.flashCardIDs.map(id =>
-    this.flashcardService.getById(id)
-  );
-  console.log('Deck flashcard IDs:', requests);
-  forkJoin(requests).subscribe(flashcards => {
-    const dialogRef = this.dialog.open(DeckDialogComponent, {
-      width: '90%',
-      height: '90%',
-      maxHeight: '900vh',
-      maxWidth: '900vw',
-      autoFocus: false,
-      data: { cards: flashcards }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+  if(!this.deck.Loaded) {
+    // Lazy-load flashcards from the server
+    this.flashcardService.getFlashcards(this.deck.Title).subscribe({
+    next: (flashcards) => {
+      this.deck.Flashcards = flashcards; // Store in local deck
+      this.deck.Loaded = true; // Mark as loaded
+      console.log('Loaded flashcards:', flashcards);
+      // Open the dialog with loaded cards
+      this.dialog.open(DeckDialogComponent, {
+        width: '90%',
+        height: '90%',
+        maxHeight: '900vh',
+        maxWidth: '900vw',
+        autoFocus: false,
+        data: { name:this.deck.Title, cards: flashcards }
+      });
+    },
+    error: (err) => {
+      console.error('Failed to load flashcards:', err);
+    }
   });
   } else {
     const dialogRef = this.dialog.open(DeckDialogComponent, {
@@ -77,7 +81,7 @@ openDialog(): void {
       maxHeight: '900vh',
       maxWidth: '900vw',
       autoFocus: false,
-      data: { cards: this.deck.flashcards }
+      data: { name:this.deck.Title, cards: this.deck.Flashcards }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -87,25 +91,35 @@ openDialog(): void {
 }
 
   renameDeck(): void {
-    this.oldDeckName = this.deck.name;
-    this.isRenaming = true;
-    console.log('Renaming deck:', this.deck.name);
     // Add logic to handle renaming the deck
+    this.oldDeckName = this.deck.Title;
+    this.isRenaming = true;
+    console.log('Renaming deck:', this.deck.Title);
   }
 
   cancelRename(): void {
     this.isRenaming = false;
-    this.deck.name = this.oldDeckName; // Revert to the old name
+    this.deck.Title = this.oldDeckName; // Revert to the old name
   }
 
   onRenameKeydown(event: Event): void {
-    console.log('Deck renamed to:', this.deck.name);
+      this.deckService.updateDeckTitle(this.oldDeckName, this.deck.Title).subscribe({
+      next: (response) => {
+        console.log('Deck renamed successfully:', response);
+      },
+      error: (err) => {
+        console.error('Error renaming deck:', err);
+        this.deck.Title = this.oldDeckName; // Revert to the old name on error
+      }
+    });
+
+    console.log('Deck renamed to:', this.deck.Title);
     event.preventDefault(); // Prevent default form submission behavior
     this.isRenaming = false; // Exit renaming mode
   }
 
   deleteDeck(): void {
-    console.log('Request to delete deck:', this.deck.name);
+    console.log('Request to delete deck:', this.deck.Title);
     this.delete.emit(this.deck); // Emit the deck to the parent component
   }
 
