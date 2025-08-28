@@ -79,7 +79,6 @@ C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\obj\Debug\net9.0\sta
 C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.GlossaAPI.props
 C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.GlossaAPI.props
 C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\obj\Debug\net9.0\staticwebassets.pack.json
-C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\obj\Debug\net9.0\GlossaAPI.csproj.Up2Date
 C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\obj\Debug\net9.0\GlossaAPI.dll
 C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\obj\Debug\net9.0\refint\GlossaAPI.dll
@@ -143,3 +142,19 @@ C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\Swa
 C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\runtimes\linux\native\libmongocrypt.so
 C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\runtimes\osx\native\libmongocrypt.dylib
 C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\runtimes\win\native\mongocrypt.dll
+<<<<<<< Updated upstream
+=======
+C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\BCrypt.Net-Next.dll
+C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\AWSSDK.BedrockRuntime.dll
+C:\Users\Owner\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\AWSSDK.BedrockRuntime.dll
+C:\Users\Owner\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\BCrypt.Net-Next.dll
+C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\Amazon.Lambda.APIGatewayEvents.dll
+C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\Amazon.Lambda.ApplicationLoadBalancerEvents.dll
+C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\Amazon.Lambda.AspNetCoreServer.dll
+C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\Amazon.Lambda.AspNetCoreServer.Hosting.dll
+C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\Amazon.Lambda.Core.dll
+C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\Amazon.Lambda.Logging.AspNetCore.dll
+C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\Amazon.Lambda.RuntimeSupport.dll
+C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\bin\Debug\net9.0\Amazon.Lambda.Serialization.SystemTextJson.dll
+C:\Users\sonof\Documents\AngularProjects\GlossaAV\GlossaAPI\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+>>>>>>> Stashed changes

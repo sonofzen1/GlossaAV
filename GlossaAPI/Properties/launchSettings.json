@@ -16,7 +16,11 @@
       "launchBrowser": true,
       "applicationUrl": "https://localhost:5001;http://localhost:5116",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "Genius__AccessToken": "",
+        "GoogleTranslate__ApiKey": "",
+        "AWS__AccessKeyId": "",
+        "AWS__SecretAccessKey": ""
       }
     }
   }

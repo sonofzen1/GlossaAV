@@ -1,14 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { TranslationService } from './translation.service';
+<<<<<<< Updated upstream
+=======
+import { Song } from '../models/song.model'; // Assuming you have a Song model defined
+import { API_BASE } from '../../../public/api-base';
+
+export interface ScrapeResponse {
+  success: boolean;
+  message: string;
+}
+>>>>>>> Stashed changes
 
 @Injectable({
     providedIn: 'root'
 })
 export class SongsService {
-    private apiUrl = 'https://localhost:5001/api/FlashCards';
+    //private apiUrl = 'https://localhost:5001/api/FlashCards';
+    private apiUrl = `${API_BASE}/api/FlashCards`;
 
     constructor(private http: HttpClient, private translationService: TranslationService) {}
 
@@ -51,6 +62,30 @@ export class SongsService {
             .filter(Boolean);
     }
 
+<<<<<<< Updated upstream
+=======
+
+    scrapeLyrics(url: string): Observable<ScrapeResponse> {
+    const proxied = this.viaScraperAPI(url);
+    // safer than string concat: lets HttpClient handle encoding
+    const params = new HttpParams().set('url', proxied);
+    return this.http.get<ScrapeResponse>(`${this.apiUrl}/scrape`, { params });
+    }
+
+    // keep this in one place so you can change providers later
+    viaScraperAPI(targetUrl: string): string {
+    const base = 'https://api.scraperapi.com/';
+    const params = new URLSearchParams({
+        api_key: 'YOUR_SCRAPERAPI_KEY',  // see security note below
+        url: targetUrl,                  // URLSearchParams encodes this for the proxy
+        country: 'us',                   // optional
+        // render: 'true',               // only if the page really needs JS
+        // device_type: 'desktop'
+    });
+    return `${base}?${params.toString()}`;
+    }
+
+>>>>>>> Stashed changes
     private handleError(error: HttpErrorResponse): Observable<never> {
         let errorMessage = 'An error occurred';
         if (error.error instanceof ErrorEvent) {

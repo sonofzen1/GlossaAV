@@ -2,13 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { API_BASE } from '../../../public/api-base';
 
 @Injectable({
   providedIn: 'root' // Singleton, available app-wide
 })
 export class TranslationService {
+<<<<<<< Updated upstream
   private apiUrl = 'https://translation.googleapis.com/language/translate/v2';
   private apiKey = 'AIzaSyB0QOTZdGNH7_3WtPoYios1OX_L37tsfC0'; // Replace with your API key or use environment variables
+=======
+  //private apiUrl = 'https://localhost:5001/api/chat/translate'; // adjust port
+  private apiUrl = `${API_BASE}/api/chat/translate`; // adjust port
+>>>>>>> Stashed changes
 
   constructor(private http: HttpClient) {}
 

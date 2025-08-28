@@ -4,8 +4,17 @@ using GlossaAPI.Mongo;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
+<<<<<<< Updated upstream
+=======
+using Amazon;
+using Amazon.BedrockRuntime;
+using Amazon.Lambda.AspNetCoreServer.Hosting;
+>>>>>>> Stashed changes
 
 var builder = WebApplication.CreateBuilder(args);
+
+// enables Lambda bootstrap when running in AWS Lambda
+builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/axnet/openapi
@@ -19,7 +28,7 @@ builder.Services.AddCors(options =>
 {
   options.AddDefaultPolicy(policy =>
   {
-    policy.WithOrigins("http://localhost:4200")
+    policy.WithOrigins("https://glossalanguagelearning.com")
     .AllowAnyHeader()
     .AllowAnyMethod();
   });
@@ -52,6 +61,13 @@ builder.Services.AddScoped(x =>
 
 
 var app = builder.Build();
+
+foreach (var kvp in app.Configuration.AsEnumerable())
+{
+  if (!string.IsNullOrEmpty(kvp.Value)) // skip nulls
+    Console.WriteLine($"{kvp.Key} = {kvp.Value}");
+}
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

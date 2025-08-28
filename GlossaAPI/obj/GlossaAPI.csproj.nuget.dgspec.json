@@ -50,6 +50,10 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "Amazon.Lambda.AspNetCoreServer.Hosting": {
+              "target": "Package",
+              "version": "[1.7.0, )"
+            },
             "HtmlAgilityPack": {
               "target": "Package",
               "version": "[1.12.1, )"
