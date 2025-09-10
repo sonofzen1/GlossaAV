@@ -36,6 +36,7 @@ export class DeckMenuModalComponent {
 
   submit(): void {
     const newDeck = new Deck(this.name,[]); // Create a new deck model
+    newDeck.Loaded = true; // Mark as loaded since it starts empty
 
     this.deckService.addDeck(newDeck).subscribe({
       next: (response) => {

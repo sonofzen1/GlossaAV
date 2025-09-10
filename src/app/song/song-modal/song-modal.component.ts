@@ -12,8 +12,10 @@ import { faRectangleXmark } from '@fortawesome/free-solid-svg-icons';
 import { FlashcardModalComponent } from '../../dialog/flashcard-modal/flashcard-modal.component';
 import { MatButtonModule } from '@angular/material/button';
 import { DeckAPIService } from '../../services/deck-api.service';
+import { FlashcardAPIService } from '../../services/flashcard-api.service';
 import { switchMap } from 'rxjs/operators';
 import { Deck } from '../../models/deck.model';
+import { Flashcard } from '../../models/flashcard.model';
 
 @Component({
   selector: 'song-modal',
@@ -30,7 +32,8 @@ export class SongModalComponent {
     public dialogRef: MatDialogRef<SongModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { song: Song; decks: any[] }, // Injected data
     private dialog: MatDialog, // Add MatDialog service
-    private deckService: DeckAPIService // Inject DeckAPIService
+    private deckService: DeckAPIService, // Inject DeckAPIService
+    private flashcardService: FlashcardAPIService
   ) {}
 
   toggleTranslation(): void {
@@ -137,35 +140,47 @@ convertToFlashcards(): void {
 
   this.dialog.open(FlashcardModalComponent, dialogConfig).afterClosed()
     .subscribe(selectedDeck => {
-      if (!selectedDeck) return; // user cancelled
+    if (!selectedDeck) return; // user cancelled
 
-      const deckName = selectedDeck.Title ?? selectedDeck.name;
-      const idx = this.data.decks.findIndex((d: any) =>
-        (d.Title ?? d.name) === deckName
-      );
+    const deckName = selectedDeck.Title ?? selectedDeck.name;
+    const idx = this.data.decks.findIndex((d: any) =>
+      (d.Title ?? d.name) === deckName
+    );
 
-      // Normalize the flashcards array prop casing
-      const flashcardsKey = selectedDeck.Flashcards ? 'Flashcards' : 'flashcards';
+    // Normalize the flashcards array prop casing
+    const flashcardsKey = selectedDeck.Flashcards ? 'Flashcards' : 'flashcards';
 
-      const newCards = pairs.map(([term, definition]) => ({
-        Term: term,
-        Definition: definition
-      }));
+    const newCards = pairs.map(([term, definition]) => ({
+      Term: term,
+      Definition: definition
+    }));
 
-      newCards.splice(0,1); // remove the first pair used for preview
+    newCards.splice(0,1); // remove the first pair used for preview
 
-      if (idx !== -1) {
-        const current = this.data.decks[idx][flashcardsKey] ?? [];
-        this.data.decks[idx][flashcardsKey] = [...current, ...newCards];
-      }
-      else{
-        return console.warn(`Deck "${deckName}" not found in local data.`);
-      }
+    
+    if (idx === -1) {
+      return console.warn(`Deck "${deckName}" not found in local data.`);
+    }
 
-      this.deckService.replaceDeckFlashcards(idx, newCards).subscribe({
-        next: res => console.log(res.message, 'count:', res.count),
-        error: err => console.error('Replace failed', err)
+    const deck = this.data.decks[idx];
+
+    if (!deck.Loaded) {
+      this.flashcardService.getFlashcards(deckName).subscribe(cards => {
+        deck.Flashcards = cards;
+        deck.Flashcards.push(...newCards);
+        this.deckService.replaceDeckFlashcards(idx, deck.Flashcards).subscribe({
+          next: res => console.log(res.message, 'count:', res.count),
+          error: err => console.error('Replace failed', err),
+        });
       });
+    } else {
+      deck.Flashcards.push(...newCards);
+      this.deckService.replaceDeckFlashcards(idx, deck.Flashcards).subscribe({
+        next: res => console.log(res.message, 'count:', res.count),
+        error: err => console.error('Replace failed', err),
+      });
+    }
+
 
       console.log(`Added ${newCards.length} flashcards to deck "${deckName}" (local).`);
       // Later: call backend bulk-add endpoint here.
